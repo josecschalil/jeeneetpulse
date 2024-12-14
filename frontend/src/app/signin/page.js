@@ -44,7 +44,7 @@ const SignInPage = () => {
               <input type="checkbox" className="h-4 w-4 text-teal-600 border-gray-300 rounded" />
               <span className="ml-2 text-sm text-gray-700">Remember me</span>
             </label>
-            <a href="#" className="text-sm text-teal-600 hover:underline">
+            <a href="/resetpassword" className="text-sm text-teal-600 hover:underline">
               Forgot password?
             </a>
           </div>
@@ -75,14 +75,7 @@ const SignInPage = () => {
             />
             Sign in with Google
           </button>
-          <button className="flex items-center justify-center px-4 py-2 border rounded-lg shadow-sm bg-white hover:bg-gray-100">
-            <img
-              src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/Facebook_Logo_%282019%29.png/512px-Facebook_Logo_%282019%29.png"
-              alt="Facebook Logo"
-              className="h-5 w-5 mr-2"
-            />
-            Sign in with Facebook
-          </button>
+         
         </div>
 
         {/* Sign Up Link */}

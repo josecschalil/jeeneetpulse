@@ -4,22 +4,30 @@ import Link from "next/link";
 
 const VideoCard = ({ title, faculty, time, link, url }) => {
   return (
-    <div className="text-black">
+    <div className="text-black flex justify-center items-center font-montserrat font-semibold">
       <Link href={url} passHref>
-        <div className="bg-white shadow-md rounded-xl p-4">
+      
+          <div className="h-[250px] w-[380px]">
           <img
             src={link}
             alt="Video Thumbnail"
-            className="rounded mb-4 h-[140px] w-[330px]"
+            className="rounded-3xl shadow-md object-fit"
           />
+          </div>
+       
+
+        <div className="flex flex-col items-center mt-3 gap-1  ">
+          <p className="text-center text-[18px] hover:text-teal-300">{title}</p>
+          <div className="flex  px-8 rounded-full text-[14px] bg-gray-300 bg-opacity-5">
+            <p className=" ">
+              {faculty}
+            </p>
+            <div className="mx-2 my-auto w-2 h-2 rounded-full bg-black"></div>
+            <p className="">
+              {time}
+            </p>
+          </div>
         </div>
-    
-    <div className="flex flex-col items-center mt-3 gap-2">
-      <p className="text-center hover:text-teal-300">{title}</p>
-      <p className="text-center bg-slate-300 w-[200px] rounded-full">
-        {faculty}, {time}
-      </p>
-      </div>
       </Link>
     </div>
   );

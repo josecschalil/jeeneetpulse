@@ -13,9 +13,11 @@ module.exports = {
       fontFamily: {
       
         poppins: ['Poppins', 'Sans'], 
+        istok:['Istok','Sans'],
         montserrat: ['Montserrat', 'Sans'], 
         instSans: ['instrumentSans', 'Sans'],
         instSansN: ['instrumentSansnorm', 'Sans'],  
+        instSansB: ['instrumentSansBold', 'Sans'], 
       },
       colors: {
         background: "var(--background)",

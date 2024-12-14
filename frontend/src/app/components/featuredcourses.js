@@ -2,7 +2,7 @@ import React from "react";
 import Link from "next/link";
 const FeaturedCourses = () => {
   return (
-    <section className="bg-white py-10 text-black flex justify-center max-w-[1300px]">
+    <section className="bg-white py-10 text-black flex  max-w-[1300px]">
       <div className="max-w-6xl">
         <h2 className="text-3xl font-bold">Featured Courses and Study Materials</h2>
         <p className=" mt-2">

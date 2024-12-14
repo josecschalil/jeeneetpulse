@@ -1,28 +1,30 @@
 import React from "react";
 
 const Sections = () => {
-  return(
-<section className="bg-gradient-to-r from-teal-500 to-green-100 text-white w-[100vw]">
-        <div className="container max-w-[1240px] mx-auto px-6 py-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-12 text-center">
-          <div className="bg-slate-200 rounded-lg py-8 text-black">
-            <h2 className="text-3xl font-bold">200+</h2>
-            <p className="mt-2">Video Classes</p>
+  const data = [
+    { count: 200, label: "Video Classes" },
+    { count: 100, label: "Live Sessions" },
+    { count: 50, label: "Quizzes" },
+    { count: 300, label: "Assignments" },
+  ];
+
+  return (
+    <section className="bg-gradient-to-r from-[#009A80] to-[#FFF5EF] text-white w-[100vw] font-instSansB">
+      <div className=" max-w-[1240px] mx-auto  py-8  gap-6 text-center flex flex-row ">
+        {data.map((item, index) => (
+          <div
+            key={index}
+            className="flex-1 relative text-[28px] bg-white px-4 bg-opacity-65 shadow-md rounded-lg py-4 text-black"
+          >
+            <div className="mb-4">
+              <h2 className="">{item.count}+</h2>
+              <p className="">{item.label}</p>
+            </div>{" "}
           </div>
-          <div className="bg-slate-200 rounded-lg py-8 text-black">
-            <h2 className="text-3xl font-bold">20+</h2>
-            <p className="mt-2">Test Series</p>
-          </div>
-          <div className="bg-slate-200 rounded-lg py-8 text-black">
-            <h2 className="text-3xl font-bold">10+</h2>
-            <p className="mt-2">Something?</p>
-          </div>
-          <div className="bg-slate-200 rounded-lg py-8 text-black">
-            <h2 className="text-3xl font-bold">1K+</h2>
-            <p className="mt-2">Problems</p>
-          </div>
-        </div>
-      </section>
-)
+        ))}
+      </div>
+    </section>
+  );
 };
 
-export default Sections
+export default Sections;

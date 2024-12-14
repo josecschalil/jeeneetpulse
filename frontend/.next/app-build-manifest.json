@@ -10,26 +10,6 @@
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
       "static/chunks/app/page.js"
-    ],
-    "/questions/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/questions/page.js"
-    ],
-    "/questions/subject/[subjectId]/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/questions/subject/[subjectId]/page.js"
-    ],
-    "/questions/chapter/[chapterId]/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/questions/chapter/[chapterId]/page.js"
-    ],
-    "/questions/question/[questionId]/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/questions/question/[questionId]/page.js"
     ]
   }
 }

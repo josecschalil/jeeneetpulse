@@ -13,22 +13,23 @@ import SuccessStories from "./components/successstories";
 
 export default function Home() {
   return (
-    <div
-      
-      className="flex flex-col items-center font-poppins w-[100vw]  bg-slate-50"
-    >
-      <div className="">
-        <Navbar />
-        <Hero />
+    <div className="flex flex-col items-center font-poppins w-[100vw]  bg-slate-50">
+      <div className="w-screen" style={{ backgroundColor: "#EBFFF9" }}>
+        <div className="max-w-[1200px] mx-auto">
+          <Navbar />
+          <Hero />
+        </div>
       </div>
       <div>
         <Sections />
       </div>
-      <div>
+      <div >
+        
+      <VideoHighlights />
+      <PrepareSection />
         <FeaturedCourses />
-        <Features_2/>
-        <PrepareSection />
-        <VideoHighlights />
+        <Features_2 />
+        
         <SuccessStories />
         <Features_1 />
         <StartLearning />
