@@ -16,7 +16,7 @@ const ChapterPage = () => {
   }
 
   return (
-    <div className="p-6 bg-slate-500">
+    <div className="p-6 ">
       <h1 className="text-2xl font-bold">videos</h1>
       <ul className="mt-4  flex gap-6 justify-evenly">
         

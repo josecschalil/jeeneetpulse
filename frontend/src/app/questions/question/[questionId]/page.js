@@ -1,100 +1,173 @@
 "use client";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { useState } from "react";
 import { questions } from "../../data";
+import Sidebar from "@/app/components/sidebar";
+import { FaBookmark } from "react-icons/fa";
 
 const QuestionPage = () => {
-  const { questionId } = useParams(); // Get dynamic parameter
-  const [selectedOption, setSelectedOption] = useState(null); // For multiple-choice questions
-  const [numericalAnswer, setNumericalAnswer] = useState(""); // For numerical questions
+  const { questionId } = useParams();
+  const router = useRouter();
+  const [selectedOption, setSelectedOption] = useState(null);
+  const [numericalAnswer, setNumericalAnswer] = useState("");
   const [submitted, setSubmitted] = useState(false);
+  const [bookmarked, setBookmarked] = useState(false);
 
-  const question = questions.find((q) => q.id === questionId);
+  const questionIndex = questions.findIndex((q) => q.id === questionId);
+  const question = questions[questionIndex];
 
   if (!question) {
-    return <div>Question not found.</div>;
+    return (
+      <div className="flex items-center justify-center min-h-screen bg-gray-100 ">
+        <div className="p-6 bg-white shadow-lg">
+          <h1 className="text-2xl font-bold text-red-500">
+            Question not found.
+          </h1>
+        </div>
+      </div>
+    );
   }
 
   const handleSubmit = () => {
     setSubmitted(true);
   };
 
+  const handleBookmark = () => {
+    setBookmarked(!bookmarked);
+  };
+
+  const navigateTo = (index) => {
+    if (index >= 0 && index < questions.length) {
+      setSubmitted(false);
+      setSelectedOption(null);
+      setNumericalAnswer("");
+      router.push(`/questions/question/${questions[index].id}`);
+    }
+  };
+
   return (
-    <div className="p-6">
-      <h1 className="text-2xl font-bold">Question Details</h1>
-      <div className="mt-4 p-4 bg-gray-100 rounded-lg shadow">
-        <p className="text-lg mb-4">{question.text}</p>
-        <form>
-          {!(question.isnum) ? (
-            // Multiple-choice question
-            ["a", "b", "c", "d"].map((option) => (
-              <div key={option} className="mb-2">
-                <label className="flex items-center space-x-2">
-                  <input
-                    disabled={submitted}
-                    type="radio"
-                    name="option"
-                    value={option}
-                    checked={selectedOption === option}
-                    onChange={(e) => setSelectedOption(e.target.value)}
-                    className="form-radio text-blue-500"
-                  />
-                  <span>{question.options[option]}</span>
-                </label>
+    <div className=" flex min-h-[100vh] bg-gray-200 font-semibold flex-col-reverse md:flex-row flex-1 gap-4 p-4">
+      {/* Sidebar */}
+      <Sidebar />
+
+      {/* Main Content */}
+      <main className="flex-1  transition-all duration-200 p-8 rounded-3xl bg-white flex flex-col  font-serif">
+        <div className="flex items-center justify-between mb-2">
+          <div className="flex items-center gap-2">
+            <button
+              onClick={() => router.push("/questions/chapter/chap1")} // Replace "/chapters" with the actual route to your chapter section
+              className="px-2 py-1 rounded-lg border border-gray-400 text-black hover:bg-gray-400 flex items-center"
+            >
+              &lt;
+            </button>
+            <h1 className="text-2xl font-bold text-teal-900 uppercase">
+              {question.id}.
+            </h1>
+          </div>
+          <button
+            onClick={handleBookmark}
+            className={`py-2 px-4 rounded-lg ${
+              bookmarked
+                ? "bg-black text-white"
+                : "border border-gray-400 text-black hover:bg-gray-400"
+            } flex items-center`}
+          >
+            <FaBookmark className="mr-2" />
+            {bookmarked ? "Bookmarked" : "Bookmark"}
+          </button>
+        </div>
+
+        <div className="p-6">
+          <p className="text-lg mb-6 font-medium text-gray-700">
+            {question.text}
+          </p>
+          <form>
+            {!question.isnum ? (
+              <div className="grid grid-cols-2 gap-4">
+                {["a", "b", "c", "d"].map((option) => (
+                  <div key={option}>
+                    <button
+                      type="button"
+                      disabled={submitted}
+                      onClick={() => setSelectedOption(option)}
+                      className={`w-full py-3 px-4 rounded-lg border border-gray-400 text-teal-900 hover:text-white font-semibold text-center ${
+                        selectedOption === option
+                          ? "bg-teal-900 text-white"
+                          : " hover:bg-teal-800"
+                      }`}
+                    >
+                      {question.options[option]}
+                    </button>
+                  </div>
+                ))}
               </div>
-            ))
-          ) : (
-            // Numerical question
-            <div className="mb-4">
-              <label className="block mb-2 font-medium">
-                Enter your numerical answer:
-              </label>
-              <input
-                disabled={submitted}
-                type="number"
-                value={numericalAnswer}
-                onChange={(e) => setNumericalAnswer(e.target.value)}
-                className="form-input border rounded px-2 py-1 text-blue-500"
-                placeholder="Type your answer"
-              />
+            ) : (
+              <div className="mb-6">
+                <label className="block mb-2 font-medium text-gray-700">
+                  Enter your numerical answer:
+                </label>
+                <input
+                  disabled={submitted}
+                  type="number"
+                  value={numericalAnswer}
+                  onChange={(e) => setNumericalAnswer(e.target.value)}
+                  className="form-input border border-gray-300 rounded px-3 py-2 w-full focus:outline-none focus:ring focus:ring-blue-300"
+                  placeholder="Type your answer"
+                />
+              </div>
+            )}
+          </form>
+          {submitted && (
+            <div className="mt-6 p-6 border border-black rounded-lg shadow">
+              {!question.isnum ? (
+                selectedOption === question.correctAnswer ? (
+                  <p className="text-green-600 font-bold text-lg">Correct!</p>
+                ) : (
+                  <p className="text-red-600 font-bold text-lg">Incorrect.</p>
+                )
+              ) : Number(numericalAnswer) === question.correctAnswer ? (
+                <p className="text-green-600 font-bold text-lg">Correct!</p>
+              ) : (
+                <p className="text-red-600 font-bold text-lg">Incorrect.</p>
+              )}
+              <p className="mt-4">
+                <span className="font-semibold">Correct Answer:</span>{" "}
+                {question.correctAnswer}
+              </p>
+              <p className="mt-2">
+                <span className="font-semibold">Solution:</span>{" "}
+                {question.solution}
+              </p>
             </div>
           )}
-
+        </div>
+        <div className="flex items-center p-6 gap-5 justify-between ">
           <button
-            type="button"
+            onClick={() => navigateTo(questionIndex - 1)}
+            disabled={questionIndex === 0}
+            className="py-2 flex-1 px-4 border border-bg-gray-700 rounded-lg shadow hover:bg-gray-200 disabled:bg-gray-200 disabled:text-gray-400 disabled:cursor-not-allowed"
+          >
+            Previous
+          </button>
+          <button
             onClick={handleSubmit}
-            className="mt-4 px-4 py-2 bg-blue-500 text-white rounded shadow hover:bg-blue-600"
+            className={`py-2 flex-1 px-4 rounded-lg shadow text-white ${
+              submitted
+                ? "bg-gray-400 cursor-not-allowed"
+                : "bg-teal-900 hover:bg-teal-800"
+            }`}
           >
             Submit
           </button>
-        </form>
-        {submitted && (
-          <div className="mt-6 p-4 bg-green-100 rounded-lg shadow">
-
-            {!question.isnum ? (
-              selectedOption === question.correctAnswer ? (
-                <p className="text-green-600 font-bold">Correct!</p>
-              ) : (
-                <p className="text-red-600 font-bold">Incorrect.</p>
-              )
-            ) : (
-              (numericalAnswer) === question.correctAnswer ? (
-                <p className="text-green-600 font-bold">Correct!</p>
-              ) : (
-                <p className="text-red-600 font-bold">Incorrect.</p>
-              )
-            )}
-            <p className="mt-2">
-              <span className="font-semibold">Correct Answer:</span>{" "}
-              {question.correctAnswer}
-            </p>
-            <p className="mt-2">
-              <span className="font-semibold">Solution:</span>{" "}
-              {question.solution}
-            </p>
-          </div>
-        )}
-      </div>
+          <button
+            onClick={() => navigateTo(questionIndex + 1)}
+            disabled={questionIndex === questions.length - 1}
+            className="py-2 flex-1 px-4 border border-bg-gray-700 rounded-lg shadow hover:bg-gray-200 disabled:bg-gray-200 disabled:text-gray-400 disabled:cursor-not-allowed"
+          >
+            Next
+          </button>
+        </div>
+      </main>
     </div>
   );
 };

@@ -1,10 +1,16 @@
 "use client";
 import Link from "next/link";
 import React, { useState } from "react";
+import {
+  FaBookmark,
+  FaList,
+  FaAtom,
+  FaBook,
+  FaGraduationCap,
+} from "react-icons/fa";
 
 const QuestionsPage = () => {
   const [examType, setExamType] = useState("jee");
-  const [selectedSubject, setSelectedSubject] = useState("");
 
   const subjects = {
     iit: ["Physics", "Chemistry", "Mathematics"],
@@ -12,64 +18,118 @@ const QuestionsPage = () => {
     neet: ["Physics", "Chemistry", "Biology"],
   };
 
-  const questionsData = {
-    Physics: ["What is Newton's second law?", "Explain the Doppler Effect."],
-    Chemistry: ["What is the molecular weight of water?", "Define valency."],
-    Mathematics: ["Solve x² - 5x + 6 = 0.", "Find the derivative of x³."],
-    Biology: ["What is photosynthesis?", "Define the structure of DNA."],
-  };
-
   return (
-    <div className="min-h-screen bg-gradient-to-r from-teal-100 to-teal-400 py-10 px-4">
-      <div className="max-w-4xl mx-auto bg-white shadow-lg rounded-lg p-6">
-        <h2 className="text-2xl font-bold text-gray-800 text-center uppercase">
-          Questions
-        </h2>
+    <div className="min-h-screen flex flex-col bg-gray-200 font-jakarta font-semibold">
+      {/* Hero Section */}
+      <div className="hidden w-[100vw] h-[25vh] md:flex items-center justify-between  text-green-900">
+  {/* Left Line */}
+  <div className="flex-1 h-[1px] bg-green-900 rounded-full"></div>
 
-        <div className="mt-6">
-          <label
-            htmlFor="examType"
-            className="block text-sm font-medium text-gray-700"
-          >
-            Select Exam Type
-          </label>
-          <select
-            id="examType"
-            value={examType}
-            onChange={(e) => {
-              setExamType(e.target.value);
-              setSelectedSubject("");
-            }}
-            className="w-full mt-1 px-4 py-2 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
-          >
-            <option value="jee">JEE</option>
-            <option value="iit">IIT JEE</option>
-            <option value="neet">NEET</option>
-          </select>
+  {/* Center Text */}
+  <div className="flex items-center justify-center ">
+        <div className="text-center px-4">
+          <p className="text-4xl max-w-[750px] font-instSansB">
+            Master your exams with curated question banks and previous year questions.
+          </p>
         </div>
+      </div>
 
-        <div className="mt-6">
-          {examType ? (
-            <>
-              <h3 className="text-lg font-semibold text-gray-700">
-                {examType.toUpperCase()}
-              </h3>
-              <ul className="mt-4 flex gap-4 ">
-                {subjects[examType]?.map((subject) => (
-                  <Link href={`/questions/subject/${subject.toLowerCase()}_${examType.toLowerCase()}`} key={subject}>
-                    <li className="p-4 bg-gray-100 rounded-lg shadow-sm text-gray-800 hover:bg-teal-300 transition-all duration-200">
+  {/* Right Line */}
+  <div className="flex-1 h-[1px] bg-green-900"></div>
+</div>
+
+
+      {/* Main Layout */}
+      <div className="flex flex-col md:flex-row flex-1 mx-4 gap-4 py-4 ">
+        {/* Sidebar Section */}
+        <aside className="md:w-[23%] shadow-lg p-6 pt-2 bg-white rounded-xl">
+          <div className="flex md: flex-col gap-3 mt-5">
+            <div className="group relative bg-white p-4 rounded-lg shadow-sm border border-gray-300 transition-all duration-300">
+              <Link
+                href="/questions/bookmarked"
+                className="hover:text-teal-900 flex items-center"
+              >
+                <FaBookmark className="mr-2 text-teal-900" />
+                View Bookmarks
+              </Link>
+            </div>
+            <div className="group relative bg-white p-4 rounded-lg  shadow-sm border border-gray-300 transition-all duration-300">
+              <Link
+                href="/questions/user-lists"
+                className="hover:text-teal-900 flex items-center"
+              >
+                <FaList className="mr-2 text-teal-900" />
+                Recommended Problems
+              </Link>
+            </div>
+            <div className="group relative bg-white p-4 rounded-lg shadow-sm border border-gray-300 transition-all duration-300">
+              <Link
+                href="/questions/similar"
+                className="hover:text-teal-900 flex items-center"
+              >
+                <FaBook className="mr-2 text-teal-900" />
+                Personal Lists
+              </Link>
+            </div>
+          </div>
+        </aside>
+
+        {/* Main Content */}
+        <main className="flex-1 p-8 bg-white flex flex-col rounded-3xl  shadow-md border-black">
+          {/* Exam Selection */}
+          <div>
+            <p className="text-xl font-bold text-gray-800 mb-4 font-instSansB">Select your Exam</p>
+            <div className="flex gap-2 my-4">
+              {Object.keys(subjects).map((exam) => (
+                <button
+                  key={exam}
+                  onClick={() => setExamType(exam)}
+                  className={`w-1/4 text-left px-4 py-3 rounded-lg  border-gray-300 border text-gray-800  uppercase transition-all duration-300 ease-in-out ${
+                    examType === exam
+                      ? "bg-teal-900 text-white border-black w-full"
+                      : "hover:bg-gray-200 hover:text-black"
+                  }`}
+                >
+                  {exam}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* Subjects Section */}
+          <div className="flex flex-col mt-6">
+            <h2 className="text-xl font-bold text-gray-800 mb-4 font-instSansB">Subjects</h2>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              {subjects[examType].map((subject, index) => (
+                <Link
+                  href={`/questions/subject/${subject.toLowerCase()}_${examType}`}
+                  key={subject}
+                >
+                  <div className="group hover:bg-gray-100 relative border-b-2 border-b-teal-900  bg-white p-6 rounded-lg shadow-md border-gray-300 border transition-all duration-100">
+                    {/* Subject Icon */}
+                    <div className="absolute top-3 right-3 text-gray-600 text-2xl"> 
+                      {index === 0 ? (
+                        <FaAtom />
+                      ) : index === 1 ? (
+                        <FaBook />
+                      ) : (
+                        <FaGraduationCap />
+                      )}
+                    </div>
+                    {/* Subject Details */}
+                    <h3 className="text-xl font-bold text-gray-800 mb-4 ">
                       {subject}
-                    </li>
-                  </Link>
-                ))}
-              </ul>
-            </>
-          ) : (
-            <p className="text-gray-600 mt-4">
-              Please select a subject to view questions.
-            </p>
-          )}
-        </div>
+                    </h3>
+                    <p className="text-gray-600 text-sm leading-relaxed">
+                      Dive deep into {examType.toUpperCase()} {subject}{" "}
+                      questions.
+                    </p>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          </div>
+        </main>
       </div>
     </div>
   );

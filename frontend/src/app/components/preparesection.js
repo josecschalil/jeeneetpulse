@@ -3,7 +3,7 @@ import Link from "next/link";
 const PrepareSection = () => {
   return (
     <section className="bg-gradient-to-r from-[#009A80] to-[#FFF5EF] p-10 w-[100vw]">
-      <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 items-center gap-8">
+      <div className="max-w-[1240px] mx-auto grid grid-cols-1 md:grid-cols-2 items-center gap-8">
         {/* Left Content */}
         <div>
           <h1 className="text-4xl font-bold leading-tight text-black">

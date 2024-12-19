@@ -1,4 +1,9 @@
 {
   "/favicon.ico/route": "app/favicon.ico/route.js",
-  "/page": "app/page.js"
+  "/page": "app/page.js",
+  "/questions/page": "app/questions/page.js",
+  "/questions/subject/[subjectId]/page": "app/questions/subject/[subjectId]/page.js",
+  "/questions/chapter/[chapterId]/page": "app/questions/chapter/[chapterId]/page.js",
+  "/questions/question/[questionId]/page": "app/questions/question/[questionId]/page.js",
+  "/videos/page": "app/videos/page.js"
 }

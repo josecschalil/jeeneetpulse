@@ -12,6 +12,12 @@ export const chapters = [
   { id: "chap1", subjectId: "physics_jee", name: "Kinematics" },
   { id: "chap2", subjectId: "physics_jee", name: "Dynamics" },
   { id: "chap3", subjectId: "physics_jee", name: "Thermodynamics" },
+  { id: "chap4", subjectId: "physics_jee", name: "Work, Energy and Power" },
+  { id: "chap5", subjectId: "physics_jee", name: "Rotational Motion" },
+  { id: "chap6", subjectId: "physics_jee", name: "Gravitation" },
+  { id: "chap7", subjectId: "physics_jee", name: "Optics" },
+  { id: "chap8", subjectId: "physics_jee", name: "Electromagnetic Induction" },
+  { id: "chap9", subjectId: "physics_jee", name: "Wave Motion" },
 
   // Chemistry JEE Chapters
   { id: "chap4", subjectId: "chemistry_jee", name: "Organic Chemistry" },
@@ -57,7 +63,9 @@ export const questions = [
     isnum:false,
     correctAnswer: "c",
     solution: "solution text.",
-    text: "What is velocity?",
+    text: `The dimensions of a cone are measured using a scale with a least count of 2 mm
+. The diameter of the base and the height are both measured to be 20.0 cm
+. The maximum percentage error in the determination of the volume is _______ .`,
   },
   {
     id: "q2",
@@ -65,7 +73,11 @@ export const questions = [
     isnum:true,
     correctAnswer: "14",
     solution: "solution text.",
-    text: "Define acceleration.",
+    text: `In an experiment for determination of the focal length of a thin convex lens, the distance of the object from the lens is 10±0.1 cm
+ and the distance of its real image from the lens is 20±0.2 cm
+. The error in the determination of focal length of the lens is n%
+. The value of n
+ is _____.`,
   },
   {
     id: "q3",
@@ -79,7 +91,10 @@ export const questions = [
     isnum:false,
     correctAnswer: "c",
     solution: "solution text.",
-    text: "What is displacement?",
+    text: `Two capacitors with capacitance values C1=(2000±10) pF
+  and C2=(3000±15) pF
+ are connected in series. The voltage applied across this combination is V=(5.00±0.02) V
+. The percentage error in the calculation of the energy stored in this combination of capacitors is __________.`,
   },
 
   // Dynamics Questions
