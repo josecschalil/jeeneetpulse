@@ -1,15 +1,15 @@
 import React from "react";
 import Navbar from "./components/navbar";
-import Hero from "./components/hero";
+import Hero from "./components/home/hero";
 import Sections from "./components/sections";
-import Features_1 from "./components/features_1";
-import Features_2 from "./components/features_2";
-import VideoHighlights from "./components/videohighlights";
+import Features_1 from "./components/home/features_1";
+import Features_2 from "./components/home/features_2";
+import VideoHighlights from "./components/home/videohighlights";
 import Footer from "./components/footer";
-import PrepareSection from "./components/preparesection";
-import StartLearning from "./components/startlearning";
-import FeaturedCourses from "./components/featuredcourses";
-import SuccessStories from "./components/successstories";
+import PrepareSection from "./components/home/preparesection";
+import StartLearning from "./components/home/startlearning";
+import FeaturedCourses from "./components/home/featuredcourses";
+import SuccessStories from "./components/home/successstories";
 
 export default function Home() {
   return (

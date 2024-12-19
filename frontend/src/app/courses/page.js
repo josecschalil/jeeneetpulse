@@ -15,7 +15,7 @@ const CoursesPage = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gray-100 py-10">
+    <div className="min-h-screen bg-gray-50 py-10">
       {/* Main Container */}
       <div className="max-w-[1240px] mx-auto px-4">
         {/* Page Title */}

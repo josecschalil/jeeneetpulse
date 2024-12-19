@@ -19,7 +19,7 @@ const QuestionsPage = () => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-gray-200 font-jakarta font-semibold">
+    <div className="min-h-screen flex flex-col bg-gray-50 font-jakarta font-semibold">
       {/* Hero Section */}
       <div className="hidden w-[100vw] h-[25vh] md:flex items-center justify-between  text-green-900">
   {/* Left Line */}

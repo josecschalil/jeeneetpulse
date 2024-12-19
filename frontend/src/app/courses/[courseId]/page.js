@@ -16,7 +16,7 @@ const CoursePage = () => {
   }
 
   return (
-    <div className="relative min-h-screen bg-gray-100 py-[10vh] font-poppins">
+    <div className="relative min-h-screen bg-gray-50 py-[10vh] font-poppins">
       {/* Background Images */}
       <img className="absolute top-[80vh] rotate-180 -z-0" src="/ve.png" alt="Decoration" />
       <img className="-right-10 top-2 absolute -z-0 rotate-180" src="/Vector.png" alt="Decoration" />
