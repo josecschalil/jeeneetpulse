@@ -1,7 +1,9 @@
 {
-  "/courses/page": "app/courses/page.js",
+  "/_not-found/page": "app/_not-found/page.js",
   "/student-portal/[courseId]/page": "app/student-portal/[courseId]/page.js",
   "/student-portal/page": "app/student-portal/page.js",
+  "/videos/subject/[subjectId]/page": "app/videos/subject/[subjectId]/page.js",
+  "/page": "app/page.js",
   "/videos/page": "app/videos/page.js",
-  "/courses/[courseId]/page": "app/courses/[courseId]/page.js"
+  "/about/page": "app/about/page.js"
 }

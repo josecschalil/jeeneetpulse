@@ -6,25 +6,20 @@
       "static/css/app/layout.css",
       "static/chunks/app/layout.js"
     ],
-    "/about/page": [
+    "/student-portal/[courseId]/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/about/page.js"
-    ],
-    "/contact/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/contact/page.js"
-    ],
-    "/videos/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/videos/page.js"
+      "static/chunks/app/student-portal/[courseId]/page.js"
     ],
     "/student-portal/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
       "static/chunks/app/student-portal/page.js"
+    ],
+    "/videos/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/videos/page.js"
     ],
     "/courses/page": [
       "static/chunks/webpack.js",
@@ -36,16 +31,6 @@
       "static/chunks/main-app.js",
       "static/chunks/app/questions/page.js"
     ],
-    "/questions/subject/[subjectId]/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/questions/subject/[subjectId]/page.js"
-    ],
-    "/questions/chapter/[chapterId]/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/questions/chapter/[chapterId]/page.js"
-    ],
     "/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
@@ -56,20 +41,15 @@
       "static/chunks/main-app.js",
       "static/chunks/app/videos/subject/[subjectId]/page.js"
     ],
-    "/tests/page": [
+    "/about/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/tests/page.js"
+      "static/chunks/app/about/page.js"
     ],
-    "/student-portal/[courseId]/page": [
+    "/_not-found/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/student-portal/[courseId]/page.js"
-    ],
-    "/courses/[courseId]/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/courses/[courseId]/page.js"
+      "static/chunks/app/_not-found/page.js"
     ]
   }
 }

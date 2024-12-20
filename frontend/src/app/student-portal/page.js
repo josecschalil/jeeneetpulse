@@ -1,38 +1,8 @@
 "use client";
 import React from "react";
 import Link from "next/link";
+import { courses } from "../student-portal/data";
 const CourseList = () => {
-  const courses = [
-    {
-      id: 1,
-      title: "2025 | Repeaters - JEE Advanced | Offline",
-      chapters: 246,
-      contents: 1161,
-      progress: 7,
-    },
-    {
-      id: 2,
-      title: "Free JEE Advance Package |  Online",
-      chapters: 226,
-      chapters: 13,
-      contents: 1,
-      progress: 0,
-    },
-    {
-      id: 3,
-      title: "UCEED 2025",
-      chapters: 8,
-      contents: 13,
-      progress: 0,
-    },
-    {
-      id: 4,
-      title: "JEE Main Syllabus 2025",
-      chapters: 1,
-      contents: 1,
-      progress: 0,
-    },
-  ];
 
   return (
     <div className="min-h-screen bg-gray-50 py-8 font-jakarta">

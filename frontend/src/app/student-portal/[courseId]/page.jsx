@@ -1,17 +1,24 @@
 "use client";
 import React, { useState } from "react";
-
+import {courses} from "../data"
+import { useParams } from "next/navigation";
 import Exams from "@/app/components/student/exams";
 import StudyMaterials from "@/app/components/student/studym";
 import PracticeQuestions from "@/app/components/student/PracticeQuestions";
 import Classes from "@/app/components/student/classes";
 
 const CoursePage = () => {
+  const {courseId} =useParams();
+ const id= parseInt(courseId);
+  console.log(courseId)
   const [activeTab, setActiveTab] = useState("exams");
 
   const handleTabChange = (tab) => {
     setActiveTab(tab);
   };
+
+  const course=courses.find(course => course.id === id);
+  console.log(course)
 
   return (
     <div className="min-h-screen bg-gray-50 py-8 font-jakarta">
@@ -20,7 +27,7 @@ const CoursePage = () => {
         <div className="flex flex-col gap-4  mb-6">
           {/* Course Title */}
           <h2 className="text-2xl font-bold text-gray-700 font-instSansB">
-          2025 | Repeaters - JEE Advanced | Offline
+        {course.title}
           </h2>
 
           {/* Tabs */}
@@ -43,10 +50,10 @@ const CoursePage = () => {
 
         {/* Content Section */}
         <div>
-          {activeTab === "exams" && <Exams />}
-          {activeTab === "questions" && <PracticeQuestions />}
-          {activeTab === "classes" && <Classes />}
-          {activeTab === "materials" && <StudyMaterials />}
+          {activeTab === "exams" && <Exams id={courseId} />}
+          {activeTab === "questions" && <PracticeQuestions id={courseId}  />}
+          {activeTab === "classes" && <Classes id={courseId}  />}
+          {activeTab === "materials" && <StudyMaterials id={courseId}  />}
         </div>
       </div>
     </div>
