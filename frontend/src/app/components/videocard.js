@@ -7,7 +7,7 @@ const VideoCard = ({ title, faculty, time, link, url }) => {
     <div className="text-black flex justify-center items-center font-montserrat font-semibold">
       <Link href={url} passHref>
       
-          <div className="h-[250px] w-[380px]">
+          <div className="">
           <img
             src={link}
             alt="Video Thumbnail"

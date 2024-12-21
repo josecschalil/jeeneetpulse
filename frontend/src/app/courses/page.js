@@ -1,36 +1,50 @@
 "use client";
 import React, { useState } from "react";
+import ProductCard from "../components/productCard";
 import { courses } from "./data";
-import Link from "next/link";
 
 const CoursesPage = () => {
+  const [selected, setSelected] = useState("JEE");
+
+  const categories = [
+    { id: "JEE", name: "JEE" },
+    { id: "IITJEE", name: "IIT JEE" },
+    { id: "NEET", name: "NEET" },
+  ];
 
   return (
-    <div className="min-h-screen bg-gray-100 py-10">
-      <div className="max-w-6xl mx-auto">
-        <h2 className="text-3xl font-bold text-gray-800">Courses</h2>
-        <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {courses.map((course) => (
-            <div key={course.id} className="bg-white shadow-lg rounded-lg p-4">
-              <h3 className="text-xl font-semibold">{course.title}</h3>
-              <p className="mt-2 text-gray-600">{course.description}</p>
-              <p className="mt-2 text-gray-800 font-semibold">
-                Price: ₹{course.offerPrice}{" "}
-                <span className="line-through text-gray-500">₹{course.price}</span>{" "}
-                ({course.discount} off)
-              </p>
-              <Link href={`/courses/${course.id}`} key={course.id}>
-              <button
-           
-                className="mt-4 bg-teal-600 text-white py-2 px-4 rounded-lg hover:bg-teal-700"
-              >
-                View Details
-              </button>
-              </Link>
+    <div className="min-h-screen bg-gray-50 py-8 font-poppins">
+      {/* Main Container */}
+      <div className="max-w-5xl mx-auto bg-white shadow-md rounded-xl p-6">
+        {/* Page Title */}
+        <h2 className="text-4xl font-bold text-gray-800 mb-6">Courses</h2>
+
+        {/* Categories */}
+        {/* <div className="flex items-center gap-8 mb-6">
+          {categories.map((category) => (
+            <div
+              key={category.id}
+              className={`cursor-pointer pb-1 ${
+                selected === category.id
+                  ? "text-black border-b-2 border-teal-600"
+                  : "text-gray-600"
+              }`}
+              onClick={() => setSelected(category.id)}
+            >
+              <h1 className="text-lg font-medium">{category.name}</h1>
             </div>
           ))}
-        </div>
+        </div> */}
 
+        {/* Divider */}
+        <div className="w-full h-[1px] bg-gray-300 mb-8"></div>
+
+        {/* Courses Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-8">
+          {courses.map((course) => (
+            <ProductCard key={course.id} course={course} />
+          ))}
+        </div>
       </div>
     </div>
   );

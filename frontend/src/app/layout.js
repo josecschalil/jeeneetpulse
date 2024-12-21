@@ -1,8 +1,5 @@
-import localFont from "next/font/local";
+import Navbar from "./components/navbar";
 import "./globals.css";
-
-
-
 
 export const metadata = {
   title: "Create Next App",
@@ -12,9 +9,10 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className="font-instSansN">
-  {children}
-</body>
+      <body className="font-instSansN overflow-x-hidden" >
+        <Navbar />
+        {children}
+      </body>
     </html>
   );
 }

@@ -1,9 +1,9 @@
 import React from "react";
-import VideoCard from "./videocard";
+import VideoCard from "../videocard";
 
 const VideoHighlights = () => {
   return (
-    <section className=" pt-16 bg-transparent mb-24 font-instSansN">
+    <section className=" pt-16 bg-transparent mb-24 font-instSansN max-w-[1240px] mx-auto">
       <div className="flex flex-col items-center gap-4 ">
         <h2 className="text-[54px] font-instSansB" style={{ color: "#009C84" }}>
           Video Classes featuring the finest tutors.

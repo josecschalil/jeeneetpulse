@@ -12,8 +12,10 @@ module.exports = {
       },
       fontFamily: {
       
-        poppins: ['Poppins', 'Sans'], 
+        poppins: ['Poppins', 'Sans'],
+        jakarta:['Jakarta','Sans'], 
         istok:['Istok','Sans'],
+        istokn:['IstokN','Sans'],
         montserrat: ['Montserrat', 'Sans'], 
         instSans: ['instrumentSans', 'Sans'],
         instSansN: ['instrumentSansnorm', 'Sans'],  
