@@ -68,9 +68,9 @@ export const practiceSet =[
 
 
 export const subjects = [
-  { id: "physics_iit", name: "Physics Adv.", videos:34 , examType: "iit", courseId: 1 ,icon:"🧲" },
-  { id: "chemistry_iit", name: "Chemistry Adv.",videos:314 , examType: "iit", courseId: 1  ,icon:"🧬" },
-  { id: "mathematics_iit", name: "Mathematics Adv.",videos:24 , examType: "iit", courseId: 1 , icon:"➗"},
+  { id: "physics_iit", name: "Physics ", videos:34 , examType: "iit", courseId: 1 ,icon:"🧲" },
+  { id: "chemistry_iit", name: "Chemistry ",videos:314 , examType: "iit", courseId: 1  ,icon:"🧬" },
+  { id: "mathematics_iit", name: "Mathematics ",videos:24 , examType: "iit", courseId: 1 , icon:"➗"},
 
   { id: "physics_iit", name: "Physics", videos:34 , examType: "iit", courseId: 3 ,icon:"🧲" },
   { id: "chemistry_iit", name: "Chemistry",videos:314 , examType: "iit", courseId: 3  ,icon:"🧬" },
@@ -89,65 +89,149 @@ export const chapters = [
   { id: "chap1", subjectId: "physics_jee", videos:23, name: "Kinematics", icon: "🏃‍♂️" }, // Motion-related
   { id: "chap2", subjectId: "physics_jee", videos:23, name: "Dynamics", icon: "⚙️" }, // Mechanics-related
   { id: "chap3", subjectId: "physics_jee", videos:23, name: "Thermodynamics", icon: "🔥" }, // Heat-related
-  { id: "chap4", subjectId: "physics_jee", videos:23, name: "Work, Energy and Power", icon: "🔋" }, // Energy-related
-  { id: "chap5", subjectId: "physics_jee", videos:23, name: "Rotational Motion", icon: "🔄" }, // Rotational motion
-  { id: "chap6", subjectId: "physics_jee", videos:23, name: "Gravitation", icon: "🌍" }, // Gravity
-  { id: "chap7", subjectId: "physics_jee", videos:23, name: "Optics", icon: "🔭" }, // Light-related
-  { id: "chap8", subjectId: "physics_jee", videos:23, name: "Electromagnetic Induction", icon: "⚡" }, // Electricity-related
-  { id: "chap9", subjectId: "physics_jee", videos:23, name: "Wave Motion", icon: "🌊" }, // Wave-related
+  { id: "chap31", subjectId: "physics_jee", videos:23, name: "Work, Energy and Power", icon: "🔋" }, // Energy-related
+  { id: "chap32", subjectId: "physics_jee", videos:23, name: "Rotational Motion", icon: "🔄" }, // Rotational motion
+  { id: "chap33", subjectId: "physics_jee", videos:23, name: "Gravitation", icon: "🌍" }, // Gravity
+  { id: "chap34", subjectId: "physics_jee", videos:23, name: "Optics", icon: "🔭" }, // Light-related
+  { id: "chap35", subjectId: "physics_jee", videos:23, name: "Electromagnetic Induction", icon: "⚡" }, // Electricity-related
+  { id: "chap36", subjectId: "physics_jee", videos:23, name: "Wave Motion", icon: "🌊" }, // Wave-related
 
 
 
   // Chemistry JEE Chapters
-  { id: "chap4", subjectId: "chemistry_jee", name: "Organic Chemistry" },
-  { id: "chap5", subjectId: "chemistry_jee", name: "Inorganic Chemistry" },
-  { id: "chap6", subjectId: "chemistry_jee", name: "Physical Chemistry" },
+{ id: "chap4", subjectId: "chemistry_jee", videos: 23, name: "Organic Chemistry", icon: "🔥" },
+{ id: "chap5", subjectId: "chemistry_jee", videos: 23, name: "Inorganic Chemistry", icon: "🔬" },
+{ id: "chap6", subjectId: "chemistry_jee", videos: 23, name: "Physical Chemistry", icon: "📊" },
 
-  // Mathematics JEE Chapters
-  { id: "chap7", subjectId: "mathematics_jee", name: "Algebra" },
-  { id: "chap8", subjectId: "mathematics_jee", name: "Calculus" },
-  { id: "chap9", subjectId: "mathematics_jee", name: "Geometry" },
+// Mathematics JEE Chapters
+{ id: "chap7", subjectId: "mathematics_jee", name: "Algebra", icon: "🔢" },
+{ id: "chap8", subjectId: "mathematics_jee", name: "Calculus", icon: "📈" },
+{ id: "chap9", subjectId: "mathematics_jee", name: "Geometry", icon: "📐" },
 
-  // Biology NEET Chapters
-  { id: "chap10", subjectId: "biology_neet", name: "Cell Structure" },
-  { id: "chap11", subjectId: "biology_neet", name: "Genetics" },
-  { id: "chap12", subjectId: "biology_neet", name: "Human Physiology" },
+// Biology NEET Chapters
+{ id: "chap10", subjectId: "biology_neet", name: "Cell Structure", icon: "🧬" },
+{ id: "chap11", subjectId: "biology_neet", name: "Genetics", icon: "🌱" },
+{ id: "chap12", subjectId: "biology_neet", name: "Human Physiology", icon: "🫀" },
 
-  // Physics NEET Chapters
-  { id: "chap13", subjectId: "physics_neet", name: "Optics" },
-  { id: "chap14", subjectId: "physics_neet", name: "Electromagnetism" },
-  { id: "chap15", subjectId: "physics_neet", name: "Nuclear Physics" },
+// Physics NEET Chapters
+{ id: "chap13", subjectId: "physics_neet", name: "Optics", icon: "🔭" },
+{ id: "chap14", subjectId: "physics_neet", name: "Electromagnetism", icon: "⚡" },
+{ id: "chap15", subjectId: "physics_neet", name: "Nuclear Physics", icon: "☢️" },
 
-  // Chemistry NEET Chapters
-  { id: "chap16", subjectId: "chemistry_neet", name: "Biochemistry" },
-  {
-    id: "chap17",
-    subjectId: "chemistry_neet",
-    name: "Environmental Chemistry",
+// Chemistry NEET Chapters
+{ id: "chap16", subjectId: "chemistry_neet", name: "Biochemistry", icon: "🧪" },
+{ id: "chap17", subjectId: "chemistry_neet", name: "Environmental Chemistry", icon: "🌍" },
+{ id: "chap18", subjectId: "chemistry_neet", name: "Analytical Chemistry", icon: "🧫" },
+
+// Physics IIT Chapters
+{ id: "chap19", subjectId: "physics_iit", name: "Rigid Body and Motion", icon: "⚙️" },
+{ id: "chap20", subjectId: "physics_iit", name: "Fluid Mechanics", icon: "💧" },
+{ id: "chap21", subjectId: "physics_iit", name: "Thermodynamics", icon: "🌡️" },
+{ id: "chap22", subjectId: "physics_iit", name: "Mechanics", icon: "🏗️" },
+{ id: "chap23", subjectId: "physics_iit", name: "Waves", icon: "🌊" },
+{ id: "chap24", subjectId: "physics_iit", name: "Electromagnetic Waves", icon: "📡" },
+
+// Chemistry IIT Chapters
+{ id: "chap25", subjectId: "chemistry_iit", name: "Organic Chemistry", icon: "🔥" },
+{ id: "chap26", subjectId: "chemistry_iit", name: "Inorganic Chemistry", icon: "🔬" },
+{ id: "chap27", subjectId: "chemistry_iit", name: "Physical Chemistry", icon: "📊" },
+
+// Mathematics IIT Chapters
+{ id: "chap28", subjectId: "mathematics_iit", name: "Calculus", icon: "📈" },
+{ id: "chap29", subjectId: "mathematics_iit", name: "Trigonometry", icon: "📏" },
+{ id: "chap30", subjectId: "mathematics_iit", name: "Differential Equations", icon: "🔄" },
+
+];
+
+
+export const videos = [
+  // Physics Chapters (All for mains videos)
+  { 
+    id: "video1", 
+    chapterId: "chap1", 
+    name: "Introduction to Waves - Class 1",  
+    faculty: "Dr. Rajesh Kumar", 
+    duration: "15:32", 
+    thumbnail: "/Options.svg" 
   },
-  { id: "chap18", subjectId: "chemistry_neet", name: "Analytical Chemistry" },
+  { 
+    id: "video2", 
+    chapterId: "chap1", 
+    name: "Waves in Water - Class 2", 
+    faculty: "Prof. Sneha Sharma", 
+    duration: "12:45", 
+    thumbnail: "/Options.svg" 
+  },
+  { 
+    id: "video3", 
+    chapterId: "chap1", 
+    name: "Wave Interference - Class 3", 
+    faculty: "Dr. Anil Mehta", 
+    duration: "18:20", 
+    thumbnail: "/Options.svg" 
+  },
+  { 
+    id: "video4", 
+    chapterId: "chap1", 
+    name: "Wave Propagation - Class 4", 
+    faculty: "Dr. Priya Verma", 
+    duration: "14:50", 
+    thumbnail: "/Options.svg" 
+  },
 
-  { id: "chap19", subjectId: "phyisics_iit", name: "Rigid Body and Motion" },
-  { id: "chap20", subjectId: "physics_iit", name: "Fluid Mechanics" },
-  { id: "chap21", subjectId: "physics_iit", name: "Thermodynamics" },
-
-  //Physics IIT Chapters
-  { id: "chap22", subjectId: "physics_iit", name: "Mechanics" },
-  { id: "chap23", subjectId: "physics_iit", name: "Waves" },
-  { id: "chap24", subjectId: "physics_iit", name: "Electromagnetic Waves" },
-  //Chemistry Iit Chapters
-  { id: "chap25", subjectId: "chemistry_iit", name: "Organic Chemistry" },
-  { id: "chap26", subjectId: "chemistry_iit", name: "Inorganic Chemistry" },
-  { id: "chap27", subjectId: "chemistry_iit", name: "Physical Chemistry" },
-  //Mathematics Iit Chapters
-  { id: "chap28", subjectId: "mathematics_iit", name: "Calculus" },
-  { id: "chap29", subjectId: "mathematics_iit", name: "Trigonometry" },
-  {
-    id: "chap30",
-    subjectId: "mathematics_iit",
-    name: "Differential Equations",
+  // Chemistry Chapters
+  { 
+    id: "video5", 
+    chapterId: "chap4", 
+    name: "Atomic Structure", 
+    faculty: "Dr. Manish Gupta", 
+    duration: "20:10", 
+    thumbnail: "/Options.svg" 
+  },
+  { 
+    id: "video6", 
+    chapterId: "chap4", 
+    name: "Periodic Table", 
+    faculty: "Prof. Ritu Singh", 
+    duration: "22:05", 
+    thumbnail: "/Options.svg" 
+  },
+  { 
+    id: "video7", 
+    chapterId: "chap4", 
+    name: "Chemical Bonding", 
+    faculty: "Dr. Arjun Mishra", 
+    duration: "19:45", 
+    thumbnail: "/Options.svg" 
+  },
+  
+  // Mathematics Chapters
+  { 
+    id: "video8", 
+    chapterId: "chap15", 
+    name: "Algebra", 
+    faculty: "Dr. Neha Agrawal", 
+    duration: "25:30", 
+    thumbnail: "/Options.svg" 
+  },
+  { 
+    id: "video9", 
+    chapterId: "chap15", 
+    name: "Trigonometry",
+    faculty: "Prof. Vikram Singh", 
+    duration: "23:15", 
+    thumbnail: "/Options.svg" 
+  },
+  { 
+    id: "video10", 
+    chapterId: "chap15", 
+    name: "Calculus", 
+    faculty: "Dr. Kavita Jain", 
+    duration: "27:40", 
+    thumbnail: "/Options.svg" 
   },
 ];
+
 
 export const questions = [
   // Kinematics Questions

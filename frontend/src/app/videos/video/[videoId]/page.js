@@ -1,6 +1,6 @@
 "use client";
 import { useParams } from "next/navigation";
-import { videos } from "../../data";
+import { videos } from "../../../student-portal/data";
 
 const VideosPage = () => {
   const { videoId } = useParams(); // Use useParams to get the dynamic parameter

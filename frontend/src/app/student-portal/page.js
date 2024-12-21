@@ -28,7 +28,7 @@ const CourseList = () => {
 
         {courses.map((course, index) => (
     
-            <div key={index} className="flex items-center justify-between p-4 border mb-4">
+            <div key={index} className="flex items-center justify-between p-4 border hover:border-gray-500 hover:shadow  transition-all duration-100  rounded-2xl  mb-4">
               {/* Course Details */}
               <div className="flex items-center space-x-4">
                 {/* Icon */}
@@ -43,10 +43,10 @@ const CourseList = () => {
                 </div>
                 {/* Details */}
                 <div>
-                  <h3 className="text-lg font font-bold text-gray-800">
+                  <h3 className="text-lg font font-bold font-instSansB text-gray-800">
                     {course.title}
                   </h3>
-                  <p className="text-sm text-gray-500 mt-2">
+                  <p className="text-sm text-gray-500 mt-1">
                     {course.chapters} Chapters • {course.contents} Contents
                   </p>
                 </div>
@@ -65,7 +65,7 @@ const CourseList = () => {
                   {course.progress}% complete
                 </span>
                 <Link key={index} href={`/student-portal/${course.id}`}>
-                <button className="px-4 py-2 bg-teal-900 text-white rounded-2xl text-sm">
+                <button className="px-4 py-2 bg-teal-800  hover:bg-teal-900 text-white rounded-2xl text-sm">
                   Contents
                 </button>
                 </Link>

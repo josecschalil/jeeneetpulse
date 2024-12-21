@@ -13,7 +13,7 @@ const StudyMaterials = ({ id }) => {
         {materials.map((material, index) => (
           <div
             key={index}
-            className="flex items-center justify-between p-4 border   mb-4"
+            className="flex items-center justify-between p-4 hover:border-gray-500 hover:shadow  transition-all duration-100  border rounded-2xl  mb-4"
           >
             {/* Course Details */}
             <div className="flex items-center space-x-4">
@@ -25,17 +25,17 @@ const StudyMaterials = ({ id }) => {
               </div>
               {/* Details */}
               <div>
-                <h3 className="text-lg font font-bold text-gray-800">
+                <h3 className="text-lg font font-bold text-gray-800 font-instSansB">
                   {material.title}
                 </h3>
-                <p className="text-sm text-gray-500 mt-2 uppercase">{material.type}</p>
+                <p className="text-sm text-gray-500 mt-1  uppercase">{material.type}</p>
               </div>
             </div>
 
             {/* Progress and Button */}
             <div className="flex items-center space-x-4">
               <Link key={index} href={`/student-portal/`}>
-                <button className="px-4  py-2 border  border-teal-900  bg-gray-100 shadow rounded-full hover:bg-teal-800 hover:text-white  text-sm">
+                <button className="px-4  py-2 border  border-teal-900 rounded-full hover:bg-teal-800 hover:text-white  text-sm">
                   Download
                 </button>
               </Link>

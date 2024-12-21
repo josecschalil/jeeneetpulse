@@ -4,7 +4,7 @@ import {courses} from "../data"
 import { useParams } from "next/navigation";
 import Exams from "@/app/components/student/exams";
 import StudyMaterials from "@/app/components/student/studym";
-import PracticeQuestions from "@/app/components/student/PracticeQuestions";
+import PracticeQuestions from "@/app/components/student/questionsets";
 import Classes from "@/app/components/student/classes";
 
 const CoursePage = () => {

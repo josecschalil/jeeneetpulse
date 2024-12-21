@@ -15,7 +15,7 @@ const AboutPage = () => {
         </p>
       </div>
 
-      <section className="py-16 bg-gray-100">
+      <section className="py-16 bg-white">
         <div className="max-w-6xl mx-auto">
           <div className="flex flex-col md:flex-row gap-8">
             {/* Left Column: Logo and Description */}
@@ -34,7 +34,7 @@ const AboutPage = () => {
             </div>
 
             {/* Right Column: Vision and Why Choose Us */}
-            <div className="flex-1 flex flex-col gap-6">
+            <div className="flex-1 flex flex-col gap-10">
           
 
               <div>
@@ -69,7 +69,7 @@ const AboutPage = () => {
       </section>
 
       {/* Core Values Section */}
-      <section className="py-16 px-8 bg-white">
+      {/* <section className="py-16 px-8 bg-white">
         <div className="max-w-6xl mx-auto">
           <h2 className="text-3xl font-bold text-gray-800 mb-8 text-center font-instSansB">
             Our Core Values
@@ -104,7 +104,7 @@ const AboutPage = () => {
             ))}
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* Features  */}
       <section className="py-16 bg-gray-100">

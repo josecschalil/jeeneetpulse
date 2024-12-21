@@ -1,9 +1,10 @@
 {
   "/_not-found/page": "app/_not-found/page.js",
-  "/student-portal/[courseId]/page": "app/student-portal/[courseId]/page.js",
+  "/questions/page": "app/questions/page.js",
+  "/featured/page": "app/featured/page.js",
+  "/courses/page": "app/courses/page.js",
   "/student-portal/page": "app/student-portal/page.js",
-  "/videos/subject/[subjectId]/page": "app/videos/subject/[subjectId]/page.js",
+  "/contact/page": "app/contact/page.js",
   "/page": "app/page.js",
-  "/videos/page": "app/videos/page.js",
   "/about/page": "app/about/page.js"
 }

@@ -14,7 +14,7 @@ const Exams = ({ id }) => {
         filteredExams.map((exam, index) => (
           <div
             key={exam.id || index} // Use exam.id if available, otherwise fallback to index
-            className="flex items-center justify-between p-4 border mb-4"
+            className="flex  hover:border-gray-500 hover:shadow   transition-all duration-100 items-center justify-between p-4 border rounded-2xl mb-4"
           >
             {/* Course Details */}
             <div className="flex items-center space-x-4">
@@ -26,11 +26,11 @@ const Exams = ({ id }) => {
               </div>
               {/* Details */}
               <div>
-                <h3 className="text-lg font-bold text-gray-800">
+                <h3 className="text-lg font-bold font-instSansB text-gray-800">
                   {exam.title}
                 </h3>
-                <p className="text-sm text-gray-500 mt-2">
-                  {exam.date} • {exam.time}
+                <p className="text-sm text-gray-500 mt-1">
+                {exam.time}
                 </p>
               </div>
             </div>
@@ -38,7 +38,7 @@ const Exams = ({ id }) => {
             {/* Progress and Button */}
             <div className="flex items-center space-x-4">
               <Link href={`/student-portal/${exam.id}`}>
-                <button className="px-4 py-2 border border-teal-900 bg-gray-100 shadow rounded-full hover:bg-teal-800 hover:text-white text-sm">
+                <button className="px-4 py-2 border border-teal-900 transition-all duration-100  rounded-full hover:bg-teal-800 hover:text-white text-sm">
                   Start
                 </button>
               </Link>

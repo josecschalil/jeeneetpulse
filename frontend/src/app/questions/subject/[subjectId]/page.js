@@ -3,15 +3,17 @@ import { useParams } from "next/navigation";
 import Link from "next/link";
 import React, { useState } from "react";
 import Sidebar from "@/app/components/sidebar";
-import { chapters } from "../../data";
+import { chapters, subjects } from "../../data";
 
 const SubjectPage = () => {
   const { subjectId } = useParams(); // Dynamic subject ID from URL
   const [examType, setExamType] = useState(subjectId || "jee"); // Default examType fallback
 
   // Filter chapters for the current subject
-  const filteredChapters = chapters.filter((chapter) => chapter.subjectId === subjectId);
-
+  const filteredChapters = chapters.filter(
+    (chapter) => chapter.subjectId === subjectId
+  );
+  const subject = subjects.find((subject) => subject.id === subjectId);
   if (!filteredChapters.length) {
     return (
       <div className="min-h-screen flex items-center justify-center text-xl font-bold text-gray-800">
@@ -21,56 +23,54 @@ const SubjectPage = () => {
   }
 
   return (
-    <div className="min-h-screen flex flex-col bg-gray-200 font-jakarta font-semibold">
-     
-      <div className="w-[100vw] h-[25vh] hidden md:flex items-center justify-between text-green-900">
-    
-        <div className="flex-1 h-[1px] bg-green-900 rounded-full"></div>
+    <div className="min-h-screen bg-gray-50 py-8 font-jakarta">
+      <div className="max-w-5xl mx-auto bg-white shadow-md rounded-2xl p-6">
+        
+          <div className="w-[95%] mx-auto flex flex-col md:flex-row justify-between border-b items-center mb-6 ">
+            <h2 className="text-4xl uppercase  p-2 px-3 rounded-xl mb-4 font-bold text-gray-700 font-instSansB ">
+              {subject?.name}
+            </h2>
 
-        <div className="flex items-center justify-center">
-          <div className="text-center px-4">
-          <p className="text-4xl max-w-[750px] font-instSansB">
-            Master your exams with curated question banks and previous year questions.
-          </p>
+            <Sidebar />
+            </div>
+        
+
+        {/* Header: Course Title and Navbar */}
+        <div className="flex justify-center gap-4  mb-6">
+          <div className="w-[95%] grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3   gap-6 ">
+            {filteredChapters.map((chapter) => (
+              <Link key={chapter.id} href={`/questions/chapter/${chapter.id}`}>
+                <div className="w-full  hover:border-gray-400 items-center justify-between pl-2 pr-4 py-3 border rounded-xl">
+                  {/* Course Details */}
+                  <div className="flex items-center space-x-4">
+                    {/* Icon */}
+                    <div className="h-10 w-10  flex items-center  justify-center rounded-full">
+                      <span
+                        role="img"
+                        aria-label="course-icon"
+                        className="text-2xl"
+                      >
+                        {chapter.icon}
+                      </span>
+                    </div>
+                    {/* Details */}
+                    <div>
+                      <h3 className="text-md font-instSansB text-gray-800 ">
+                        {chapter.name}
+                      </h3>
+                      <p className="text-sm text-gray-500 mt-1">
+                        {chapter.videos} videos
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* Progress and Button */}
+                  <div className="flex items-center space-x-4"></div>
+                </div>
+              </Link>
+            ))}
           </div>
         </div>
-
-        <div className="flex-1 h-[1px] bg-green-900"></div>
-      </div>
-
-      {/* Main Layout */}
-      <div className="flex flex-col-reverse md:flex-row flex-1 mx-4 gap-4 py-4">
-        {/* Sidebar Section */}
-        <Sidebar />
-        {/* Main Content */}
-        <main className="flex-1 p-8 bg-white flex flex-col rounded-3xl shadow-md border-black">
-          {/* Chapters Section */}
-          <div className="flex flex-col">
-            <h2 className="text-xl font-bold text-gray-800 mb-4 font-instSansB">
-              Chapters
-            </h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-              {filteredChapters.map((chapter, index) => (
-                <Link
-                  href={`/questions/chapter/${chapter.id}`}
-                  key={chapter.id}
-                >
-                  <div className="group hover:bg-gray-100 relative border-b-2 border-b-teal-900 bg-white p-6 rounded-lg shadow-md border-gray-300 border transition-all duration-100">
-                    {/* Chapter Icon */}
-                   
-                    {/* Chapter Details */}
-                    <h3 className="text-md font-bold text-gray-800 ">
-                      {chapter.name}
-                    </h3>
-                    <p className="text-xs mt-1 font-bold text-gray-500 ">
-                      23 questions
-                    </p>
-                  </div>
-                </Link>
-              ))}
-            </div>
-          </div>
-        </main>
       </div>
     </div>
   );

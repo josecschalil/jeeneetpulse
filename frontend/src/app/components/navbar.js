@@ -30,8 +30,8 @@ const Navbar = () => {
           <div className="hover:text-gray-400">Questions</div>
         </Link>
 
-        <Link href="/videos" passHref>
-          <div className="hover:text-gray-400">Classes</div>
+        <Link href="/featured" passHref>
+          <div className="hover:text-gray-400">Featured</div>
         </Link>
         <Link href="/about" passHref>
           <div className="hover:text-gray-400">About</div>{" "}
