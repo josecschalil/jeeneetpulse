@@ -1,4 +1,6 @@
 {
-  "/favicon.ico/route": "app/favicon.ico/route.js",
-  "/student-portal/page": "app/student-portal/page.js"
+  "/page": "app/page.js",
+  "/student-portal/[courseId]/page": "app/student-portal/[courseId]/page.js",
+  "/student-portal/page": "app/student-portal/page.js",
+  "/featured/page": "app/featured/page.js"
 }
