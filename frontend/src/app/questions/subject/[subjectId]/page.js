@@ -59,7 +59,7 @@ const SubjectPage = () => {
                         {chapter.name}
                       </h3>
                       <p className="text-sm text-gray-500 mt-1">
-                        {chapter.videos} videos
+                        {chapter.videos} questions
                       </p>
                     </div>
                   </div>

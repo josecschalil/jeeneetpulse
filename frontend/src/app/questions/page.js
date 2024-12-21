@@ -165,7 +165,7 @@ const VideosPage = () => {
        mx-auto bg-white shadow-md rounded-2xl p-6">
         {/* Page Header */}
         <div className="flex justify-between ">
-          <h2 className=" text-3xl font-bold text-gray-700  font-instSansB">
+          <h2 className=" text-2xl font-bold text-gray-700  font-instSansB">
             {/* Master your exams with curated question banks and previous year questions. */}
             Practice Questions
           </h2>

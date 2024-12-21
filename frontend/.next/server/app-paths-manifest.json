@@ -1,10 +1,8 @@
 {
-  "/_not-found/page": "app/_not-found/page.js",
-  "/questions/page": "app/questions/page.js",
-  "/featured/page": "app/featured/page.js",
-  "/courses/page": "app/courses/page.js",
   "/student-portal/page": "app/student-portal/page.js",
-  "/contact/page": "app/contact/page.js",
-  "/page": "app/page.js",
-  "/about/page": "app/about/page.js"
+  "/student-portal/[courseId]/page": "app/student-portal/[courseId]/page.js",
+  "/videos/chapter/[chapterId]/page": "app/videos/chapter/[chapterId]/page.js",
+  "/questions/page": "app/questions/page.js",
+  "/about/page": "app/about/page.js",
+  "/courses/page": "app/courses/page.js"
 }

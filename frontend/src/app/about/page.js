@@ -7,7 +7,10 @@ const AboutPage = () => {
     <div className="bg-gray-100 min-h-screen">
       {/* Header Section */}
       <div className="bg-teal-900 text-white py-20 text-center">
-        <h1 className="text-4xl font-bold mb-4 font-instSansB">About Jeeneetpulse</h1>
+        <h1 className="text-4xl font-bold mb-4 font-instSansB">
+        ©  JEENEETPULSE 
+        
+        </h1>
         <p className="text-lg font-medium max-w-3xl mx-auto">
           The ultimate platform for aspiring students preparing for JEE and
           NEET. Test your skills, practice questions, and watch expert-led
@@ -17,52 +20,39 @@ const AboutPage = () => {
 
       <section className="py-16 bg-white">
         <div className="max-w-6xl mx-auto">
-          <div className="flex flex-col md:flex-row gap-8">
-            {/* Left Column: Logo and Description */}
-            <div className="flex-1 flex flex-col items-center md:items-start text-center md:text-left">
-              <img
-                src="/logo.svg" // Replace with your logo path
-                alt="Company Logo"
-                className="w-32 h-32 mb-6"
-              />
-              <p className="text-lg text-gray-800 font-medium">
-                At Jeeneetpulse, we are committed to empowering students to
-                excel in their JEE and NEET journey. With top-notch resources,
-                expert instructors, and an intuitive platform, we make learning
-                engaging and effective.
+          <div className="grid  gap-8">
+    
+
+            <div className="">
+              <h3 className="text-3xl font-bold text-teal-900 mb-4 font-instSansB">
+                Who We Are
+              </h3>
+              <p className="text-gray-900">
+                Jeeneetpulse is a leading platform dedicated to helping students
+                excel in competitive exams like JEE and NEET. Our mission is to
+                provide high-quality resources, expert guidance, and an
+                intuitive learning experience and some other stuff.
+                Jeeneetpulse is a leading platform dedicated to helping students
+                excel in competitive exams like JEE and NEET. Our mission is to
+                provide high-quality resources, expert guidance, and an
+                intuitive learning experience and some other stuff. 
               </p>
             </div>
 
-            {/* Right Column: Vision and Why Choose Us */}
-            <div className="flex-1 flex flex-col gap-10">
-          
-
-              <div>
-                <h3 className="text-3xl font-bold text-teal-900 mb-4 font-instSansB">
-                  Who We Are
-                </h3>
-                <p className="text-gray-900 text-justify">
-                  Jeeneetpulse is a leading platform dedicated to helping
-                  students excel in competitive exams like JEE and NEET. Our
-                  mission is to provide high-quality resources, expert guidance,
-                  and an intuitive learning experience. Built by a team of
-                  passionate educators and technologists, we aim to empower
-                  every learner to achieve their goals.
-                </p>
-              </div>
-
-              <div>
-                <h3 className="text-3xl font-bold text-teal-900 mb-4 font-instSansB">
-                  Our Vision
-                </h3>
-                <p className="text-gray-900 text-justify">
-                  Our vision is to transform how students prepare for their
-                  exams by integrating technology, personalized learning, and
-                  expert resources. We aspire to be the one-stop solution for
-                  all academic needs, fostering success and confidence in our
-                  learners.
-                </p>
-              </div>
+            <div>
+              <h3 className="text-3xl font-bold  text-teal-900 mb-4 font-instSansB">
+                Our Vision
+              </h3>
+              <p className="text-gray-900 ">
+                Our vision is to transform how students prepare for their exams
+                by integrating technology, personalized learning, and expert
+                resources. We aspire to be the one-stop solution for all
+                academic needs, fostering success and confidence in our
+                learners. Jeeneetpulse is a leading platform dedicated to helping students
+                excel in competitive exams like JEE and NEET. Our mission is to
+                provide high-quality resources, expert guidance, and an
+                intuitive learning experience and some other stuff.
+              </p>
             </div>
           </div>
         </div>
@@ -190,7 +180,7 @@ const AboutPage = () => {
       </section>
 
       {/* Team Section */}
-      <section className="py-16 bg-white">
+      <section className="py-16 bg-white font-instSansB">
         <div className="max-w-6xl mx-auto">
           <h2 className="text-3xl font-bold text-gray-800 mb-8 text-center fo">
             Meet the Team
@@ -198,29 +188,29 @@ const AboutPage = () => {
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
             {[
               {
-                image: "/team1.jpg",
+                image: "/boy.png",
                 name: "John Doe",
                 role: "CEO",
               },
               {
-                image: "/team2.jpg",
+                image: "/boy.png",
                 name: "Jane Smith",
                 role: "Lead Instructor",
               },
               {
-                image: "/team3.jpg",
+                image: "/boy.png",
                 name: "Alice Johnson",
                 role: "Content Strategist",
               },
               {
-                image: "/team4.jpg",
+                image: "/boy.png",
                 name: "Bob Brown",
                 role: "Technical Lead",
               },
             ].map((member, index) => (
               <div
                 key={index}
-                className="bg-gray-50 shadow-md rounded-2xl p-6 text-center"
+                className="bg-gray-50 border-b-gray-300 border hover:border-gray-600 transition-all duration-200 hover:shadow-md rounded-2xl p-6 text-center"
               >
                 <div className="relative w-24 h-24 mx-auto mb-4">
                   <Image
@@ -233,7 +223,7 @@ const AboutPage = () => {
                 <h3 className="text-xl font-bold text-teal-900">
                   {member.name}
                 </h3>
-                <p className="text-gray-600">{member.role}</p>
+                <p className="text-gray-600 font-jakarta">{member.role}</p>
               </div>
             ))}
           </div>
@@ -242,7 +232,7 @@ const AboutPage = () => {
 
       {/* Call to Action */}
       <section className="py-16 bg-teal-900 text-white text-center">
-        <h2 className="text-3xl font-bold mb-4">Join Jeeneetpulse Today!</h2>
+        <h2 className="text-3xl font-bold mb-4 font-instSansB">Join Jeeneetpulse Today!</h2>
         <p className="mb-8">
           Transform your preparation journey with expert guidance and tools.
         </p>
