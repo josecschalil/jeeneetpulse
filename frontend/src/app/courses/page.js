@@ -1,6 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import ProductCard from "../components/productCard";
+import CourseCard from "../components/Coursecard";
 import { courses } from "./data";
 
 const CoursesPage = () => {
@@ -13,9 +14,8 @@ const CoursesPage = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gray-50 py-8 font-poppins">
-      {/* Main Container */}
-      <div className="max-w-5xl mx-auto bg-white shadow-md rounded-xl p-6">
+
+      <div className="max-w-7xl mx-auto  bg-white py-8 font-poppins rounded-xl p-6">
         {/* Page Title */}
         <h2 className="text-4xl font-bold text-gray-800 mb-6">Courses</h2>
 
@@ -38,15 +38,18 @@ const CoursesPage = () => {
 
         {/* Divider */}
         <div className="w-full h-[1px] bg-gray-300 mb-8"></div>
-
+      
         {/* Courses Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-8">
+        <div className="flex flex-wrap  justify-between">
           {courses.map((course) => (
+               
             <ProductCard key={course.id} course={course} />
+
+          
           ))}
         </div>
       </div>
-    </div>
+
   );
 };
 
