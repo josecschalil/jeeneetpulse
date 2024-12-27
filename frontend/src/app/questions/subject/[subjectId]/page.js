@@ -27,7 +27,7 @@ const SubjectPage = () => {
       <div className="max-w-5xl mx-auto bg-white shadow-md rounded-2xl p-6">
         
           <div className="w-[95%] mx-auto flex flex-col md:flex-row justify-between border-b items-center mb-6 ">
-            <h2 className="text-4xl uppercase  p-2 px-3 rounded-xl mb-4 font-bold text-gray-700 font-instSansB ">
+            <h2 className="text-4xl uppercase  px-3 rounded-xl  font-bold text-gray-700 font-instSansB ">
               {subject?.name}
             </h2>
 

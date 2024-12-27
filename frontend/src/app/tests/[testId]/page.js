@@ -91,123 +91,127 @@ const TestPage = () => {
 
   // Rendering
   return (
-    <div className="h-auto md:h-screen font-montserrat bg-gray-700">
-      <header className="bg-green-100   text-white items-center flex justify-center  text-lg h-[10vh]">
-        Test {testId}
-      </header>
+    <div className="h-auto bg-gray-100 ">
+      <div className="flex  justify-between md:h-[88vh] bg-white border-t   flex-col md:flex-row ">
+        <div className="md:w-[70vw] flex flex-col">
+          <header className="  border-b uppercase items-center font-extrabold font-jakarta flex justify-center   text-2xl h-[10vh]">
+            JEE Advanced AITS {testId}
+          </header>
+          <div className=" p-6 bg-white rounded-xl font-jakarta">
+            {isSubmitted ? (
+              <div className="text-center">
+                <h2 className="text-2xl ">
+                  Your Score: {calculateScore()} / {totalQuestions}
+                </h2>
+              </div>
+            ) : (
+              <>
+                <h2 className="text-xl   mb-4">
+                  Question {currentQuestionIndex + 1}
+                </h2>
+                <p className="text-lg mb-4">
+                  {testQuestions[currentQuestionIndex]?.question}
+                </p>
+                {/* {testQuestions[currentQuestionIndex]?.image && (
+                  <img
+                    src={testQuestions[currentQuestionIndex].image}
+                    alt="Question Visual"
+                    className="w-full md:w-3/4   mb-4"
+                  />
+                )} */}
 
-      <div className="flex  md:h-[90vh]   flex-col-reverse md:flex-row">
-        <div className="md:w-2/3 p-6 bg-white">
-          {isSubmitted ? (
-            <div className="text-center">
-              <h2 className="text-2xl font-instSansB">
-                Your Score: {calculateScore()} / {totalQuestions}
-              </h2>
+                {/* Options */}
+                <div className="grid grid-cols-2 gap-3 w-[80%] mt-8">
+                  {testQuestions[currentQuestionIndex]?.options.map(
+                    (option, index) => (
+                      <label
+                        key={index}
+                        className={`block p-2 px-4 py-4 rounded-xl transition cursor-pointer border ${
+                          answers[currentQuestionIndex] === option
+                            ? "bg-blue-100 border-blue-500"
+                            : "border-gray-300"
+                        }`}
+                      >
+                        <input
+                          type="radio"
+                          name={`question-${currentQuestionIndex}`}
+                          checked={answers[currentQuestionIndex] === option}
+                          onChange={() => handleAnswer(option)}
+                          className="hidden"
+                        />
+                        {/* {`Option ${String.fromCharCode(65 + index)}`} */}
+                        {option}
+                      </label>
+                    )
+                  )}
+                </div>
+              </>
+            )}
+          </div>
+          <div className="border-t flex border p-2 px-6 mt-auto flex-col md:flex-row ">
+            <div className="mt-6  flex   font-jakarta ">
+              <button
+                onClick={markForReviewAndNext}
+                className="px-4 py-4 h-fit  text-black hover:border-black bg- bg-teal-100 border-teal-600 border  opacity-90 shadow-md font-semibold  rounded-lg   mr-4 hover:opacity-100 active:border-[2px] transition-all duration-300"
+              >
+                Mark for Review and Next
+              </button>
+
+              {/* <button
+                onClick={saveAndMarkForReview}
+                className="px-4 flex-1 py-2 border border-black  rounded-lg mr-4 hover:opacity-80 active:border-[2px] transition-all duration-300"
+              >
+                Save and Mark for Review
+              </button> */}
+
+              <button
+                onClick={clearAnswer}
+                className="px-4 py-4 h-fit  text-black hover:border-black font-semibold  bg-teal-100 border border-teal-600  shadow-md  rounded-lg  mr-4 hover:opacity-100 opacity-90 active:border-[2px] transition-all duration-300"
+              >
+                Clear
+              </button>
+
+              <button
+                onClick={saveandNext}
+                className="px-4 py-4 h-fit bg-e bg-teal-100 border-teal-600  border text-black hover:border-black font-semibold  opacity-90 hover:opacity-100  rounded-lg  mr-4 shadow-md active:border-[2px] transition-all duration-300"
+              >
+                Save and Next
+              </button>
             </div>
-          ) : (
-            <>
-              <h2 className="text-xl pl-2 mb-4">
-                Question {currentQuestionIndex + 1}
-              </h2>
-              {/* <p className="text-lg mb-4">
-                {testQuestions[currentQuestionIndex]?.question}
-              </p> */}
-              {testQuestions[currentQuestionIndex]?.image && (
-                <img
-                  src={testQuestions[currentQuestionIndex].image}
-                  alt="Question Visual"
-                  className="w-full md:w-3/4   mb-4"
-                />
-              )}
+            
 
-              {/* Options */}
-              <div className="grid grid-cols-2 gap-3">
-                {testQuestions[currentQuestionIndex]?.options.map(
-                  (option, index) => (
-                    <label
-                      key={index}
-                      className={`block p-2 rounded-s-lg rounded-tr-lg cursor-pointer border ${
-                        answers[currentQuestionIndex] === option
-                          ? "bg-blue-100 border-blue-500"
-                          : "border-gray-300"
-                      }`}
-                    >
-                      <input
-                        type="radio"
-                        name={`question-${currentQuestionIndex}`}
-                        checked={answers[currentQuestionIndex] === option}
-                        onChange={() => handleAnswer(option)}
-                        className="hidden"
-                      />
-                      {`Option ${String.fromCharCode(65 + index)}`}
-                    </label>
-                  )
-                )}
-              </div>
+            <div className="   border-black p-6 flex  gap-5  ">
+              <button
+                onClick={prevQuestion}
+                disabled={currentQuestionIndex === 0}
+                className="px-4 py-4 text-black bg-gray-100 shadow font-semibold border border-gray-100 hover:border-gray-800  rounded-lg  tracking-wider disabled:text-gray-300  active:border-[2px] transition-all duration-300"
+              >
+                Previous
+              </button>
+              <button
+                onClick={nextQuestion}
+                disabled={currentQuestionIndex === totalQuestions - 1}
+                className="px-7 py-4 text-black bg-gray-100 shadow font-semibold border border-gray-100 hover:border-gray-800  rounded-lg  tracking-wider disabled:text-gray-300  active:border-[2px] transition-all duration-300"
+              >
+                Next
+              </button>
 
-
-              <div className="mt-6 font-instSans ">
-                <button
-                  onClick={markForReviewAndNext}
-                  className="px-4 py-2 bg-yellow-500 text-white  mr-4 hover:opacity-80 active:border-[2px] transition-all duration-300"
-                >
-                  Mark for Review and Next
-                </button>
-
-                <button
-                  onClick={saveAndMarkForReview}
-                  className="px-4 py-2 bg-blue-500 text-white  mr-4 hover:opacity-80 active:border-[2px] transition-all duration-300"
-                >
-                  Save and Mark for Review
-                </button>
-
-                <button
-                  onClick={clearAnswer}
-                  className="px-4 py-2 border-[1px] border-black  mr-4 hover:opacity-80 active:border-[2px] transition-all duration-300"
-                >
-                  Clear
-                </button>
-
-                <button
-                  onClick={saveandNext}
-                  className="px-4 py-2 bg-green-500 text-white  mr-4 hover:opacity-80 active:border-[2px] transition-all duration-300"
-                >
-                  Save and Next
-                </button>
-              </div>
-              <div className="border-b-[1px] border-t-[1px] shadow-orange-300 s border-black p-3 flex items-center mt-6 flex-auto gap-3 font-instSansB ">
-                <button
-                  onClick={prevQuestion}
-                  disabled={currentQuestionIndex === 0}
-                  className="px-4 py-2 border-black border-[1px] uppercase tracking-wider disabled:bg-gray-300 hover:opacity-80 active:border-[2px] transition-all duration-300"
-                >
-                  &lt;&lt; Previous
-                </button>
-                <button
-                  onClick={nextQuestion}
-                  disabled={currentQuestionIndex === totalQuestions - 1}
-                  className="px-4 py-2  uppercase  border-black border-[1px] tracking-wider  disabled:bg-gray-300 hover:opacity-80 active:border-[2px] transition-all duration-300"
-                >
-                  Next &gt;&gt;
-                </button>
-
-                <button
-                  onClick={handleSubmit}
-                  className="px-6 py-2 bg-black ml-auto text-white tracking-[2px] font-normal uppercase hover:opacity-80 active:border-[2px] transition-all duration-300 "
-                >
-                  Submit
-                </button>
-              </div>
-            </>
-          )}
+              <button
+                onClick={handleSubmit}
+                className="px-6 py-4 bg-black ml-auto text-white rounded-lg  tracking-[2px] font-semibold   hover:opacity-80 active:border-[2px] transition-all duration-300 "
+              >
+                Submit
+              </button>
+            </div>
+          </div>
         </div>
 
         {/* Sidebar */}
-        <div className="md:w-1/3 p-4 bg-gray-100 border-l">
+        <div className="p-4 px-6   border-l md:w-[30vw]  ">
           {/* Help Section */}
-          <div className="p-4 mt-4 bg-white border-t rounded-md">
-            <h3 className="text-lg font-semibold mb-2">Legend</h3>
-            <div className="flex flex-wrap gap-4">
+          <div className="  bg-white rounded-md mb-5">
+            <h3 className="text-md border-b py-2 mb-2">LEGEND</h3>
+            <div className="flex flex-wrap gap-4 pt-2">
               {/* Not Visited */}
               <div className="flex items-center">
                 <div className="w-6 h-6 bg-gray-300 rounded mr-2"></div>
@@ -220,7 +224,7 @@ const TestPage = () => {
               </div>
               {/* Answered */}
               <div className="flex items-center">
-                <div className="w-6 h-6 bg-green-600 rounded mr-2"></div>
+                <div className="w-6 h-6 bg-emerald-500 rounded mr-2"></div>
                 <span>Answered</span>
               </div>
               {/* Marked for Review */}
@@ -236,28 +240,90 @@ const TestPage = () => {
             </div>
           </div>
 
-          <div className="p-4 mt-4 bg-white border-t rounded-md">
+          <div className=" bg-white rounded-md mb-5">
+            <div className="border-b mb-4 py-2">PHYSICS</div>
             {/* Question Navigator */}
-            <div className=" flex flex-wrap gap-3">
-              {testQuestions.map((_, index) => {
-                // Define background colors for buttons
-                let bgColor = "bg-gray-300"; // Default: Not Visited
-                if (visited.has(index)) bgColor = "bg-orange-300"; // Visited
-                if (answers[index]) bgColor = "bg-green-600"; // Answered
-                if (markedForReview.has(index)) bgColor = "bg-violet-300"; // Marked for Review
-                if (markedForReview.has(index) && answers[index])
-                  bgColor = "bg-purple-700"; // Answered & Marked for Review
+            <div className="flex flex-wrap gap-3">
+              {testQuestions
+                .filter((question) => question.subject === "Physics")
+                .map((question, overallIndex) => {
+                  const index = testQuestions.indexOf(question);
+                  // Define background colors for buttons
+                  let bgColor = "bg-gray-300"; // Default: Not Visited
+                  if (visited.has(index)) bgColor = "bg-orange-300"; // Visited
+                  if (answers[index]) bgColor = "bg-emerald-500"; // Answered
+                  if (markedForReview.has(index)) bgColor = "bg-violet-300"; // Marked for Review
+                  if (markedForReview.has(index) && answers[index])
+                    bgColor = "bg-purple-700"; // Answered & Marked for Review
 
-                return (
-                  <button
-                    key={index}
-                    onClick={() => goToQuestion(index)}
-                    className={`w-10 h-10 flex items-center shadow-[0px_2px_0px_rgba(0,0,0,0.3)] justify-center ${bgColor} rounded-md text-white font-semibold hover:rounded-xl transition-all duration-600`}
-                  >
-                    {index + 1}
-                  </button>
-                );
-              })}
+                  return (
+                    <button
+                      key={index}
+                      onClick={() => goToQuestion(index)}
+                      className={`w-10 h-10 flex items-center justify-center ${bgColor} rounded-md text-white font-semibold transition-all duration-600`}
+                    >
+                      {index + 1}
+                    </button>
+                  );
+                })}
+            </div>
+          </div>
+
+          <div className=" bg-white rounded-md mb-5">
+            <div className="border-b mb-4 py-2">CHEMISTRY</div>
+            {/* Question Navigator */}
+            <div className="flex flex-wrap gap-3">
+              {testQuestions
+                .filter((question) => question.subject === "Chemistry")
+                .map((question, overallIndex) => {
+                  const index = testQuestions.indexOf(question);
+                  // Define background colors for buttons
+                  let bgColor = "bg-gray-300"; // Default: Not Visited
+                  if (visited.has(index)) bgColor = "bg-orange-300"; // Visited
+                  if (answers[index]) bgColor = "bg-emerald-500"; // Answered
+                  if (markedForReview.has(index)) bgColor = "bg-violet-300"; // Marked for Review
+                  if (markedForReview.has(index) && answers[index])
+                    bgColor = "bg-purple-700"; // Answered & Marked for Review
+
+                  return (
+                    <button
+                      key={index}
+                      onClick={() => goToQuestion(index)}
+                      className={`w-10 h-10 flex items-center justify-center ${bgColor} rounded-md text-white font-semibold transition-all duration-600`}
+                    >
+                      {index + 1}
+                    </button>
+                  );
+                })}
+            </div>
+          </div>
+
+          <div className=" bg-white rounded-md">
+            <div className="border-b mb-4 py-2">MATHEMATICS</div>
+            {/* Question Navigator */}
+            <div className="flex flex-wrap gap-3">
+              {testQuestions
+                .filter((question) => question.subject === "Mathematics")
+                .map((question, overallIndex) => {
+                  const index = testQuestions.indexOf(question);
+                  // Define background colors for buttons
+                  let bgColor = "bg-gray-300"; // Default: Not Visited
+                  if (visited.has(index)) bgColor = "bg-orange-300"; // Visited
+                  if (answers[index]) bgColor = "bg-emerald-500"; // Answered
+                  if (markedForReview.has(index)) bgColor = "bg-violet-300"; // Marked for Review
+                  if (markedForReview.has(index) && answers[index])
+                    bgColor = "bg-purple-700"; // Answered & Marked for Review
+
+                  return (
+                    <button
+                      key={index}
+                      onClick={() => goToQuestion(index)}
+                      className={`w-10 h-10 flex items-center justify-center ${bgColor} rounded-md text-white font-semibold transition-all duration-600`}
+                    >
+                      {index + 1}
+                    </button>
+                  );
+                })}
             </div>
           </div>
         </div>

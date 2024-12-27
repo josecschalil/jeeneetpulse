@@ -1,8 +1,7 @@
 {
-  "/courses/[courseId]/page": "app/courses/[courseId]/page.js",
-  "/about/page": "app/about/page.js",
-  "/contact/page": "app/contact/page.js",
-  "/featured/page": "app/featured/page.js",
-  "/page": "app/page.js",
-  "/courses/page": "app/courses/page.js"
+  "/student-portal/[courseId]/page": "app/student-portal/[courseId]/page.js",
+  "/courses/page": "app/courses/page.js",
+  "/questions/chapter/[chapterId]/page": "app/questions/chapter/[chapterId]/page.js",
+  "/student-portal/page": "app/student-portal/page.js",
+  "/page": "app/page.js"
 }

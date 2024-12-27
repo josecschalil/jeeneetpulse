@@ -16,31 +16,6 @@
       "static/chunks/main-app.js",
       "static/chunks/app/courses/page.js"
     ],
-    "/student-portal/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/student-portal/page.js"
-    ],
-    "/student-portal/[courseId]/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/student-portal/[courseId]/page.js"
-    ],
-    "/videos/subject/[subjectId]/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/videos/subject/[subjectId]/page.js"
-    ],
-    "/videos/chapter/[chapterId]/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/videos/chapter/[chapterId]/page.js"
-    ],
-    "/courses/[courseId]/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/courses/[courseId]/page.js"
-    ],
     "/questions/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
@@ -60,6 +35,51 @@
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
       "static/chunks/app/contact/page.js"
+    ],
+    "/student-portal/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/student-portal/page.js"
+    ],
+    "/student-portal/[courseId]/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/student-portal/[courseId]/page.js"
+    ],
+    "/signin/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/signin/page.js"
+    ],
+    "/profile/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/profile/page.js"
+    ],
+    "/tests/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/tests/page.js"
+    ],
+    "/tests/[testId]/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/tests/[testId]/page.js"
+    ],
+    "/questions/subject/[subjectId]/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/questions/subject/[subjectId]/page.js"
+    ],
+    "/questions/chapter/[chapterId]/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/questions/chapter/[chapterId]/page.js"
+    ],
+    "/questions/question/[questionId]/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/questions/question/[questionId]/page.js"
     ]
   }
 }

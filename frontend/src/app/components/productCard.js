@@ -7,7 +7,7 @@ const ProductCard = ({ course }) => {
         {/* Image Section */}
         <div className="relative">
           <img
-            className=" w-full rounded  h-[240px] object-cover "
+            className=" w-full rounded-2xl  h-[240px] object-cover "
             src={course.img}
             alt={course.title}
           />

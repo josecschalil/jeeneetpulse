@@ -46,12 +46,13 @@ const QuestionPage = () => {
   };
 
   return (
-    <div className=" flex min-h-[100vh] bg-gray-200 font-semibold flex-col-reverse md:flex-row flex-1 gap-4 p-4">
+    <div className=" flex min-h-[100vh] bg-gray-50 font-semibold flex-col-reverse md:flex-row flex-1 gap-4 p-4">
       {/* Sidebar */}
-      <Sidebar />
+   
 
       {/* Main Content */}
-      <main className="flex-1  transition-all duration-200 p-8 rounded-3xl bg-white flex flex-col  font-serif">
+      <main className="flex-1  transition-all duration-200 p-6 max-w-5xl mx-auto shadow rounded-3xl bg-white flex flex-col ">
+     
         <div className="flex items-center justify-between mb-2">
           <div className="flex items-center gap-2">
             <button
