@@ -3,8 +3,9 @@ from django.contrib.auth import authenticate
 from django.contrib.auth.models import update_last_login
 from rest_framework_simplejwt.tokens import RefreshToken
 from .models import CustomUser
-
-
+from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
+from .views import *
 class UserRegistrationSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True)  # Ensure password is not exposed in responses
 
@@ -13,16 +14,19 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
         fields = ['name', 'email', 'password']
 
     def create(self, validated_data):
-        # Create a user with hashed password
-        user = CustomUser.objects.create_user(
-            username=validated_data['email'],  # Use email as username
+        """
+        Create a user but only save it if the verification email is successfully sent.
+        """
+        # Prepare user data without saving to the database yet
+        user = CustomUser(
             name=validated_data['name'],
-            email=validated_data['email'],
-            password=validated_data['password'],
-         
+            email=validated_data['email']
         )
-        return user
+        user.set_password(validated_data['password'])
+        user.is_active = False  # Make user inactive until email verification is done
 
+        user.save()
+        return user
 class UserAuthenticationSerializer(serializers.Serializer):
     """Serializer for user login and token generation."""
 

@@ -50,19 +50,30 @@ const SignUpPage = () => {
 
     try {
       // Send form data to backend for user registration
-      const response = await axios.post("http://127.0.0.1:8000/register/", {
+      const response = await axios.post("http://127.0.0.1:8000/signup/", {
         name: formData.name,
         email: formData.email,
         password: formData.password,
+        re_password: formData.password,
       });
 
       // Clear any error messages
       setError("");
       setMessage("User registered successfully! Please check your email to verify your account.");
+
+      // Hide success message after 3 seconds
+      setTimeout(() => {
+        setMessage("");
+      }, 3000);
     } catch (err) {
       const errorMsg =
         err.response?.data?.email || err.response?.data?.password || "Registration failed.";
       setError(errorMsg);
+
+      // Hide error message after 3 seconds
+      setTimeout(() => {
+        setError("");
+      }, 3000);
     }
   };
 
