@@ -10,7 +10,7 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = CustomUser
-        fields = ['name', 'email', 'password', 'preference']
+        fields = ['name', 'email', 'password']
 
     def create(self, validated_data):
         # Create a user with hashed password
@@ -19,7 +19,7 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
             name=validated_data['name'],
             email=validated_data['email'],
             password=validated_data['password'],
-            preference=validated_data.get('preference', ''),
+         
         )
         return user
 

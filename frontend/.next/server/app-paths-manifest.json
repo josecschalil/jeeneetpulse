@@ -1,8 +1,4 @@
 {
-  "/page": "app/page.js",
-  "/student-portal/page": "app/student-portal/page.js",
-  "/courses/[courseId]/page": "app/courses/[courseId]/page.js",
-  "/student-portal/[courseId]/page": "app/student-portal/[courseId]/page.js",
-  "/courses/page": "app/courses/page.js",
+  "/favicon.ico/route": "app/favicon.ico/route.js",
   "/signup/page": "app/signup/page.js"
 }
