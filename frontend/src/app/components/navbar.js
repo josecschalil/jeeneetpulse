@@ -120,7 +120,7 @@ const Navbar = () => {
           <div className="flex items-center space-x-4">
             <Link href="/profile" passHref>
               <div className="hover:text-gray-400 text-black">
-                {username ? `Welcome, ${username}` : "Profile"}
+                {username ? `Welcome ${username}` : "Profile"}
               </div>
             </Link>
             <button
