@@ -1,7 +1,11 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
+<<<<<<< HEAD
 from rest_framework.permissions import AllowAny,IsAuthenticated
+=======
+from rest_framework.permissions import AllowAny
+>>>>>>> d67558d94dde35ad0c034d2122bcf3a056a11d25
 from django.contrib.auth import get_user_model
 from rest_framework_simplejwt.tokens import RefreshToken
 from .serializers import UserRegistrationSerializer
@@ -12,10 +16,13 @@ from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.template.loader import render_to_string
 from django.contrib.auth.tokens import default_token_generator
 from django.utils.encoding import force_str
+<<<<<<< HEAD
 from rest_framework_simplejwt.authentication import JWTAuthentication
 
 
 
+=======
+>>>>>>> d67558d94dde35ad0c034d2122bcf3a056a11d25
 User = get_user_model()
 
 class SignupView(APIView):
