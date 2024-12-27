@@ -11,18 +11,18 @@ const VideoCard = ({ title, faculty, time, link, url }) => {
           <img
             src={link}
             alt="Video Thumbnail"
-            className="rounded-3xl shadow-md object-fit"
+            className="rounded-lg shadow-md object-fit"
           />
           </div>
        
 
         <div className="flex flex-col items-center mt-3 gap-1  ">
-          <p className="text-center text-[18px] hover:text-teal-300">{title}</p>
-          <div className="flex  px-8 rounded-full text-[14px] bg-gray-300 bg-opacity-5">
+          <p className="text-center text-md ">{title}</p>
+          <div className="flex  px-4 py-1 rounded-full text-sm font-normal  bg-gray-300 bg-opacity-25">
             <p className=" ">
               {faculty}
             </p>
-            <div className="mx-2 my-auto w-2 h-2 rounded-full bg-black"></div>
+            <div className="mx-2 my-auto w-1 h-1  rounded-full  bg-black"></div>
             <p className="">
               {time}
             </p>
