@@ -1,34 +1,50 @@
 "use client";
-import { useState } from 'react';
+import { useState } from "react";
+import axios from "axios";
 
 export default function ResetRequest() {
-  const [email, setEmail] = useState('');
-  const [message, setMessage] = useState('');
-  const [isSubmitted, setIsSubmitted] = useState(false); // New state to track submission
+  const [email, setEmail] = useState("");
+  const [message, setMessage] = useState(""); 
+  const [isSubmitted, setIsSubmitted] = useState(false); 
+  const [isLoading, setIsLoading] = useState(false); 
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
 
-    try {
-      const res = await fetch('/api/reset-request', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email }),
-      });
+    setIsLoading(true); 
 
-      const data = await res.json();
-
-      if (res.ok) {
-        // Success
+  
+    axios
+      .post("http://127.0.0.1:8000/auth/users/reset_password/", {
+        email: email,
+      })
+      .then((res) => {
+      
         setIsSubmitted(true);
-        setMessage(`An email has been sent to ${email} with further instructions.`);
-      } else {
-        // Error
-        setMessage(data.message || 'Something went wrong. Please try again.');
-      }
-    } catch (error) {
-      setMessage('An error occurred. Please try again.');
-    }
+        setMessage(`An email has been sent to ${email} with instructions to reset your password.`);
+      })
+      .catch((error) => {
+    
+        if (error.response) {
+        
+          setMessage(error.response.data.detail || "Something went wrong. Please try again.");
+        } else if (error.request) {
+          
+          setMessage("No response from the server. Please check your internet connection.");
+        } else {
+       
+          setMessage("An error occurred. Please try again.");
+        }
+      })
+      .finally(() => {
+        setIsLoading(false);
+       
+        if (!isSubmitted) {
+          setTimeout(() => {
+            setMessage(""); 
+          }, 3000);
+        }
+      });
   };
 
   return (
@@ -51,14 +67,18 @@ export default function ResetRequest() {
             <button
               type="submit"
               className="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition"
+              disabled={isLoading} 
             >
-              Send Reset Link
+              {isLoading ? "Sending..." : "Send Reset Link"}
             </button>
           </form>
         ) : (
+       
           <p className="text-center text-gray-600 mt-4">{message}</p>
         )}
-        {!isSubmitted && message && <p className="mt-4 text-center text-red-500">{message}</p>}
+
+        {/* Show error message if exists */}
+        {message && !isSubmitted && <p className="mt-4 text-center text-red-500">{message}</p>}
       </div>
     </div>
   );

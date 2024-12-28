@@ -23,13 +23,13 @@ const SignInPage = () => {
     
     e.preventDefault();
 
-    // Basic form validation
+    
     if (!formData.email || !formData.password) {
       setError("Please fill in both fields.");
       return;
     }
 
-    setError(""); // Clear previous errors
+    setError("");
     setLoading(true);
 
     try {
@@ -38,14 +38,14 @@ const SignInPage = () => {
         password: formData.password,
       });
 
-      // Handle success: Store tokens in localStorage
+    
       const { access, refresh } = response.data;
-      localStorage.setItem("access_token", access); // Store access token
-      localStorage.setItem("refresh_token", refresh); // Store refresh token
+      localStorage.setItem("access_token", access); 
+      localStorage.setItem("refresh_token", refresh); 
     
 
     } catch (err) {
-      // Handle error: Show error message
+     
       setError("Invalid email or password.");
     } finally {
       setLoading(false);
