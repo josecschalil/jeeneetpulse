@@ -3,11 +3,11 @@ import Link from "next/link";
 const ProductCard = ({ course }) => {
   return (
     <Link href={`/courses/${course.id}`} key={course.id}>
-      <div className=" rounded-lg shadow-sm bg-white transition-transform transform hover:scale-[1.03] hover:shadow-md font-jakarta">
+      <div className="m min-h-[400px] w-[400px]  mb-3  transition-transform transform hover:scale-[1.03] font-jakarta">
         {/* Image Section */}
         <div className="relative">
           <img
-            className="rounded-t-lg w-full h-[160px] object-cover"
+            className=" w-full rounded  h-[240px] object-cover "
             src={course.img}
             alt={course.title}
           />
@@ -19,33 +19,42 @@ const ProductCard = ({ course }) => {
         </div>
 
         {/* Content Section */}
-        <div className="p-3">
+        <div className="py-3">
           {/* Type */}
-          <p className="text-teal-600 text-xs font-medium tracking-widest mb-1">
+          <p className="text-teal-600 text-xs  font-medium tracking-widest mb-2">
             {course.type}
           </p>
 
           {/* Title */}
-          <h3 className="text-base font-semibold text-gray-800 mb-1 truncate">
+          <h3 className="text-lg  font-bold text-gray-800 mb-1 truncate">
             {course.title}
           </h3>
 
+          <h3 className="text-sm text-justify text-gray-800 mb-1  line-clamp-3">
+            {course.info}
+          </h3>
+
           {/* Course Details */}
-          <div className="text-xs text-gray-600">
+          {/* <div className="text-xs text-gray-600">
             {course.detailedDescription.videos} Videos ·{" "}
             {course.detailedDescription.classes} Classes ·{" "}
             {course.detailedDescription.testSeries} Tests
-          </div>
+          </div> */}
 
           {/* Price Section */}
-          <div className="mt-3 flex justify-between items-center">
+          <div className="flex justify-between gap-4">
+          <div className="mt-1 flex justify-between items-center">
             <p className="text-lg font-semibold text-gray-800">
-              ₹{course.offerPrice}
+              Rs.{course.offerPrice}
               <span className="text-sm line-through text-gray-400 ml-2">
-                ₹{course.price}
+                {course.price}
               </span>
             </p>
           </div>
+
+        
+          </div>
+        
         </div>
       </div>
     </Link>

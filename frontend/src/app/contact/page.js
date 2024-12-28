@@ -2,11 +2,11 @@ import React from "react";
 
 const ContactUsPage = () => {
   return (
-    <div className="min-h-screen  py-16 font-jakarta">
-      <div className="max-w-5xl bg-white shadow-lg rounded-2xl mx-auto pb-12">
+    <div className="min-h-screen  pb-10 pt-6 font-jakarta">
+      <div className="max-w-5xl bg-white shadow-lg rounded-2xl mx-auto py-6 border">
         <div className=" bg-white mx-auto flex ">
           {/* Left Column: Contact Form */}
-          <div className="px-8 font-instSansB w-[50%]">
+          <div className="px-6 font-instSansB w-[50%]">
             <h2 className="text-2xl  font-bold text-gray-800 mb-2">
               Get in Touch With Us.
             </h2>
@@ -77,11 +77,11 @@ const ContactUsPage = () => {
           </div>
 
           {/* Right Column: Image */}
-          <div className="relative w-[50%] pr-8">
+          <div className="relative w-[50%] pr-6">
             <img
-              src="/Options.svg"
+              src="/1 (2).avif"
               alt="Contact Us"
-              className="object-cover h-full w-full rounded-2xl"
+              className="object-cover object-right h-full w-full rounded-2xl"
             />
           </div>
         </div>

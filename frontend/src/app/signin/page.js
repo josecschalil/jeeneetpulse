@@ -1,6 +1,57 @@
-import React from "react";
+"use client";
+import React, { useState } from "react";
+import axios from "axios";
+
 
 const SignInPage = () => {
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+  });
+
+  const [error, setError] = useState("");
+  
+
+  const [loading, setLoading] = useState(false);
+
+  const handleChange = (e) => {
+    const { id, value } = e.target;
+    setFormData({ ...formData, [id]: value });
+  };
+
+  const handleSubmit = async (e) => {
+    
+    e.preventDefault();
+
+    // Basic form validation
+    if (!formData.email || !formData.password) {
+      setError("Please fill in both fields.");
+      return;
+    }
+
+    setError(""); // Clear previous errors
+    setLoading(true);
+
+    try {
+      const response = await axios.post("http://127.0.0.1:8000/auth/token/", {
+        email: formData.email,
+        password: formData.password,
+      });
+
+      // Handle success: Store tokens in localStorage
+      const { access, refresh } = response.data;
+      localStorage.setItem("access_token", access); // Store access token
+      localStorage.setItem("refresh_token", refresh); // Store refresh token
+    
+
+    } catch (err) {
+      // Handle error: Show error message
+      setError("Invalid email or password.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-teal-100 to-green-100">
       <div className="w-full max-w-md bg-white shadow-lg rounded-lg p-6">
@@ -9,7 +60,7 @@ const SignInPage = () => {
           Welcome back! Please enter your details.
         </p>
 
-        <form className="mt-6 space-y-4">
+        <form className="mt-6 space-y-4" onSubmit={handleSubmit}>
           {/* Email Input */}
           <div>
             <label htmlFor="email" className="block text-sm font-medium text-gray-700">
@@ -19,6 +70,8 @@ const SignInPage = () => {
               type="email"
               id="email"
               placeholder="example@email.com"
+              value={formData.email}
+              onChange={handleChange}
               className="w-full mt-1 px-4 py-2 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent"
               required
             />
@@ -33,10 +86,15 @@ const SignInPage = () => {
               type="password"
               id="password"
               placeholder="••••••••"
+              value={formData.password}
+              onChange={handleChange}
               className="w-full mt-1 px-4 py-2 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent"
               required
             />
           </div>
+
+          {/* Error Message */}
+          {error && <p className="text-sm text-red-600">{error}</p>}
 
           {/* Remember Me and Forgot Password */}
           <div className="flex items-center justify-between">
@@ -53,8 +111,9 @@ const SignInPage = () => {
           <button
             type="submit"
             className="w-full bg-teal-600 text-white py-2 rounded-lg hover:bg-teal-700 transition duration-300"
+            disabled={loading}
           >
-            Sign In
+            {loading ? "Signing In..." : "Sign In"}
           </button>
         </form>
 
@@ -75,7 +134,6 @@ const SignInPage = () => {
             />
             Sign in with Google
           </button>
-         
         </div>
 
         {/* Sign Up Link */}
