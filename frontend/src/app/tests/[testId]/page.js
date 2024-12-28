@@ -148,7 +148,7 @@ const TestPage = () => {
               </>
             )}
           </div>
-          <div className="border-t flex border p-2 px-6 mt-auto flex-col md:flex-row ">
+          <div className="border-t flex  border p-2 px-6 mt-auto flex-row max1:flex-col">
             <div className="mt-6  flex   font-jakarta ">
               <button
                 onClick={markForReviewAndNext}
@@ -178,9 +178,8 @@ const TestPage = () => {
                 Save and Next
               </button>
             </div>
-            
 
-            <div className="   border-black p-6 flex  gap-5  ">
+            <div className="   border-black py-6 flex  gap-5  ">
               <button
                 onClick={prevQuestion}
                 disabled={currentQuestionIndex === 0}
@@ -198,7 +197,7 @@ const TestPage = () => {
 
               <button
                 onClick={handleSubmit}
-                className="px-6 py-4 bg-black ml-auto text-white rounded-lg  tracking-[2px] font-semibold   hover:opacity-80 active:border-[2px] transition-all duration-300 "
+                className="px-6 py-4 bg-black md:ml-auto text-white rounded-lg  tracking-[2px] font-semibold   hover:opacity-80 active:border-[2px] transition-all duration-300 "
               >
                 Submit
               </button>

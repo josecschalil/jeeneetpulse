@@ -21,8 +21,8 @@ const VideosPage = () => {
   const courseId = examTypeToCourseId[examType];
 
   return (
-    <div className="min-h-screen bg-gray-50 py-8 font-jakarta">
-      <div className="max-w-5xl mx-auto bg-white shadow-md rounded-2xl p-6">
+    <div className="min-h-screen md:bg-gray-50 md:py-8 font-jakarta md:px-6">
+      <div className="max-w-5xl mx-auto bg-white md:shadow-md md:rounded-2xl p-6">
         {/* Page Header */}
         <div className="flex justify-between">
           <h2 className="text-2xl font-bold text-gray-700 mb-3 font-instSansB">

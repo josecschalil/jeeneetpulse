@@ -46,12 +46,8 @@ const QuestionPage = () => {
   };
 
   return (
-    <div className=" flex min-h-[100vh] bg-gray-50 font-semibold flex-col-reverse md:flex-row flex-1 gap-4 p-4">
-      {/* Sidebar */}
-   
-
-      {/* Main Content */}
-      <main className="flex-1  transition-all duration-200 p-6 max-w-5xl mx-auto shadow rounded-3xl bg-white flex flex-col ">
+    <div className="min-h-screen md:bg-gray-50 md:py-8 font-jakarta md:px-6">
+      <main className="max-w-5xl mx-auto bg-white md:shadow-md md:rounded-2xl p-6">
      
         <div className="flex items-center justify-between mb-2">
           <div className="flex items-center gap-2">
@@ -78,8 +74,8 @@ const QuestionPage = () => {
           </button>
         </div>
 
-        <div className="p-6">
-          <p className="text-lg mb-6 font-medium text-gray-700">
+        <div className="md:px-6 py-6">
+          <p className="text-lg mb-6 text-justify font-medium text-gray-700">
             {question.text}
           </p>
           <form>
@@ -142,7 +138,7 @@ const QuestionPage = () => {
             </div>
           )}
         </div>
-        <div className="flex items-center p-6 gap-5 justify-between ">
+        <div className="flex items-center md:p-6 gap-5 justify-between ">
           <button
             onClick={() => navigateTo(questionIndex - 1)}
             disabled={questionIndex === 0}

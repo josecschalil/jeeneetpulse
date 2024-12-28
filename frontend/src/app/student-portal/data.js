@@ -306,42 +306,42 @@ export const chapters = [
 { id: "chap6", subjectId: "chemistry_jee", videos: 23, name: "Physical Chemistry", icon: "📊" },
 
 // Mathematics JEE Chapters
-{ id: "chap7", subjectId: "mathematics_jee", name: "Algebra", icon: "🔢" },
-{ id: "chap8", subjectId: "mathematics_jee", name: "Calculus", icon: "📈" },
-{ id: "chap9", subjectId: "mathematics_jee", name: "Geometry", icon: "📐" },
+{ id: "chap7", subjectId: "mathematics_jee", videos:23,      name: "Algebra", icon: "🔢" },
+{ id: "chap8", subjectId: "mathematics_jee",videos:23,   name: "Calculus", icon: "📈" },
+{ id: "chap9", subjectId: "mathematics_jee",videos:23,   name: "Geometry", icon: "📐" },
 
 // Biology NEET Chapters
-{ id: "chap10", subjectId: "biology_neet", name: "Cell Structure", icon: "🧬" },
-{ id: "chap11", subjectId: "biology_neet", name: "Genetics", icon: "🌱" },
-{ id: "chap12", subjectId: "biology_neet", name: "Human Physiology", icon: "🫀" },
+{ id: "chap10", subjectId: "biology_neet",videos:23,   name: "Cell Structure", icon: "🧬" },
+{ id: "chap11", subjectId: "biology_neet",videos:23,   name: "Genetics", icon: "🌱" },
+{ id: "chap12", subjectId: "biology_neet",videos:23,   name: "Human Physiology", icon: "🫀" },
 
 // Physics NEET Chapters
-{ id: "chap13", subjectId: "physics_neet", name: "Optics", icon: "🔭" },
-{ id: "chap14", subjectId: "physics_neet", name: "Electromagnetism", icon: "⚡" },
-{ id: "chap15", subjectId: "physics_neet", name: "Nuclear Physics", icon: "☢️" },
+{ id: "chap13", subjectId: "physics_neet",videos:23,   name: "Optics", icon: "🔭" },
+{ id: "chap14", subjectId: "physics_neet",videos:23,   name: "Electromagnetism", icon: "⚡" },
+{ id: "chap15", subjectId: "physics_neet",videos:23,   name: "Nuclear Physics", icon: "☢️" },
 
 // Chemistry NEET Chapters
-{ id: "chap16", subjectId: "chemistry_neet", name: "Biochemistry", icon: "🧪" },
-{ id: "chap17", subjectId: "chemistry_neet", name: "Environmental Chemistry", icon: "🌍" },
-{ id: "chap18", subjectId: "chemistry_neet", name: "Analytical Chemistry", icon: "🧫" },
+{ id: "chap16", subjectId: "chemistry_neet",videos:23,   name: "Biochemistry", icon: "🧪" },
+{ id: "chap17", subjectId: "chemistry_neet",videos:23,   name: "Environmental Chemistry", icon: "🌍" },
+{ id: "chap18", subjectId: "chemistry_neet", videos:23,  name: "Analytical Chemistry", icon: "🧫" },
 
 // Physics IIT Chapters
-{ id: "chap19", subjectId: "physics_iit", name: "Rigid Body and Motion", icon: "⚙️" },
-{ id: "chap20", subjectId: "physics_iit", name: "Fluid Mechanics", icon: "💧" },
-{ id: "chap21", subjectId: "physics_iit", name: "Thermodynamics", icon: "🌡️" },
-{ id: "chap22", subjectId: "physics_iit", name: "Mechanics", icon: "🏗️" },
-{ id: "chap23", subjectId: "physics_iit", name: "Waves", icon: "🌊" },
-{ id: "chap24", subjectId: "physics_iit", name: "Electromagnetic Waves", icon: "📡" },
+{ id: "chap19", subjectId: "physics_iit",videos:23,   name: "Rigid Body and Motion", icon: "⚙️" },
+{ id: "chap20", subjectId: "physics_iit",videos:23,   name: "Fluid Mechanics", icon: "💧" },
+{ id: "chap21", subjectId: "physics_iit",videos:23,   name: "Thermodynamics", icon: "🌡️" },
+{ id: "chap22", subjectId: "physics_iit",videos:23,   name: "Mechanics", icon: "🏗️" },
+{ id: "chap23", subjectId: "physics_iit",videos:23,   name: "Waves", icon: "🌊" },
+{ id: "chap24", subjectId: "physics_iit",videos:23,   name: "Electromagnetic Waves", icon: "📡" },
 
 // Chemistry IIT Chapters
-{ id: "chap25", subjectId: "chemistry_iit", name: "Organic Chemistry", icon: "🔥" },
-{ id: "chap26", subjectId: "chemistry_iit", name: "Inorganic Chemistry", icon: "🔬" },
-{ id: "chap27", subjectId: "chemistry_iit", name: "Physical Chemistry", icon: "📊" },
+{ id: "chap25", subjectId: "chemistry_iit", videos:23,  name: "Organic Chemistry", icon: "🔥" },
+{ id: "chap26", subjectId: "chemistry_iit", videos:23,  name: "Inorganic Chemistry", icon: "🔬" },
+{ id: "chap27", subjectId: "chemistry_iit", videos:23,  name: "Physical Chemistry", icon: "📊" },
 
 // Mathematics IIT Chapters
-{ id: "chap28", subjectId: "mathematics_iit", name: "Calculus", icon: "📈" },
-{ id: "chap29", subjectId: "mathematics_iit", name: "Trigonometry", icon: "📏" },
-{ id: "chap30", subjectId: "mathematics_iit", name: "Differential Equations", icon: "🔄" },
+{ id: "chap28", subjectId: "mathematics_iit",videos:23,   name: "Calculus", icon: "📈" },
+{ id: "chap29", subjectId: "mathematics_iit",videos:23,   name: "Trigonometry", icon: "📏" },
+{ id: "chap30", subjectId: "mathematics_iit",videos:23,   name: "Differential Equations", icon: "🔄" },
 
 ];
 

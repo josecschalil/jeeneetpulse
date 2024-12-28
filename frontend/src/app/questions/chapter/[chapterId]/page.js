@@ -19,25 +19,22 @@ const ChapterPage = () => {
   }
 
   return (
-    <div className="flex min-h-[100vh] p-8 bg-gray-50 font-semibold  flex-col-reverse font-jakarta md:flex-row flex-1 gap-4  ">
-      {/* Sidebar Section */}
-
-      <main className="flex-1   max-w-5xl mx-auto bg-white shadow-md rounded-2xl p-6  flex flex-col  border-black ">
-        <div className="w-[95%] mx-auto flex flex-col md:flex-row  border-b items-center mb-6 ">
+    <div className="min-h-screen md:bg-gray-50 md:py-8 font-jakarta md:px-6">
+      <main className="max-w-5xl mx-auto bg-white md:shadow-md md:rounded-2xl p-6">
+        <div className="md:w-[95%] mx-auto flex flex-row  border-b items-center mb-6 ">
           <button
             onClick={() => router.push("/questions/subject/physics_jee")}
             className="px-2 py-1 rounded-lg border border-gray-200 text-black hover:shadow flex items-center"
           >
             &lt;
           </button>
-          <h2 className="text-4xl uppercase  px-3 rounded-xl  font-bold text-gray-700 font-instSansB ">
+          <h2 className="text-4xl uppercase  px-3 py-2 rounded-xl  font-bold text-gray-700 font-instSansB ">
             Questions
           </h2>
-<div className="ml-auto"> <Sidebar /></div>
          
         </div>
 
-        <ul className="mt-4 flex flex-col space-y-3 px-6">
+        <ul className="mt-4 flex flex-col space-y-3 md:px-6">
           {filteredQuestions.map((question, index) => (
             <Link  href={`/questions/question/${question.id}`} key={question.id}>
               <li className="p-6  hover:border-black border-b   border-gray-300 cursor-pointer transition-all duration-300 ">

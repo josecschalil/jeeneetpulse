@@ -14,7 +14,7 @@ const QuestionBank = ({ id }) => {
       
       <div className="flex justify-center gap-4  mb-2">
          
-         <div className="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3   gap-6 ">
+         <div className="w-full grid max2:grid-cols-1 grid-cols-2 md:grid-cols-3 gap-1  md:gap-6 ">
         {filteredSubjects.map((subject, index) => (
           <Link href={`/questions/subject/${subject.id}`} key={index}>
             <div className="flex items-center justify-between p-4 border transition-all duration-100 hover:border-gray-500 hover:shadow rounded-2xl   mb-4">

@@ -8,7 +8,8 @@ module.exports = {
   theme: {
     extend: {
       screens: {
-        'max1': { max: '1080px' }, // Custom media query for max-width 1080px
+        'max1': { max: '1080px' },
+        'max2': { max: '480px' }, // Custom media query for max-width 1080px
       },
       fontFamily: {
       

@@ -40,7 +40,7 @@ const CoursesPage = () => {
         <div className="w-full h-[1px] bg-gray-300 mb-8"></div>
       
         {/* Courses Grid */}
-        <div className="flex flex-wrap justify-evenly gap-4">
+        <div className="grid max2:grid-cols-1 grid-cols-2 md:grid-cols-3 gap-4 mb-8">
           {courses.map((course) => (
                
             <ProductCard key={course.id} course={course} />
