@@ -1,15 +1,5 @@
 {
-<<<<<<< HEAD
-  "/favicon.ico/route": "app/favicon.ico/route.js",
   "/page": "app/page.js",
-  "/courses/page": "app/courses/page.js",
-  "/about/page": "app/about/page.js",
-  "/featured/page": "app/featured/page.js",
-  "/contact/page": "app/contact/page.js"
-=======
-  "/page": "app/page.js",
-  "/resetpassword/page": "app/resetpassword/page.js",
-  "/signup/page": "app/signup/page.js",
+  "/profile/page": "app/profile/page.js",
   "/signin/page": "app/signin/page.js"
->>>>>>> 8fd150f12a8fdfcf115d42dce48bc3c6e4dd5f2c
 }
