@@ -10,13 +10,13 @@ const Sections = () => {
 
   return (
     <section className="bg-gradient-to-r from-[#009A80] to-[#FFF5EF] text-white w-[100vw] font-instSansB">
-      <div className=" max-w-[1240px] mx-auto  py-8  gap-6 text-center flex flex-row ">
+      <div className=" max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-4  px-6 py-8 gap-3 lg:gap-6 text-center  ">
         {data.map((item, index) => (
           <div
             key={index}
-            className="flex-1 relative text-[28px] bg-white px-4 bg-opacity-65 shadow-md rounded-lg py-4 text-black"
+            className="flex-1 relative   text-xl lg:text-2xl bg-white px-1  lg:px-4 bg-opacity-65 shadow-md rounded-lg py-8 text-gray-900"
           >
-            <div className="mb-4">
+            <div className="mb">
               <h2 className="">{item.count}+</h2>
               <p className="">{item.label}</p>
             </div>{" "}

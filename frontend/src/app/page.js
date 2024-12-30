@@ -15,25 +15,19 @@ export default function Home() {
   return (
     <div className="flex flex-col items-center font-poppins w-[100vw] overflow-x-hidden ">
       <div className="w-screen" style={{ backgroundColor: "#EBFFF9" }}>
-        {/* <div className="max-w-[1200px] mx-auto">
-        
-          <Hero />
-        </div>
-      </div>
-      <div>
+        <Hero />
+
         <Sections />
-      </div>
-      <div >
+
+        <VideoHighlights />
+        <PrepareSection />
+
+        {/* <Features_2 />
          */}
-      <VideoHighlights />
-      <PrepareSection />
-     
-         {/* <Features_2 />
-   */}
-     <Features_1 />
+        {/* <FeaturedCourses /> */}
+        <Features_1 />
         <SuccessStories />
         <StartLearning />
-       
       </div>
     </div>
   );

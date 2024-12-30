@@ -6,10 +6,10 @@ const PrepareSection = () => {
       <div className="max-w-[1240px] mx-auto grid grid-cols-1 md:grid-cols-2 items-center gap-8">
         {/* Left Content */}
         <div className="">
-          <h1 className="text-4xl text-center md:text-left font-instSansB leading-tight text-black">
+          <h1 className="text-3xl  text-center md:text-left font-instSansB leading-tight text-black">
             Prepare for your tests and entrance with us.
           </h1>
-          <p className="text-gray-700 text-center md:text-left  mt-4">
+          <p className="text-gray-700 text-center md:text-left font  mt-4">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Eleifend sed aenean eu odio
             non, sit eu. Ut tristique massa leo interdum venenatis amet feugiat netus.
           </p>

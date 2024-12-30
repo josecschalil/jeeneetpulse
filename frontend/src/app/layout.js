@@ -10,7 +10,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className="m-0 p-0 font-instSansN overflow-x-hidden" >
-     
+     <Navbar />
         {children}
       </body>
       {/* <Footer /> */}

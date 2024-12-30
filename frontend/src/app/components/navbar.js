@@ -73,13 +73,15 @@ const Navbar = () => {
   }, []);
 
   return (
-    <nav className="max-w-[1240px] mx-auto flex items-center font-jakarta justify-between bg-transparent py-6">
+    <nav className="font-jakarta justify-between bg-transparent py-6" style={{ backgroundColor: "#EBFFF9" }}>
       {/* Logo on the left */}
-      <div className="basis-auto hidden max1:flex">
+      <div className="flex flex-row max-w-7xl px-6 items-center  justify-between mx-auto">
+
+      <div className="basis-auto flex md:hidden mr-10">
         <img src="menu.png" className="h-[25px]" alt="Menu" />
       </div>
 
-      <div className="flex basis-auto">
+      <div className="flex ">
         <img src="logo.svg" className="h-[15px]" alt="Logo" />
       </div>
 
@@ -109,10 +111,10 @@ const Navbar = () => {
       </div>
 
       {/* Sign in and user profile icons on the right */}
-      <div className="flex items-center space-x-4">
+      <div className="flex items-center space-x-4 font-semibold">
         {!isAuthenticated ? (
           <Link href="/signin" passHref>
-            <button className="bg-black text-white py-2 px-4 rounded-full hover:bg-gray-700">
+            <button className="bg-black text-white py-2 px-4 text-sm rounded-full hover:bg-gray-700">
               Sign In
             </button>
           </Link>
@@ -132,6 +134,8 @@ const Navbar = () => {
           </div>
         )}
       </div>
+      </div>
+     
     </nav>
   );
 };

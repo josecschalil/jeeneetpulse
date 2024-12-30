@@ -36,17 +36,17 @@ const Features_1 = () => {
         />
       </div>
       <div className="flex-1 container mx-auto nmd:px-6  text-black nmd:ml-10 ">
-        <h2 className="text-4xl sm:text-5xl text-center md:text-left md:text-[3.2em] font-instSansB  nmd:max-w-[420px] text-gray-800 leading-[1.2em] ">
-          <span style={{ color: "#009D86" }}>Be Ready with</span> proper
+        <h2 className="text-3xl lg:text-4xl text-center nmd:text-left font-instSansB  nmd:max-w-[500px] text-gray-800 leading-[1.2em] ">
+          <span style={{ color: "#009D86" }}>Tackle the Exams with</span> proper
           solutions.
         </h2>
-        <p className="mt-6 max1:text-md text-center md:text-left text-[1em] nmd:max-w-[550px]">
+        <p className="mt-6 max1:text-md text-center nmd:text-left text-[1em] nmd:max-w-[550px]">
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla feugiat
           enim at auctor consequat. Lorem ipsum dolor sit amet, consectetur
           adipiscing elit. 
         </p>
 
-        <div className="flex flex-col max-h-[700px] gap-2 nmd:gap-6 rounded mt-3 ">
+        <div className="flex flex-col max-h-[700px] gap-2 nmd:gap-2 rounded mt-3 ">
           {features.map((feature) => (
             <div key={feature.id} className="hover:px-4  p-3 -ml-1 hover:ml-4 hover:bg-[#6D6D6D] rounded-[30px] hover:shadow-[0px_4px_3px_rgba(0,0,0,0.4)]  flex flex-row transition-all duration-400 w-fit cursor-pointer group">
               <img
