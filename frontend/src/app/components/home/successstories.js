@@ -29,12 +29,12 @@ const SuccessStories = () => {
   ];
 
   return (
-    <section className="bg-gradient-to-r from-teal-500 to-green-100 py-16 font-jakarta">
+    <section className="w-full bg-gradient-to-r from-teal-500 to-green-100 py-16 font-jakarta">
       <div className="max-w-6xl mx-auto">
         <h2 className="text-3xl font-bold text-center text-black font-instSansB">
           Our Success Stories
         </h2>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-8 mt-8 px-6 ">
           {stories.map((story, idx) => (
             <div key={idx}>
               <div
@@ -53,7 +53,7 @@ const SuccessStories = () => {
               </div>
               <div className="mt-4 flex flex-col items-center text-center gap-1">
                 <img
-                  className="w-12 h-12 rounded-full border-2 border-gray-600 object-cover"
+                  className="w-12 h-12 rounded-full border-2 hidden md:block border-gray-900 object-cover"
                   src={story.image}
                   alt={story.name}
                 />
