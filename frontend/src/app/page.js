@@ -26,7 +26,7 @@ export default function Home() {
       <div >
          */}
       <VideoHighlights />
-      {/* <PrepareSection /> */}
+      <PrepareSection />
      
          {/* <Features_2 />
    */}

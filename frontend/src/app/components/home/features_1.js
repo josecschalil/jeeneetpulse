@@ -26,7 +26,7 @@ const Features_1 = () => {
   ];
 
   return (
-    <section className=" max2:py-[6vh] nmd:py-[10vh] bg-none flex flex-col nmd:flex-row max-w-6xl mx-auto px-6 font-jakarta">
+    <section className=" py-[6vh] nmd:py-[10vh] bg-none flex flex-col nmd:flex-row max-w-6xl mx-auto px-6 font-jakarta">
               <img className="hidden nmd:absolute -right-[100px] -z-10 "src="/Vector.png"></img>
       <div className=" my-auto flex-1 hidden nmd:block ">
         <img
@@ -36,11 +36,11 @@ const Features_1 = () => {
         />
       </div>
       <div className="flex-1 container mx-auto nmd:px-6  text-black nmd:ml-10 ">
-        <h2 className="max1:text-5xl  text-[3.2em] font-instSansB  nmd:max-w-[420px] text-gray-800 leading-[1.2em] ">
+        <h2 className="text-4xl sm:text-5xl text-center md:text-left md:text-[3.2em] font-instSansB  nmd:max-w-[420px] text-gray-800 leading-[1.2em] ">
           <span style={{ color: "#009D86" }}>Be Ready with</span> proper
-          solutions
+          solutions.
         </h2>
-        <p className="mt-6 max1:text-md text-[1em] nmd:max-w-[550px]">
+        <p className="mt-6 max1:text-md text-center md:text-left text-[1em] nmd:max-w-[550px]">
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla feugiat
           enim at auctor consequat. Lorem ipsum dolor sit amet, consectetur
           adipiscing elit. 

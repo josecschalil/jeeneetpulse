@@ -3,7 +3,7 @@ import VideoCard from "../videocard";
 
 const VideoHighlights = () => {
   return (
-    <section className=" pt-16 bg-transparent mb-24 font-instSansN max-w-6xl mx-auto px-6">
+    <section className=" pt-16 bg-transparent mb-10 sm:mb-16 md:mb-24 font-instSansN max-w-6xl mx-auto px-6">
       <div className="flex flex-col items-center gap-4 ">
         <h2 className="text-4xl lg:text-[54px] text-center font-instSansB" style={{ color: "#009C84" }}>
           Video Classes featuring the finest tutors.
