@@ -34,13 +34,13 @@ const SuccessStories = () => {
         <h2 className="text-3xl font-bold text-center text-black font-instSansB">
           Our Success Stories
         </h2>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-8 mt-8 px-6 ">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-8 mt-8 px-6 items-stretch">
           {stories.map((story, idx) => (
-            <div key={idx}>
+            <div key={idx} className="items-stretch ">
               <div
                 className={`${
                   idx % 2 === 1 ? "bg-gray-800 text-white bg-opacity-75" : "bg-white"
-                } p-6 py-6 pb-10 text-center relative rounded-3xl shadow-md`}
+                } p-6 py-6 pb-10 text-center relative rounded-3xl shadow-md md:h-2/3 `}
               >
                 <img
                   className="h-5 w-5 mb-4 mx-auto"

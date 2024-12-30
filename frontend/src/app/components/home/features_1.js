@@ -26,29 +26,29 @@ const Features_1 = () => {
   ];
 
   return (
-    <section className="py-[10vh] bg-none flex max-w-[1140px] mx-auto">
-              <img className="absolute -right-[100px] -z-10"src="/Vector.png"></img>
-      <div className=" my-auto ">
+    <section className="py-[6vh] nmd:py-[10vh] bg-none flex flex-col nmd:flex-row max-w-6xl mx-auto px-6 font-jakarta">
+              <img className="nmd:absolute -right-[100px] -z-10 "src="/Vector.png"></img>
+      <div className=" my-auto flex-1 hidden nmd:block ">
         <img
           src="/shap1e.svg"
           alt="Student Studying"
-          className="w-full max-w-[530px] max-h-[530px]"
+          className="w-full  max-w-[530px] max-h-[530px]"
         />
       </div>
-      <div className="container mx-auto px-6  w-[50%] text-black ">
-        <h2 className="text-[3.2em] font-instSansB max-w-[420px] text-gray-800 leading-[1.2em] ">
+      <div className="flex-1 container mx-auto nmd:px-6  text-black nmd:ml-10 ">
+        <h2 className="max1:text-5xl  text-[3.2em] font-instSansB  nmd:max-w-[420px] text-gray-800 leading-[1.2em] ">
           <span style={{ color: "#009D86" }}>Be Ready with</span> proper
           solutions
         </h2>
-        <p className="mt-6 text-[1em] max-w-[550px]">
+        <p className="mt-6 max1:text-md text-[1em] nmd:max-w-[550px]">
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla feugiat
           enim at auctor consequat. Lorem ipsum dolor sit amet, consectetur
           adipiscing elit. 
         </p>
 
-        <div className="flex flex-col max-h-[700px] gap-6 rounded mt-3 ">
+        <div className="flex flex-col max-h-[700px] gap-2 nmd:gap-6 rounded mt-3 ">
           {features.map((feature) => (
-            <div key={feature.id} className="hover:px-4  p-3 -ml-1 hover:ml-4 hover:bg-[#6D6D6D] rounded-[30px] hover:shadow-[0px_4px_3px_rgba(0,0,0,0.4)]  flex transition-all duration-400 w-fit cursor-pointer group">
+            <div key={feature.id} className="hover:px-4  p-3 -ml-1 hover:ml-4 hover:bg-[#6D6D6D] rounded-[30px] hover:shadow-[0px_4px_3px_rgba(0,0,0,0.4)]  flex flex-row transition-all duration-400 w-fit cursor-pointer group">
               <img
                 src="/point.svg"
                 alt="Student Studying"
@@ -58,7 +58,7 @@ const Features_1 = () => {
                 <h3 className="font-bold text-lg text-[#006B5B] group-hover:text-white">
                   {feature.title}
                 </h3>
-                <p className=" text-black text-md max-w-[350px]  group-hover:text-white">
+                <p className=" text-black text-md nmd:max-w-[350px]  group-hover:text-white">
                   {feature.description}
                 </p>
               </div>
