@@ -24,14 +24,13 @@ export default function Home() {
         <Sections />
       </div>
       <div >
-        
+         */}
       <VideoHighlights />
-      <PrepareSection />
+      {/* <PrepareSection /> */}
      
-        {/* <Features_2 /> */}
-  
-     
-        <Features_1 />
+         {/* <Features_2 />
+   */}
+     <Features_1 />
         <SuccessStories />
         <StartLearning />
        

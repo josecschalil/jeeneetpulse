@@ -34,7 +34,7 @@ const SuccessStories = () => {
         <h2 className="text-3xl font-bold text-center text-black font-instSansB">
           Our Success Stories
         </h2>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-8 mt-8 px-6 items-stretch">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 mt-8 px-6 items-stretch">
           {stories.map((story, idx) => (
             <div key={idx} className="items-stretch ">
               <div
@@ -58,7 +58,7 @@ const SuccessStories = () => {
                   alt={story.name}
                 />
                 <div>
-                  <h4 className="font-bold text-sm">{story.name}</h4>
+                  <h4 className="font-bold text-sm mb-1">{story.name}</h4>
                   <p className="text-gray-600 text-sm">{story.designation}</p>
                 </div>
               </div>

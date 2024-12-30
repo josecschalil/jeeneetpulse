@@ -26,8 +26,8 @@ const Features_1 = () => {
   ];
 
   return (
-    <section className="py-[6vh] nmd:py-[10vh] bg-none flex flex-col nmd:flex-row max-w-6xl mx-auto px-6 font-jakarta">
-              <img className="nmd:absolute -right-[100px] -z-10 "src="/Vector.png"></img>
+    <section className=" max2:py-[6vh] nmd:py-[10vh] bg-none flex flex-col nmd:flex-row max-w-6xl mx-auto px-6 font-jakarta">
+              <img className="hidden nmd:absolute -right-[100px] -z-10 "src="/Vector.png"></img>
       <div className=" my-auto flex-1 hidden nmd:block ">
         <img
           src="/shap1e.svg"
