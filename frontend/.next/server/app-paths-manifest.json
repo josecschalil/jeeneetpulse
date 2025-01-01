@@ -1,6 +1,8 @@
 {
-  "/page": "app/page.js",
-  "/resetpassword/page": "app/resetpassword/page.js",
-  "/signup/page": "app/signup/page.js",
-  "/signin/page": "app/signin/page.js"
+  "/courses/page": "app/courses/page.js",
+  "/featured/page": "app/featured/page.js",
+  "/student-portal/page": "app/student-portal/page.js",
+  "/student-portal/[courseId]/page": "app/student-portal/[courseId]/page.js",
+  "/videos/subject/[subjectId]/page": "app/videos/subject/[subjectId]/page.js",
+  "/videos/chapter/[chapterId]/page": "app/videos/chapter/[chapterId]/page.js"
 }

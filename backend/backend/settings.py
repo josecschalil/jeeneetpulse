@@ -26,7 +26,8 @@ SECRET_KEY = 'django-insecure-igt2(drbd-j!9174r@skyw1p%&f53i3q5dhlpp7o$!(4t$7ko0
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', '74ac-2409-40f3-b-60ad-25a1-53d2-f6ff-cc98.ngrok-free.app']
+
 
 
 # Application definition
@@ -44,13 +45,17 @@ INSTALLED_APPS = [
     'djoser',
     'django.contrib.sites',
     'corsheaders',
-    
+    'csp',
+    'courses_app',
+   
+
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'corsheaders.middleware.CorsMiddleware',
+    'csp.middleware.CSPMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -186,3 +191,10 @@ DJOSER = {
         'current_user': 'djoser.serializers.UserSerializer',
     },
 }
+CSP_DEFAULT_SRC = ("'self'",)  # Only allow resources from the same origin
+CSP_FONT_SRC = ("'self'", "https://fonts.gstatic.com", "https://fonts.googleapis.com")  # Allow fonts from Google Fonts
+CSP_STYLE_SRC = ("'self'", "https://fonts.googleapis.com", "'unsafe-inline'")  # Allow inline styles and Google Fonts
+CSP_IMG_SRC = ("'self'",)  # Allow images from the same origin
+SECURE_CONTENT_TYPE_NOSNIFF = True  # Ensure correct content types are served
+CSP_SCRIPT_SRC = ("'self'", "'unsafe-inline'") 
+CSP_REPORT_URI = '/csp-violation-report-endpoint/'
