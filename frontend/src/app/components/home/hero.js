@@ -5,9 +5,9 @@ import Link from "next/link";
 const Hero = () => {
   return (
     <div>
-      <div className="max-w-7xl mx-auto flex flex-row container font-jakarta justify-center space-x-20 px-6 pt-5 pb-10 lg:py-20 lg:flex lg:items-center lg:justify-between">
+      <div className=" mt-4 sm:mt-0 md:h-auto max-w-7xl mx-auto flex flex-row container font-jakarta justify-center space-x-20 px-6 pt-5 pb-10 lg:py-20 lg:flex lg:items-center lg:justify-between">
         <div className="text-center flex  flex-col justify-start lg:text-left">
-          <div className="text-5xl md:text-[68px] font-bold text-gray-800 md:max-w-[580px]">
+          <div className="text-5xl md:text-[68px] font-bold text-gray-800 md:max-w-[580px] leading-tight">
             one stop{" "}
             <span className="text-teal-500 font-istok font-normal ">
               Solution

@@ -2,7 +2,6 @@
 import { useParams, useRouter } from "next/navigation";
 import { useState } from "react";
 import { questions } from "../../data";
-import Sidebar from "@/app/components/sidebar";
 import { FaBookmark } from "react-icons/fa";
 
 const QuestionPage = () => {

@@ -53,7 +53,7 @@ const SignInPage = () => {
   };
 
   return (
-    <div className="min-h-screen flex sm:items-center sm:justify-center bg-gray-50">
+    <div className="sm:min-h-screen flex items-center justify-center bg-gray-50">
       <div className="w-full sm:max-w-md bg-white sm:shadow-lg sm:rounded-xl p-6">
         <h2 className="text-2xl font-bold text-center text-gray-800">Sign In</h2>
         <p className="text-sm text-gray-600 text-center mt-2">

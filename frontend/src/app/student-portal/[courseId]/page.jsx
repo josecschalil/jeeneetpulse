@@ -31,14 +31,14 @@ const CoursePage = () => {
           </h2>
 
           {/* Tabs */}
-          <div className=" w-full flex justify-between sm:gap-4 sm:justify-normal text-sm">
+          <div className=" w-fit sm:w-full flex justify-between g-0 sm:gap-4 sm:justify-normal text-sm">
             {["exams", "questions", "classes", "materials"].map((tab) => (
               <button
                 key={tab}
-                className={`px-3 sm:px-4 py-1 rounded-3xl bg-gray-100 shadow ${
+                className={`px-3 sm:px-4 py-1 sm:rounded-3xl bg-none sm:bg-gray-100 shadow-none sm:shadow ${
                   activeTab === tab
-                    ? "bg-teal-900 text-white border-black"
-                    : "text-black border-black hover:bg-gray-100"
+                    ? "bg-teal-900 sm:bg-teal-900 text-white rounded-full  border-black"
+                    : "text-black border-black hover:sm-gray-100"
                 }`}
                 onClick={() => handleTabChange(tab)}
               >

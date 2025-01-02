@@ -76,16 +76,16 @@ const Navbar = () => {
         backgroundColor: pathname === "/" ? "#EBFFF9" : "#FFFFFF",
       }}
     >
-      <div className="flex flex-row max-w-7xl px-6 items-center justify-between mx-auto">
-        <div className="basis-auto flex md:hidden mr-4" onClick={() => setMenuOpen(!menuOpen)}>
-          <img src="menu.png" className="h-[25px]" alt="Menu" />
+      <div className="flex flex-row max-w-7xl px-3 pr-5 md:px-6 items-center justify-between mx-auto">
+        <div className="basis-auto flex lg:hidden mr-4" onClick={() => setMenuOpen(!menuOpen)}>
+          <img src="menu.png" className="h-[25px] " alt="Menu" />
         </div>
 
         <div className="flex">
-          <img src="logo.svg" className="h-[15px]" alt="Logo" />
+          <img src="logo.svg" className="h-[15px] mr-1" alt="Logo" />
         </div>
 
-        <div className="hidden md:flex space-x-6 text-black max1:hidden">
+        <div className="hidden space-x-6 text-black lg:flex">
           <Link href="/" passHref>
             <div className="hover:text-gray-400">Home</div>
           </Link>
@@ -112,7 +112,7 @@ const Navbar = () => {
         <div className="flex items-center space-x-4 font-semibold">
           {!isAuthenticated ? (
             <Link href="/signin" passHref>
-              <button className="bg-black text-white py-2 px-4 text-sm rounded-full hover:bg-gray-700">
+              <button className="bg-black text-white py-2 px-4 text-sm rounded-full hover:bg-gray-700 ">
                 Sign In
               </button>
             </Link>
@@ -162,6 +162,15 @@ const Navbar = () => {
           </Link>
           <Link href="/contact" passHref onClick={() => setMenuOpen(false)}>
             <div className="hover:text-gray-400">Contact</div>
+          </Link>
+          <Link href="/signin" passHref onClick={() => setMenuOpen(false)}>
+            <div className="hover:text-gray-400">Sign In</div>
+          </Link>
+          <Link href="/signup" passHref onClick={() => setMenuOpen(false)}>
+            <div className="hover:text-gray-400">Register</div>
+          </Link>
+          <Link href="/profile" passHref onClick={() => setMenuOpen(false)}>
+            <div className="hover:text-gray-400">Profile</div>
           </Link>
         </div>
       )}

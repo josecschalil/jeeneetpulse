@@ -22,7 +22,7 @@ const StartLearning = () => {
           </a>
         </div>
       </div>
-      <p className="text-gray-700 mt-6">
+      <p className="text-gray-700 mt-6 px-4">
         Enroll to our courses before the slots fill out.
       </p>
     </section>
