@@ -2,23 +2,23 @@
 import { useParams } from "next/navigation";
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import axios from "axios"; // Import axios
+import axios from "axios"; 
 
 const CoursePage = () => {
-  const { courseId } = useParams(); // Get dynamic parameter
-  const [course, setCourse] = useState(null); // State to store course data
-  const [loading, setLoading] = useState(true); // State to track loading
-  const [error, setError] = useState(null); // State to handle errors
+  const { courseId } = useParams(); 
+  const [course, setCourse] = useState(null); 
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null); 
 
-  // Fetch course data from API using axios
+ 
   useEffect(() => {
     const fetchCourse = async () => {
       try {
         const response = await axios.get(`http://localhost:8000/courses/${courseId}`);
-        setCourse(response.data); // Set course data
+        setCourse(response.data); 
         setLoading(false);
       } catch (err) {
-        setError(err.message || "Failed to fetch course data."); // Handle error
+        setError(err.message || "Failed to fetch course data."); 
         setLoading(false);
       }
     };
@@ -26,7 +26,7 @@ const CoursePage = () => {
     fetchCourse();
   }, [courseId]);
 
-  // Handle loading state
+
   if (loading) {
     return (
       <div className="text-center mt-20 text-2xl  font-bold text-gray-700">
@@ -35,7 +35,6 @@ const CoursePage = () => {
     );
   }
 
-  // Handle error state
   if (error) {
     return (
       <div className="text-center mt-20 text-2xl font-bold text-red-500">
@@ -44,7 +43,6 @@ const CoursePage = () => {
     );
   }
 
-  // Handle case when course is not found
   if (!course) {
     return (
       <div className="text-center mt-20 text-2xl font-bold text-gray-700">

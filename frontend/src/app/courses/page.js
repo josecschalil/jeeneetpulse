@@ -5,13 +5,12 @@ import ProductCard from "../components/productCard";
 const CoursesPage = () => {
   const [courses, setCourses] = useState([]);
 
-  // Fetch courses from the Django API when the component mounts
   useEffect(() => {
     const fetchCourses = async () => {
       const response = await fetch("http://localhost:8000/courses/");
       if (response.ok) {
         const data = await response.json();
-        setCourses(data);  // Update the state with fetched courses
+        setCourses(data);
       } else {
         console.error("Failed to fetch courses");
       }
