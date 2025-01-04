@@ -39,6 +39,7 @@ const Navbar = () => {
         },
       });
       setUsername(response.data.username);
+      
     } catch (error) {
       if (error.response && error.response.status === 401) {
         const newToken = await refreshToken();
