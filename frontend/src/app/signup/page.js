@@ -92,8 +92,8 @@ const SignUpPage = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-green-100 via-teal-100 to-cyan-100">
-      <div className="w-full max-w-lg bg-white shadow-xl rounded-lg p-8">
+    <div className="min-h-screen flex sm:items-center sm:justify-center bg-gray-50">
+      <div className="w-full sm:max-w-lg bg-white sm:shadow-xl sm:rounded-xl p-8">
         <h2 className="text-3xl font-bold text-center text-gray-800">Sign Up</h2>
         <p className="text-sm text-gray-600 text-center mt-2">
           Join us to kickstart your journey for JEE or NEET preparation!

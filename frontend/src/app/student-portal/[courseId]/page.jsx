@@ -21,8 +21,8 @@ const CoursePage = () => {
   console.log(course)
 
   return (
-    <div className="min-h-screen bg-gray-50 py-8 font-jakarta">
-      <div className="max-w-5xl mx-auto bg-white shadow-md rounded-2xl p-6">
+    <div className="min-h-screen md:bg-gray-50 md:py-8 font-jakarta md:px-6">
+      <div className="max-w-5xl mx-auto bg-white md:shadow-md md:rounded-2xl p-6">
         {/* Header: Course Title and Navbar */}
         <div className="flex flex-col gap-4  mb-6">
           {/* Course Title */}
@@ -31,14 +31,14 @@ const CoursePage = () => {
           </h2>
 
           {/* Tabs */}
-          <div className="flex space-x-4 text-sm">
+          <div className=" w-fit sm:w-full flex justify-between g-0 sm:gap-4 sm:justify-normal text-sm">
             {["exams", "questions", "classes", "materials"].map((tab) => (
               <button
                 key={tab}
-                className={`px-4 py-1 rounded-3xl bg-gray-100 shadow ${
+                className={`px-3 sm:px-4 py-1 sm:rounded-3xl bg-none sm:bg-gray-100 shadow-none sm:shadow ${
                   activeTab === tab
-                    ? "bg-teal-900 text-white border-black"
-                    : "text-black border-black hover:bg-gray-100"
+                    ? "bg-teal-900 sm:bg-teal-900 text-white rounded-full  border-black"
+                    : "text-black border-black hover:sm-gray-100"
                 }`}
                 onClick={() => handleTabChange(tab)}
               >

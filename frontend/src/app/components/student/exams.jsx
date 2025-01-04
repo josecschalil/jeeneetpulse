@@ -1,9 +1,23 @@
 import React from "react";
-import Link from "next/link";
+import Modal from "./Modal";
 import { exams } from "../../student-portal/data"; // Ensure this is correctly imported
+import { useState } from "react";
 
 const Exams = ({ id }) => {
   const courseId = Number(id);
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+ 
+
+  const handleStartClick = () => {
+    setIsModalOpen(true); // Open the modal
+  };
+
+
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false); // Close the modal without doing anything
+  };
 
   const filteredExams =
     exams?.filter((exam) => exam.courseId === courseId) || [];
@@ -29,19 +43,27 @@ const Exams = ({ id }) => {
                 <h3 className="text-lg font-bold font-instSansB text-gray-800">
                   {exam.title}
                 </h3>
-                <p className="text-sm text-gray-500 mt-1">
-                {exam.time}
-                </p>
+                <p className="text-sm text-gray-500 mt-1">{exam.time}</p>
               </div>
             </div>
 
             {/* Progress and Button */}
             <div className="flex items-center space-x-4">
-              <Link href={`/student-portal/${exam.id}`}>
-                <button className="px-4 py-2 border border-teal-900 transition-all duration-100  rounded-full hover:bg-teal-800 hover:text-white text-sm">
+              <div className="flex items-center space-x-4">
+                <button
+                  onClick={handleStartClick}
+                  className="px-4 py-2 border border-teal-900 transition-all duration-100 rounded-full hover:bg-teal-800 hover:text-white text-sm"
+                >
                   Start
                 </button>
-              </Link>
+
+                {/* Modal Component */}
+                <Modal
+                  isOpen={isModalOpen}
+                  onClose={handleCloseModal}
+                  exam={exam}
+                />
+              </div>
             </div>
           </div>
         ))

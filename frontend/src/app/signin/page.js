@@ -57,8 +57,8 @@ const SignInPage = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-teal-100 to-green-100">
-      <div className="w-full max-w-md bg-white shadow-lg rounded-lg p-6">
+    <div className="sm:min-h-screen flex items-center justify-center bg-gray-50">
+      <div className="w-full sm:max-w-md bg-white sm:shadow-lg sm:rounded-xl p-6">
         <h2 className="text-2xl font-bold text-center text-gray-800">Sign In</h2>
         <p className="text-sm text-gray-600 text-center mt-2">
           Welcome back! Please enter your details.
