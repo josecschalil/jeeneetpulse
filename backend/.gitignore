@@ -1,0 +1,13 @@
+# Ignore local virtual environments
+env/
+venv/
+
+# Ignore Python cache files
+__pycache__/
+*.py[cod]
+
+# Ignore SQLite database
+db.sqlite3
+
+# Ignore Django logs
+*.log
