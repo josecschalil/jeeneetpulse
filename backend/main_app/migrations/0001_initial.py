@@ -24,11 +24,7 @@ class Migration(migrations.Migration):
                 ('userid', models.UUIDField(default=uuid.uuid4, primary_key=True, serialize=False)),
                 ('email', models.EmailField(max_length=254, unique=True)),
                 ('name', models.CharField(max_length=255)),
-<<<<<<< HEAD
                 ('is_active', models.BooleanField(default=False)),
-=======
-                ('is_active', models.BooleanField(default=True)),
->>>>>>> d67558d94dde35ad0c034d2122bcf3a056a11d25
                 ('is_staff', models.BooleanField(default=False)),
                 ('groups', models.ManyToManyField(blank=True, help_text='The groups this user belongs to. A user will get all permissions granted to each of their groups.', related_name='user_set', related_query_name='user', to='auth.group', verbose_name='groups')),
                 ('user_permissions', models.ManyToManyField(blank=True, help_text='Specific permissions for this user.', related_name='user_set', related_query_name='user', to='auth.permission', verbose_name='user permissions')),
