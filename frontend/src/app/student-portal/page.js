@@ -65,11 +65,11 @@ const CourseList = () => {
                 <span className="hidden md:block text-sm text-gray-500">
                   {course.progress}% complete
                 </span>
-                <Link key={index} href={`/student-portal/${course.id}`}>
+                
                 <button className="max2:hidden px-4 py-2 bg-teal-800  hover:bg-teal-900 text-white rounded-2xl text-sm">
                   Contents
                 </button>
-                </Link>
+         
               </div>
             </div>
             </Link>

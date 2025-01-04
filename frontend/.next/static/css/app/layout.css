@@ -2097,10 +2097,6 @@ body {
     border-radius: 1.5rem;
   }
 
-  .sm\:rounded-none {
-    border-radius: 0px;
-  }
-
   .sm\:rounded-xl {
     border-radius: 0.75rem;
   }
@@ -2277,11 +2273,6 @@ body {
     background-color: rgb(249 250 251 / var(--tw-bg-opacity, 1));
   }
 
-  .md\:bg-gray-100 {
-    --tw-bg-opacity: 1;
-    background-color: rgb(243 244 246 / var(--tw-bg-opacity, 1));
-  }
-
   .md\:p-6 {
     padding: 1.5rem;
   }
@@ -2417,21 +2408,12 @@ body {
 
 @media (max-width: 480px) {
 
-  .max2\:block {
-    display: block;
-  }
-
   .max2\:hidden {
     display: none;
   }
 
   .max2\:grid-cols-1 {
     grid-template-columns: repeat(1, minmax(0, 1fr));
-  }
-
-  .max2\:bg-gray-100 {
-    --tw-bg-opacity: 1;
-    background-color: rgb(243 244 246 / var(--tw-bg-opacity, 1));
   }
 }
 
