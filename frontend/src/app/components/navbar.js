@@ -38,6 +38,7 @@ const Navbar = () => {
         },
       });
       setUsername(response.data.username);
+      
     } catch (error) {
       if (error.response && error.response.status === 401) {
         // Token might be expired, attempt to refresh it

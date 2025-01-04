@@ -4,7 +4,7 @@ export const courses = [
     title: "2025 | Repeaters - JEE Advanced | Offline",
     chapters: 246,
     contents: 1161,
-    progress: 7,
+    progress: 15,
   },
   {
     id: 2,

@@ -1,8 +1,9 @@
 from rest_framework import viewsets
 from .models import Course, Subject, Chapter, LectureVideo, Exam, Question
 from .serializers import CourseSerializer, SubjectSerializer, ChapterSerializer, LectureVideoSerializer, ExamSerializer, QuestionSerializer
-
+from rest_framework.permissions import AllowAny
 class CourseViewSet(viewsets.ModelViewSet):
+    permission_classes = [AllowAny]
     queryset = Course.objects.all()
     serializer_class = CourseSerializer
 
