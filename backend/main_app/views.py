@@ -19,12 +19,40 @@ from django.utils.encoding import force_str
 <<<<<<< HEAD
 from rest_framework_simplejwt.authentication import JWTAuthentication
 
+from django.contrib.auth.hashers import make_password  
+from django.contrib.auth.tokens import default_token_generator
+from rest_framework.views import APIView
+from django.contrib.auth.models import User
 
 
 =======
 >>>>>>> d67558d94dde35ad0c034d2122bcf3a056a11d25
 User = get_user_model()
+class ResetPasswordView(APIView):
+    permission_classes = [AllowAny]
 
+    def post(self, request, uidb64, token):
+        try:
+            
+            uid = force_str(urlsafe_base64_decode(uidb64))
+            user = User.objects.get(pk=uid)
+
+            if default_token_generator.check_token(user, token):
+                new_password = request.data.get('password')
+                
+                
+                if len(new_password) < 8:
+                    return Response({'message': 'Password must be at least 8 characters long.'}, status=status.HTTP_400_BAD_REQUEST)
+
+                
+                user.password = make_password(new_password)
+                user.save()
+
+                return Response({'message': 'Password reset successfully!'}, status=status.HTTP_200_OK)
+            else:
+                return Response({'message': 'Invalid or expired token!'}, status=status.HTTP_400_BAD_REQUEST)
+        except (TypeError, ValueError, OverflowError, User.DoesNotExist):
+            return Response({'message': 'Invalid request!'}, status=status.HTTP_400_BAD_REQUEST)
 class SignupView(APIView):
     """Handles user registration."""
     permission_classes = [AllowAny]
@@ -32,8 +60,8 @@ class SignupView(APIView):
         """Handle POST request for user registration."""
         serializer = UserRegistrationSerializer(data=request.data)
         if serializer.is_valid():
-            user = serializer.save()  # Save the user
-            # Send the verification email
+            user = serializer.save() 
+            
             self.send_verification_email(user, request)
 
             return Response(
@@ -47,34 +75,34 @@ class SignupView(APIView):
         token = default_token_generator.make_token(user)
         uid = urlsafe_base64_encode(str(user.pk).encode('utf-8'))
 
-        # Construct verification URL
+      
         current_site = get_current_site(request)
         relative_link = reverse('verify-email', kwargs={'uidb64': uid, 'token': token})
         full_url = f'http://{current_site.domain}{relative_link}'
         print("Relative Link:", relative_link)
         print("Full URL:", full_url)
-        # Render the email template
+      
         email_subject = "Activate your account"
         email_message = render_to_string(
-            'registration/activation_email.html',  # The email template
+            'registration/activation_email.html',  
             {'user': user, 'activation_url': full_url}
         )
 
-        # Send the email
+        
         send_mail(
             email_subject,
             email_message,
-            'no-reply@yourdomain.com',  # Your no-reply email
+            'no-reply@yourdomain.com', 
             [user.email],
             fail_silently=False,
             html_message=email_message
         )
 class VerifyEmailView(APIView):
-    permission_classes = [AllowAny]  # Allow unauthenticated access
+    permission_classes = [AllowAny] 
 
     def get(self, request, uidb64, token):
         try:
-            uid = force_str(urlsafe_base64_decode(uidb64))  # Use force_str here
+            uid = force_str(urlsafe_base64_decode(uidb64))
             user = User.objects.get(pk=uid)
             if default_token_generator.check_token(user, token):
                 user.is_active = True

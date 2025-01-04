@@ -23,11 +23,11 @@ const SubjectPage = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 py-8 font-jakarta">
-      <div className="max-w-5xl mx-auto bg-white shadow-md rounded-2xl p-6">
+    <div className="min-h-screen md:bg-gray-50 md:py-8 font-jakarta md:px-6">
+      <div className="max-w-5xl mx-auto bg-white md:shadow-md md:rounded-2xl p-6">
         
-          <div className="w-[95%] mx-auto flex flex-col md:flex-row justify-between border-b items-center mb-6 ">
-            <h2 className="text-4xl uppercase  p-2 px-3 rounded-xl mb-4 font-bold text-gray-700 font-instSansB ">
+          <div className="w-[95%] mx-auto flex flex-col md:flex-row justify-between border-b gap-4 mb-6 ">
+            <h2 className="text-4xl uppercase  px-3 rounded-xl  font-bold text-gray-700 font-instSansB ">
               {subject?.name}
             </h2>
 

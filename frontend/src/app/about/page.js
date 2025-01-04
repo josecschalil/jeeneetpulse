@@ -6,7 +6,7 @@ const AboutPage = () => {
   return (
     <div className="bg-gray-100 min-h-screen">
       {/* Header Section */}
-      <div className="bg-teal-900 text-white py-20 text-center">
+      <div className="bg-teal-900 text-white py-20 text-center px-4">
         <h1 className="text-4xl font-bold mb-4 font-instSansB">
         ©  JEENEETPULSE 
         
@@ -18,7 +18,7 @@ const AboutPage = () => {
         </p>
       </div>
 
-      <section className="py-16 bg-white">
+      <section className="py-16 bg-white px-6">
         <div className="max-w-6xl mx-auto">
           <div className="grid  gap-8">
     
@@ -97,16 +97,16 @@ const AboutPage = () => {
       </section> */}
 
       {/* Features  */}
-      <section className="py-16 bg-gray-100">
+      <section className="py-6 md:py-16 bg-gray-100 px-6">
         <div className="max-w-6xl mx-auto text-center">
-          <div className="flex mb-8 gap-6">
+          <div className="flex  mb-8 gap-3 md:gap-6">
             <div className="flex-1 h-[1px] bg-green-900 rounded-full mt-4"></div>
             <h2 className="text-3xl font-bold text-gray-800  font-instSansB">
               What We Offer
             </h2>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-16">
+          <div className="grid grid-cols-1 md:grid-cols-3  md:gap-16">
             {[
               {
                 image: "/test-prep.svg", // Replace with your image paths
@@ -139,15 +139,15 @@ const AboutPage = () => {
       </section>
 
       {/* How it Works */}
-      <section className="py-16 bg-gray-100">
+      <section className="pb-6 md:py-16 bg-gray-100 px-6">
         <div className="max-w-6xl mx-auto text-center">
-          <div className="flex mb-8 gap-6">
+          <div className="flex mb-8 gap-2 md:gap-6">
             <h2 className="text-3xl font-bold text-gray-800 font-instSansB">
               How It Works
             </h2>
             <div className="flex-1 h-[1px] bg-green-900 rounded-full mt-4"></div>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-16">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-3 md:gap-16">
             {[
               {
                 image: "/register.svg", // Replace with your image paths
@@ -168,7 +168,7 @@ const AboutPage = () => {
                   "Simulate real test environments with our adaptive test series. Identify your strengths and work on your weaknesses to stay ahead.",
               },
             ].map((step, index) => (
-              <div key={index} className="py-6 text-justify font-instSansN">
+              <div key={index} className="py-3 md:py-6 text-justify font-instSansN">
                 <h3 className="text-xl font-bold text-teal-900 mb-4 font-instSansB">
                   {step.title}
                 </h3>
@@ -180,7 +180,7 @@ const AboutPage = () => {
       </section>
 
       {/* Team Section */}
-      <section className="py-16 bg-white font-instSansB">
+      <section className="py-16 bg-white font-instSansB px-6">
         <div className="max-w-6xl mx-auto">
           <h2 className="text-3xl font-bold text-gray-800 mb-8 text-center fo">
             Meet the Team
@@ -199,7 +199,7 @@ const AboutPage = () => {
               },
               {
                 image: "/boy.png",
-                name: "Alice Johnson",
+                name: "Alice John",
                 role: "Content Strategist",
               },
               {

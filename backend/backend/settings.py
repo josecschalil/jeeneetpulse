@@ -164,9 +164,6 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'main_app.CustomUser'
 
-DJOSER = {
-    'SEND_ACTIVATION_EMAIL': False,
-}
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
@@ -180,3 +177,12 @@ DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
 SITE_ID = 1
 
+DJOSER = {
+    'PASSWORD_RESET_CONFIRM_URL': 'auth/users/reset_password_confirm/{uid}/{token}/',
+    'SEND_ACTIVATION_EMAIL': False,
+    'SERIALIZERS': {
+        'user_create': 'djoser.serializers.UserCreateSerializer',
+        'user': 'djoser.serializers.UserSerializer',
+        'current_user': 'djoser.serializers.UserSerializer',
+    },
+}

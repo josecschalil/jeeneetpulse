@@ -18,6 +18,12 @@ const SignUpPage = () => {
     setFormData({ ...formData, [id]: value });
   };
 
+  const normalizeEmail = (email) => {
+    if (!email) return "";
+    const [localPart, domainPart] = email.split("@");
+    return domainPart ? `${localPart}@${domainPart.toLowerCase()}` : email;
+  };
+
   const validatePassword = () => {
     const { password, confirmPassword } = formData;
     if (password.length < 8) {
@@ -41,7 +47,7 @@ const SignUpPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Validate password
+    
     const passwordError = validatePassword();
     if (passwordError) {
       setError(passwordError);
@@ -49,19 +55,27 @@ const SignUpPage = () => {
     }
 
     try {
-      // Send form data to backend for user registration
+      const normalizedEmail = normalizeEmail(formData.email);
+
+      
       const response = await axios.post("http://127.0.0.1:8000/signup/", {
         name: formData.name,
-        email: formData.email,
+        email: normalizedEmail,
         password: formData.password,
         re_password: formData.password,
       });
 
-      // Clear any error messages
       setError("");
       setMessage("User registered successfully! Please check your email to verify your account.");
 
-      // Hide success message after 3 seconds
+      setFormData({
+        name: "",
+        email: "",
+        password: "",
+        confirmPassword: "",
+      });
+
+
       setTimeout(() => {
         setMessage("");
       }, 3000);
@@ -70,7 +84,7 @@ const SignUpPage = () => {
         err.response?.data?.email || err.response?.data?.password || "Registration failed.";
       setError(errorMsg);
 
-      // Hide error message after 3 seconds
+     
       setTimeout(() => {
         setError("");
       }, 3000);
@@ -78,15 +92,14 @@ const SignUpPage = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-green-100 via-teal-100 to-cyan-100">
-      <div className="w-full max-w-lg bg-white shadow-xl rounded-lg p-8">
+    <div className="min-h-screen flex sm:items-center sm:justify-center bg-gray-50">
+      <div className="w-full sm:max-w-lg bg-white sm:shadow-xl sm:rounded-xl p-8">
         <h2 className="text-3xl font-bold text-center text-gray-800">Sign Up</h2>
         <p className="text-sm text-gray-600 text-center mt-2">
           Join us to kickstart your journey for JEE or NEET preparation!
         </p>
 
         <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
-          {/* Full Name */}
           <div>
             <label htmlFor="name" className="block text-sm font-medium text-gray-700">
               Full Name
@@ -98,11 +111,11 @@ const SignUpPage = () => {
               onChange={handleChange}
               placeholder="Enter your name"
               className="w-full mt-1 px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-cyan-500 focus:outline-none"
+              aria-label="Full Name"
               required
             />
           </div>
 
-          {/* Email */}
           <div>
             <label htmlFor="email" className="block text-sm font-medium text-gray-700">
               Email Address
@@ -114,11 +127,11 @@ const SignUpPage = () => {
               onChange={handleChange}
               placeholder="example@email.com"
               className="w-full mt-1 px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-cyan-500 focus:outline-none"
+              aria-label="Email Address"
               required
             />
           </div>
 
-          {/* Password */}
           <div>
             <label htmlFor="password" className="block text-sm font-medium text-gray-700">
               Password
@@ -130,11 +143,11 @@ const SignUpPage = () => {
               onChange={handleChange}
               placeholder="Create a password"
               className="w-full mt-1 px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-cyan-500 focus:outline-none"
+              aria-label="Password"
               required
             />
           </div>
 
-          {/* Confirm Password */}
           <div>
             <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-700">
               Confirm Password
@@ -146,17 +159,14 @@ const SignUpPage = () => {
               onChange={handleChange}
               placeholder="Re-enter your password"
               className="w-full mt-1 px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-cyan-500 focus:outline-none"
+              aria-label="Confirm Password"
               required
             />
           </div>
 
-          {/* Error Message */}
           {error && <p className="text-sm text-red-600">{error}</p>}
-
-          {/* Success Message */}
           {message && <p className="text-sm text-green-600">{message}</p>}
 
-          {/* Submit Button */}
           <button
             type="submit"
             className="w-full bg-teal-600 text-white py-3 rounded-lg hover:bg-teal-700 transition duration-300"

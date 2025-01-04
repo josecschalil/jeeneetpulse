@@ -34,11 +34,213 @@ export const courses = [
 ];
 
 export const exams = [
-  { title: "JEE Adv Mock Test 1 ", date: "2024-12-15" ,time:"65mins",courseId:1},
-  { title: "JEE Adv Physics Year 1", date: "2024-12-14",time:"125mins",courseId:1 },
-  { title: "JEE AITS Math Test", date: "2024-12-13",time:"65mins",courseId:4 },
-  { title: "JEE AITS Physics Year 2 ", date: "2024-12-16",time:"125mins",courseId:4 },
+  { id: 1,title: "JEE Adv Mock Test 1 ", date: "2024-12-15" ,time:"65mins",courseId:1},
+  { id: 2,title: "JEE Adv Physics Year 1", date: "2024-12-14",time:"125mins",courseId:1 },
+  { id: 3,title: "JEE AITS Main | 22-04-2023", date: "2024-12-13",time:"65mins",courseId:1 },
+  { id: 3,title: "JEE AITS Physics Year 2 ", date: "2024-12-16",time:"125mins",courseId:4 },
 ];
+
+export const tests = {
+  1: [
+    {
+      id: 1,
+      question:
+        "The work function of a metal is 2.14 eV. If light of wavelength 400 nm is incident on the metal, what is the kinetic energy of the emitted electrons? (h = 6.63 × 10⁻³⁴ J·s, c = 3 × 10⁸ m/s, 1 eV = 1.6 × 10⁻¹⁹ J)",
+      options: ["0.5 eV", "1.0 eV", "1.5 eV", "2.0 eV"],
+      correct: "0.5 eV",
+      image: "https://example.com/images/photoelectric-effect.png",
+    },
+    {
+      id: 2,
+      question:
+        "A block of mass 5 kg is placed on a smooth horizontal surface. A force of 10 N is applied horizontally. What is the acceleration of the block?",
+      options: ["0.5 m/s²", "2 m/s²", "5 m/s²", "10 m/s²"],
+      correct: "2 m/s²",
+      image: "https://example.com/images/newton-laws.png",
+    },
+  ],
+  2: [
+    {
+      id: 1,
+      question:
+        "A capacitor of capacitance 10 µF is charged to a potential of 100 V. What is the energy stored in the capacitor?",
+      options: ["0.05 J", "0.5 J", "5 J", "50 J"],
+      correct: "0.5 J",
+      image: "https://example.com/images/capacitor.png",
+    },
+    {
+      id: 2,
+      question:
+        "The resistance of a wire is 10 Ω. If the length of the wire is doubled and its radius is halved, what will be the new resistance?",
+      options: ["20 Ω", "40 Ω", "80 Ω", "160 Ω"],
+      correct: "160 Ω",
+      image: "https://example.com/images/resistance.png",
+    },
+  ],
+  3:[
+{
+  "id": 1,
+  "subject": "Physics",
+  "question": "A particle is moving in a circular path of radius r with constant speed v. What is the magnitude of its acceleration?",
+  "options": ["v/r", "v²/r", "r/v", "r²/v"],
+  "correct": "v²/r",
+  "image": "/questions (1).jpg"
+},
+{
+  "id": 2,
+  "subject": "Physics",
+  "question": "The half-life of a radioactive substance is 5 years. How much of a 100 g sample will remain after 15 years?",
+  "options": ["50 g", "25 g", "12.5 g", "6.25 g"],
+  "correct": "12.5 g",
+  "image": "/questions/questions (2).jpg"
+},
+{
+  "id": 3,
+  "subject": "Physics",
+  "question": "A capacitor of capacitance 10 µF is charged to a potential of 100 V. What is the energy stored in the capacitor?",
+  "options": ["0.05 J", "0.5 J", "5 J", "50 J"],
+  "correct": "0.5 J",
+  "image": "/questions/questions (3).jpg"
+},
+{
+  "id": 4,
+  "subject": "Physics",
+  "question": "The resistance of a wire is 10 Ω. If the length of the wire is doubled and its radius is halved, what will be the new resistance?",
+  "options": ["20 Ω", "40 Ω", "80 Ω", "160 Ω"],
+  "correct": "160 Ω",
+  "image": "/questions/questions (4).jpg"
+},
+{
+  "id": 5,
+  "subject": "Physics",
+  "question": "The half-life of a radioactive substance is 5 years. How much of a 100 g sample will remain after 15 years?",
+  "options": ["50 g", "25 g", "12.5 g", "6.25 g"],
+  "correct": "12.5 g",
+  "image": "/questions/questions (2).jpg"
+},
+{
+  "id": 6,
+  "subject": "Chemistry",
+  "question": "What is the pH of a solution with a hydrogen ion concentration of 1 × 10⁻³ M?",
+  "options": ["3", "10", "7", "1"],
+  "correct": "3",
+  "image": ""
+},
+{
+  "id": 7,
+  "subject": "Chemistry",
+  "question": "Which element has the highest electronegativity?",
+  "options": ["Oxygen", "Fluorine", "Chlorine", "Nitrogen"],
+  "correct": "Fluorine",
+  "image": ""
+},
+{
+  "id": 8,
+  "subject": "Chemistry",
+  "question": "What is the oxidation state of sulfur in H₂SO₄?",
+  "options": ["+2", "+4", "+6", "-2"],
+  "correct": "+6",
+  "image": ""
+},
+{
+  "id": 9,
+  "subject": "Chemistry",
+  "question": "What is the common name of NaHCO₃?",
+  "options": ["Baking soda", "Washing soda", "Caustic soda", "Sodium carbonate"],
+  "correct": "Baking soda",
+  "image": ""
+},
+{
+  "id": 10,
+  "subject": "Chemistry",
+  "question": "Which gas is released when a metal reacts with an acid?",
+  "options": ["Oxygen", "Hydrogen", "Nitrogen", "Carbon dioxide"],
+  "correct": "Hydrogen",
+  "image": ""
+},
+{
+  "id": 11,
+  "subject": "Chemistry",
+  "question": "What is the molecular formula of glucose?",
+  "options": ["C₆H₁₂O₆", "C₆H₆", "CH₄", "C₂H₆"],
+  "correct": "C₆H₁₂O₆",
+  "image": ""
+},
+{
+  "id": 12,
+  "subject": "Mathematics",
+  "question": "What is the derivative of sin(x)?",
+  "options": ["cos(x)", "-sin(x)", "-cos(x)", "sin(x)"],
+  "correct": "cos(x)",
+  "image": ""
+},
+{
+  "id": 13,
+  "subject": "Mathematics",
+  "question": "What is the integral of x² dx?",
+  "options": ["x³/3", "x²/2", "2x", "1/2x"],
+  "correct": "x³/3",
+  "image": ""
+},
+{
+  "id": 14,
+  "subject": "Mathematics",
+  "question": "What is the value of 2³ × 3²?",
+  "options": ["18", "36", "72", "54"],
+  "correct": "72",
+  "image": ""
+},
+{
+  "id": 15,
+  "subject": "Mathematics",
+  "question": "Solve for x: 2x + 5 = 15.",
+  "options": ["5", "10", "2", "15"],
+  "correct": "5",
+  "image": ""
+},
+{
+  "id": 16,
+  "subject": "Mathematics",
+  "question": "What is the square root of 144?",
+  "options": ["12", "14", "16", "18"],
+  "correct": "12",
+  "image": ""
+},
+{
+  "id": 17,
+  "subject": "Mathematics",
+  "question": "If x = 2, what is the value of 3x² + 2x - 1?",
+  "options": ["17", "19", "15", "21"],
+  "correct": "17",
+  "image": ""
+},
+{
+  "id": 18,
+  "subject": "Mathematics",
+  "question": "What is the sum of the first 10 natural numbers?",
+  "options": ["45", "55", "65", "50"],
+  "correct": "55",
+  "image": ""
+},
+{
+  "id": 19,
+  "subject": "Mathematics",
+  "question": "What is the solution to the quadratic equation x² - 5x + 6 = 0?",
+  "options": ["x = 2 or 3", "x = -2 or 3", "x = 2 or -3", "x = -2 or -3"],
+  "correct": "x = 2 or 3",
+  "image": ""
+},
+{
+  "id": 20,
+  "subject": "Mathematics",
+  "question": "What is the value of cos(90°)?",
+  "options": ["0", "1", "-1", "Undefined"],
+  "correct": "0",
+  "image": ""
+}
+]
+
+};
 
 
 export const studymaterials =[
@@ -104,42 +306,42 @@ export const chapters = [
 { id: "chap6", subjectId: "chemistry_jee", videos: 23, name: "Physical Chemistry", icon: "📊" },
 
 // Mathematics JEE Chapters
-{ id: "chap7", subjectId: "mathematics_jee", name: "Algebra", icon: "🔢" },
-{ id: "chap8", subjectId: "mathematics_jee", name: "Calculus", icon: "📈" },
-{ id: "chap9", subjectId: "mathematics_jee", name: "Geometry", icon: "📐" },
+{ id: "chap7", subjectId: "mathematics_jee", videos:23,      name: "Algebra", icon: "🔢" },
+{ id: "chap8", subjectId: "mathematics_jee",videos:23,   name: "Calculus", icon: "📈" },
+{ id: "chap9", subjectId: "mathematics_jee",videos:23,   name: "Geometry", icon: "📐" },
 
 // Biology NEET Chapters
-{ id: "chap10", subjectId: "biology_neet", name: "Cell Structure", icon: "🧬" },
-{ id: "chap11", subjectId: "biology_neet", name: "Genetics", icon: "🌱" },
-{ id: "chap12", subjectId: "biology_neet", name: "Human Physiology", icon: "🫀" },
+{ id: "chap10", subjectId: "biology_neet",videos:23,   name: "Cell Structure", icon: "🧬" },
+{ id: "chap11", subjectId: "biology_neet",videos:23,   name: "Genetics", icon: "🌱" },
+{ id: "chap12", subjectId: "biology_neet",videos:23,   name: "Human Physiology", icon: "🫀" },
 
 // Physics NEET Chapters
-{ id: "chap13", subjectId: "physics_neet", name: "Optics", icon: "🔭" },
-{ id: "chap14", subjectId: "physics_neet", name: "Electromagnetism", icon: "⚡" },
-{ id: "chap15", subjectId: "physics_neet", name: "Nuclear Physics", icon: "☢️" },
+{ id: "chap13", subjectId: "physics_neet",videos:23,   name: "Optics", icon: "🔭" },
+{ id: "chap14", subjectId: "physics_neet",videos:23,   name: "Electromagnetism", icon: "⚡" },
+{ id: "chap15", subjectId: "physics_neet",videos:23,   name: "Nuclear Physics", icon: "☢️" },
 
 // Chemistry NEET Chapters
-{ id: "chap16", subjectId: "chemistry_neet", name: "Biochemistry", icon: "🧪" },
-{ id: "chap17", subjectId: "chemistry_neet", name: "Environmental Chemistry", icon: "🌍" },
-{ id: "chap18", subjectId: "chemistry_neet", name: "Analytical Chemistry", icon: "🧫" },
+{ id: "chap16", subjectId: "chemistry_neet",videos:23,   name: "Biochemistry", icon: "🧪" },
+{ id: "chap17", subjectId: "chemistry_neet",videos:23,   name: "Environmental Chemistry", icon: "🌍" },
+{ id: "chap18", subjectId: "chemistry_neet", videos:23,  name: "Analytical Chemistry", icon: "🧫" },
 
 // Physics IIT Chapters
-{ id: "chap19", subjectId: "physics_iit", name: "Rigid Body and Motion", icon: "⚙️" },
-{ id: "chap20", subjectId: "physics_iit", name: "Fluid Mechanics", icon: "💧" },
-{ id: "chap21", subjectId: "physics_iit", name: "Thermodynamics", icon: "🌡️" },
-{ id: "chap22", subjectId: "physics_iit", name: "Mechanics", icon: "🏗️" },
-{ id: "chap23", subjectId: "physics_iit", name: "Waves", icon: "🌊" },
-{ id: "chap24", subjectId: "physics_iit", name: "Electromagnetic Waves", icon: "📡" },
+{ id: "chap19", subjectId: "physics_iit",videos:23,   name: "Rigid Body and Motion", icon: "⚙️" },
+{ id: "chap20", subjectId: "physics_iit",videos:23,   name: "Fluid Mechanics", icon: "💧" },
+{ id: "chap21", subjectId: "physics_iit",videos:23,   name: "Thermodynamics", icon: "🌡️" },
+{ id: "chap22", subjectId: "physics_iit",videos:23,   name: "Mechanics", icon: "🏗️" },
+{ id: "chap23", subjectId: "physics_iit",videos:23,   name: "Waves", icon: "🌊" },
+{ id: "chap24", subjectId: "physics_iit",videos:23,   name: "Electromagnetic Waves", icon: "📡" },
 
 // Chemistry IIT Chapters
-{ id: "chap25", subjectId: "chemistry_iit", name: "Organic Chemistry", icon: "🔥" },
-{ id: "chap26", subjectId: "chemistry_iit", name: "Inorganic Chemistry", icon: "🔬" },
-{ id: "chap27", subjectId: "chemistry_iit", name: "Physical Chemistry", icon: "📊" },
+{ id: "chap25", subjectId: "chemistry_iit", videos:23,  name: "Organic Chemistry", icon: "🔥" },
+{ id: "chap26", subjectId: "chemistry_iit", videos:23,  name: "Inorganic Chemistry", icon: "🔬" },
+{ id: "chap27", subjectId: "chemistry_iit", videos:23,  name: "Physical Chemistry", icon: "📊" },
 
 // Mathematics IIT Chapters
-{ id: "chap28", subjectId: "mathematics_iit", name: "Calculus", icon: "📈" },
-{ id: "chap29", subjectId: "mathematics_iit", name: "Trigonometry", icon: "📏" },
-{ id: "chap30", subjectId: "mathematics_iit", name: "Differential Equations", icon: "🔄" },
+{ id: "chap28", subjectId: "mathematics_iit",videos:23,   name: "Calculus", icon: "📈" },
+{ id: "chap29", subjectId: "mathematics_iit",videos:23,   name: "Trigonometry", icon: "📏" },
+{ id: "chap30", subjectId: "mathematics_iit",videos:23,   name: "Differential Equations", icon: "🔄" },
 
 ];
 

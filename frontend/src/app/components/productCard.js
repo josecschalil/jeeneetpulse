@@ -3,11 +3,11 @@ import Link from "next/link";
 const ProductCard = ({ course }) => {
   return (
     <Link href={`/courses/${course.id}`} key={course.id}>
-      <div className="m min-h-[400px] w-[400px]  mb-3  transition-transform transform hover:scale-[1.03] font-jakarta">
+      <div className="   mb-3  transition-transform transform hover:scale-[1.03] font-jakarta">
         {/* Image Section */}
         <div className="relative">
           <img
-            className=" w-full rounded  h-[240px] object-cover "
+            className=" w-full rounded-2xl   object-cover "
             src={course.img}
             alt={course.title}
           />
