@@ -1,7 +1,8 @@
 "use client";
 import React, { useState } from "react";
 import axios from "axios";
-import { jwtDecode } from 'jwt-decode';
+import jwt_decode from 'jwt-decode';
+
 
 
 const SignInPage = () => {
@@ -41,7 +42,7 @@ const SignInPage = () => {
 
     
       const { access, refresh } = response.data;
-      const decodedToken = jwtDecode(access);
+      const decodedToken = jwt_decode(access);
       const userId = decodedToken.user_id;
       localStorage.setItem("access_token", access); 
       localStorage.setItem("refresh_token", refresh); 
