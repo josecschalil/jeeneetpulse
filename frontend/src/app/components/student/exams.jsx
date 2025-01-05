@@ -28,7 +28,10 @@ const Exams = ({ id }) => {
   return (
     <div className="relative pt-4">
       {/* Button for creating custom test */}
-      <div className="flex hover:border-gray-500 hover:shadow transition-all duration-100 items-center justify-between p-4 border rounded-2xl mb-8 ">
+      <div
+  className={`flex  transition-all duration-100  items-center justify-between p-4 border  mb-4 ${isTestCreatorOpen ? 'border-b-0 border-gray-500 rounded-t-2xl' : 'rounded-2xl hover:shadow hover:border-gray-500 '}`}
+>
+
         {/* Test Details */}
         <div className="flex items-center space-x-4">
           {/* Icon */}
@@ -62,7 +65,7 @@ const Exams = ({ id }) => {
       {/* TestCreator Modal */}
       {isTestCreatorOpen && (
         <div className="modal-overlay relative">
-          <div className="modal-content my-4 mb-8 bg-white rounded-lg  w-full">
+          <div className="modal-content my-4 mb-8 bg-white border border-gray-500 border-t-0 p-4 rounded-b-lg -mt-4 w-full">
             <TestCreator />
           </div>
         </div>

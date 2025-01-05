@@ -65,6 +65,42 @@ const QuestionSelector = ({ numQuestions, setNumQuestions }) => {
   );
 };
 
+const DifficultySelector = ({ difficulty, setDifficulty }) => {
+  const difficulties = [
+    { value: 1, icon: "🔰", catchphrase: "Easy Peasy!" },
+    { value: 2, icon: "🟢", catchphrase: "Getting There!" },
+    { value: 3, icon: "🟡", catchphrase: "Challenging!" },
+    { value: 4, icon: "🟠", catchphrase: "Tough Cookie!" },
+    { value: 5, icon: "🔴", catchphrase: "Master Level!" },
+  ];
+
+  return (
+    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mb-4">
+      {difficulties.map((d) => (
+        <button
+          key={d.value}
+          className={`pl-3 border px-6 py-4 text-md font-jakarta rounded-lg font-bold transition-all ${
+            difficulty === d.value
+              ? "border-gray-900"
+              : "text-gray-700 hover:border-gray-900"
+          }`}
+          onClick={() => setDifficulty(d.value)}
+        >
+          <div className="flex items-center space-x-3">
+            <span className="text-2xl">{d.icon}</span>
+            <div className="text-left">
+              <p>{d.catchphrase}</p>
+              <small className="text-sm text-gray-500 font-normal font-jakarta">
+               Level {d.value}
+              </small>
+            </div>
+          </div>
+        </button>
+      ))}
+    </div>
+  );
+};
+
 
 
 const SubjectSelector = ({ setSubjects, subjects, selectedChapters, setSelectedChapters }) => {
@@ -217,15 +253,20 @@ const SubjectSelector = ({ setSubjects, subjects, selectedChapters, setSelectedC
 
 
 
-const ModalTimeQuestions = ({ onNext, setNumQuestions, setTime, numQuestions, time }) => {
-  const isNextEnabled = time && numQuestions;
+const ModalTimeQuestions = ({ onNext, setNumQuestions, setTime, setDifficulty, numQuestions, time, difficulty }) => {
+  const isNextEnabled = time && numQuestions && difficulty;
 
   return (
     <div className="px-2 modal bg-white rounded-lg w-full text-gray-800 mx-auto font-instSansB">
       <h2 className="text-lg text-left mb-4">Set Duration</h2>
       <TimeSelector time={time} setTime={setTime} />
+      
       <h2 className="text-lg text-left mb-4">Set Number of Questions</h2>
       <QuestionSelector numQuestions={numQuestions} setNumQuestions={setNumQuestions} />
+      
+      <h2 className="text-lg text-left mb-4">Set Difficulty</h2>
+      <DifficultySelector difficulty={difficulty} setDifficulty={setDifficulty} />
+      
       <div className="text-left mt-4">
         <button
           disabled={!isNextEnabled}
@@ -242,6 +283,7 @@ const ModalTimeQuestions = ({ onNext, setNumQuestions, setTime, numQuestions, ti
     </div>
   );
 };
+
 
 const ModalSubjects = ({
   onNext,
@@ -289,6 +331,7 @@ const TestCreator = () => {
   const [showModal, setShowModal] = useState(1);
   const [numQuestions, setNumQuestions] = useState(null);
   const [time, setTime] = useState(null);
+  const [difficulty, setDifficulty] = useState(null);  // New state for difficulty
   const [subjects, setSubjects] = useState([]);
   const [selectedChapters, setSelectedChapters] = useState([]);
   const [formData, setFormData] = useState(null);
@@ -297,7 +340,7 @@ const TestCreator = () => {
   const handleBack = () => setShowModal((prev) => prev - 1);
 
   const handleSubmit = () => {
-    const data = { time, numQuestions, subjects, selectedChapters };
+    const data = { time, numQuestions, subjects, selectedChapters, difficulty };  // Add difficulty to form data
     setFormData(data);
     setShowModal(0); // Hide all modals
   };
@@ -309,8 +352,10 @@ const TestCreator = () => {
           onNext={handleNext}
           setNumQuestions={setNumQuestions}
           setTime={setTime}
+          setDifficulty={setDifficulty}  // Pass down setDifficulty
           numQuestions={numQuestions}
           time={time}
+          difficulty={difficulty}
         />
       )}
       {showModal === 2 && (
@@ -339,11 +384,15 @@ const TestCreator = () => {
             <li>
               <strong>Chapters:</strong> {formData.selectedChapters.join(", ")}
             </li>
+            <li>
+              <strong>Difficulty:</strong> {formData.difficulty} {/* Display selected difficulty */}
+            </li>
           </ul>
         </div>
       )}
     </div>
   );
 };
+
 
 export default TestCreator;
