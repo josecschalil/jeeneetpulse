@@ -1,7 +1,6 @@
 from django.db import models
 import uuid
-from django.db import models
-import uuid
+from django.conf import settings
 
 class Course(models.Model):
     course_type = models.CharField(max_length=100)
@@ -29,12 +28,14 @@ class Course(models.Model):
     img = models.ImageField(upload_to='course_images/', blank=True, null=True)
     
     def __str__(self):
-        return self.title
+        return f"{self.title}"
 
 class Subject(models.Model):
+    id = models.UUIDField(default=uuid.uuid4, editable=False, unique=True,primary_key=True)
     course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name='subjects')
     name = models.CharField(max_length=255)
-    description = models.TextField()
+    def __str__(self):
+        return f"{self.name} - {self.course.title}"
 
 class Chapter(models.Model):
     subject = models.ForeignKey(Subject, on_delete=models.CASCADE, related_name='chapters')
@@ -62,11 +63,12 @@ class Question(models.Model):
 
 
 class UserCourseData(models.Model):
-    userid = models.CharField(max_length=500)
-    title = models.CharField(max_length=500)
-    chapters = models.CharField(max_length=100)
-    contents= models.CharField(max_length=100)
-    progress = models.CharField(max_length=500)
+    
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='purchases')
+    course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name='purchased_courses')
+
+    def __str__(self):
+        return f"{self.user.username} - {self.course.code}"
     
 
 
