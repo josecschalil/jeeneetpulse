@@ -6,7 +6,7 @@ import Exams from "@/app/components/student/exams";
 import StudyMaterials from "@/app/components/student/studym";
 import PracticeQuestions from "@/app/components/student/questionsets";
 import Classes from "@/app/components/student/classes";
-
+import Link from "next/link";
 const CoursePage = () => {
   const {courseId} =useParams();
  const id= parseInt(courseId);
@@ -23,12 +23,19 @@ const CoursePage = () => {
   return (
     <div className="min-h-screen md:bg-gray-50 md:py-8 font-jakarta md:px-6">
       <div className="max-w-5xl mx-auto bg-white md:shadow-md md:rounded-2xl p-6">
+       
+       
         {/* Header: Course Title and Navbar */}
         <div className="flex flex-col gap-4  mb-6">
           {/* Course Title */}
+          <div className="flex items-center">
+            <Link href={"/student-portal"}> <div className="border w-fit h-fit px-2 pb-1 pt-[2px] rounded-lg hover:border-gray-500 mr-3">&lt;</div></Link>
+         
           <h2 className="text-2xl font-bold text-gray-700 font-instSansB">
         {course.title}
           </h2>
+          </div>
+          
 
           {/* Tabs */}
           <div className=" w-fit sm:w-full flex justify-between g-0 sm:gap-4 sm:justify-normal text-sm">

@@ -1,13 +1,13 @@
 import React, { useState } from "react";
-import Modal from "./Modal"; // Ensure this is correctly imported
-import TestCreator from "./TestCreator"; // Import the TestCreator component
-import { exams } from "../../student-portal/data"; // Ensure this is correctly imported
+import Modal from "./Modal"; 
+import TestCreator from "./TestCreator"; 
+import { exams } from "../../student-portal/data"; 
 
 const Exams = ({ id }) => {
   const courseId = Number(id);
 
-  const [isModalOpen, setIsModalOpen] = useState(false); // Modal state for exam details
-  const [isTestCreatorOpen, setIsTestCreatorOpen] = useState(false); // Modal state for TestCreator
+  const [isModalOpen, setIsModalOpen] = useState(false); 
+  const [isTestCreatorOpen, setIsTestCreatorOpen] = useState(false);
 
   const handleStartClick = () => {
     setIsModalOpen(true);
@@ -17,24 +17,23 @@ const Exams = ({ id }) => {
     setIsModalOpen(false);
   };
 
-  // Handle opening the TestCreator modal
+
   const createtesttoggler = () => {
-    setIsTestCreatorOpen(!isTestCreatorOpen); // Open the TestCreator modal
+    setIsTestCreatorOpen(!isTestCreatorOpen); 
   };
 
   const filteredExams =
     exams?.filter((exam) => exam.courseId === courseId) || [];
 
   return (
-    <div className="relative pt-4">
-      {/* Button for creating custom test */}
+    <div className="relative ">
+
       <div
-  className={`flex  transition-all duration-100  items-center justify-between p-4 border  mb-4 ${isTestCreatorOpen ? 'border-b-0 border-gray-500 rounded-t-2xl' : 'rounded-2xl hover:shadow hover:border-gray-500 '}`}
+  className={`flex  transition-all duration-100  items-center justify-between p-4 border border-gray-300  mb-4 ${isTestCreatorOpen ? 'border-b-0 border-gray-500 rounded-t-2xl' : 'rounded-2xl hover:shadow hover:border-gray-500 '}`}
 >
 
-        {/* Test Details */}
         <div className="flex items-center space-x-4">
-          {/* Icon */}
+
           <div className="h-10 w-10 bg-none flex items-center justify-center rounded-full">
             <span role="img" aria-label="exam-icon" className="text-2xl">
               🛠️
@@ -65,7 +64,7 @@ const Exams = ({ id }) => {
       {/* TestCreator Modal */}
       {isTestCreatorOpen && (
         <div className="modal-overlay relative">
-          <div className="modal-content my-4 mb-8 bg-white border border-gray-500 border-t-0 p-4 rounded-b-lg -mt-4 w-full">
+          <div className="modal-content my-4 mb-8 bg-white border border-gray-500 border-t-0 p-4 rounded-b-2xl -mt-4 w-full">
             <TestCreator />
           </div>
         </div>
