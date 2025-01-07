@@ -13,7 +13,7 @@ const CheckoutPage = () => {
   useEffect(() => {
     const fetchCourse = async () => {
       try {
-        const response = await axios.get(`http://localhost:8000/courses/${courseId}`);
+        const response = await axios.get(`http://localhost:8000/courses/add-course/${courseId}`);
         setCourse(response.data); 
         setLoading(false);
       } catch (err) {
