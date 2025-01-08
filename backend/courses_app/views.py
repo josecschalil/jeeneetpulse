@@ -48,11 +48,19 @@ class QuestionViewSet(viewsets.ModelViewSet):
 
 class CourseAddViewSet(viewsets.ModelViewSet):
     permission_classes = [AllowAny]
-    queryset =UserCourseData.objects.all()
+    queryset = UserCourseData.objects.all()
     serializer_class = UserCourseDataSerializer
-    @action(detail=False, methods=['get'], url_path='user/(?P<user_id>[^/.]+)')
+    
+    @action(detail=False, methods=['get'], url_path='users/(?P<user_id>[^/.]+)')
     def get_courses_by_user(self, request, user_id=None):
-
         purchases = UserCourseData.objects.filter(user_id=user_id).select_related('course')
-        course_codes = [purchase.course.id for purchase in purchases]
-        return Response({'user_id': user_id, 'course_codes': course_codes})
+        
+        course_data = [
+            {
+                "course_code": purchase.course.id,
+                "progress": purchase.progress,
+            }
+            for purchase in purchases
+        ]
+        
+        return Response({'user_id': user_id, 'courses': course_data})

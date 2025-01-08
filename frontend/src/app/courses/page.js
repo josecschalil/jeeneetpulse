@@ -7,7 +7,7 @@ const CoursesPage = () => {
 
   useEffect(() => {
     const fetchCourses = async () => {
-      const response = await fetch("http://localhost:8000/courses/add-course/");
+      const response = await fetch("http://localhost:8000/api/courses");
       if (response.ok) {
         const data = await response.json();
         setCourses(data);

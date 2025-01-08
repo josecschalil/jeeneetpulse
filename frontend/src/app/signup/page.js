@@ -46,50 +46,57 @@ const SignUpPage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    
+  
     const passwordError = validatePassword();
     if (passwordError) {
       setError(passwordError);
       return;
     }
-
+  
     try {
       const normalizedEmail = normalizeEmail(formData.email);
-
-      
+  
+      // Make the API request
       const response = await axios.post("http://127.0.0.1:8000/signup/", {
         name: formData.name,
         email: normalizedEmail,
         password: formData.password,
         re_password: formData.password,
       });
-
+  
+      // Log the API response to the console
+      console.log('API Response:', response);
+  
       setError("");
       setMessage("User registered successfully! Please check your email to verify your account.");
-
+  
+      // Reset form data
       setFormData({
         name: "",
         email: "",
         password: "",
         confirmPassword: "",
       });
-
-
+  
+      // Clear the success message after 3 seconds
       setTimeout(() => {
         setMessage("");
       }, 3000);
     } catch (err) {
+      // If there's an error, extract a relevant message
       const errorMsg =
-        err.response?.data?.email || err.response?.data?.password || "Registration failed.";
+        err.response?.data?.email ||
+        err.response?.data?.password ||
+        "Registration failed.";
       setError(errorMsg);
-
-     
+  
+      // Clear the error message after 3 seconds
       setTimeout(() => {
         setError("");
       }, 3000);
     }
   };
+  
 
   return (
     <div className="min-h-screen flex sm:items-center sm:justify-center bg-gray-50">

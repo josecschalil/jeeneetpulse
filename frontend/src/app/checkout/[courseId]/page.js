@@ -13,7 +13,7 @@ const CheckoutPage = () => {
   useEffect(() => {
     const fetchCourse = async () => {
       try {
-        const response = await axios.get(`http://localhost:8000/courses/add-course/${courseId}`);
+        const response = await axios.get(`http://localhost:8000/api/courses/${courseId}`);
         setCourse(response.data); 
         setLoading(false);
       } catch (err) {
@@ -50,10 +50,27 @@ const CheckoutPage = () => {
   }
 
   const handlePayment = () => {
-    alert(`Payment through PhonePe for ${course.title} will be processed.`);
-    // Add payment gateway logic here
+    alert(`Payment through PhonePe for ${course.title} will be processed. Now adding to userCourses.`);
+    addCourseToUser();
   };
+  
+  const addCourseToUser = () => {
+    const userId = localStorage.getItem('user_id');
 
+    const data = {
+      user: userId,
+      course: courseId
+    };
+  
+    axios.post('http://127.0.0.1:8000/api/userCourses/', data)
+      .then(response => {
+        console.log('Course added to user successfully:', response.data);
+      })
+      .catch(error => {
+        console.error('There was an error adding the course to the user:', error);
+      });
+  };
+  
   return (
     <div className="min-h-screen bg-gray-100 py-10 font-jakarta">
       <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -84,7 +101,7 @@ const CheckoutPage = () => {
             </div>
             <div className="text-center border-t-4 border-teal-700 py-3 bg-gray-50 rounded-lg shadow-md">
               <span className="text-2xl font-bold text-gray-800">
-                {course.classes_length}+ 
+                {course.classes}+ 
               </span>
               <p className="text-gray-500 text-sm">Classes</p>
             </div>

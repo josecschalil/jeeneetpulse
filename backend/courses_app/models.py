@@ -6,15 +6,15 @@ class Course(models.Model):
     course_type = models.CharField(max_length=100)
     title = models.CharField(max_length=255)
     description = models.TextField()
-    discount=models.IntegerField(default=20)
     price = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)  
     current_price = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)  
     id = models.UUIDField(default=uuid.uuid4, editable=False, unique=True,primary_key=True)
     portions = models.TextField() 
     watch_hours = models.CharField(max_length=50)  
-    classes_length = models.CharField(max_length=50) 
-    tests_length = models.CharField(max_length=50)
-    videos = models.CharField(max_length=50) 
+    classes = models.CharField(max_length=50) 
+    chapters = models.CharField(max_length=50) 
+    tests = models.CharField(max_length=50)
+    studymaterials= models.CharField(max_length=50)
     validity = models.IntegerField(default=365)  
    
     content_left_1 = models.TextField(blank=True, null=True)
@@ -63,12 +63,12 @@ class Question(models.Model):
 
 
 class UserCourseData(models.Model):
-    
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='purchases')
     course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name='purchased_courses')
+    progress = models.IntegerField(default=0)  # New field to track progress (default is 0%)
 
     def __str__(self):
-        return f"{self.user.username} - {self.course.code}"
-    
+        return f"{self.user.username} - {self.course.code} - {self.progress}%"
+
 
 

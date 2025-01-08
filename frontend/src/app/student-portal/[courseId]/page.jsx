@@ -1,24 +1,40 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import {courses} from "../data"
+import axios from "axios";
 import { useParams } from "next/navigation";
 import Exams from "@/app/components/student/exams";
 import StudyMaterials from "@/app/components/student/studym";
 import PracticeQuestions from "@/app/components/student/questionsets";
 import Classes from "@/app/components/student/classes";
 import Link from "next/link";
+
 const CoursePage = () => {
-  const {courseId} =useParams();
- const id= parseInt(courseId);
-  console.log(courseId)
+  const { courseId } = useParams();
+  
+
+  const [course, setCourse] = useState(null);
   const [activeTab, setActiveTab] = useState("exams");
 
   const handleTabChange = (tab) => {
     setActiveTab(tab);
   };
 
-  const course=courses.find(course => course.id === id);
-  console.log(course)
+  useEffect(() => {
+    axios
+      .get(`http://127.0.0.1:8000/api/courses/${courseId}`)  // Replace with your API endpoint
+      .then((response) => {
+        console.log("Course fetched:", response.data);
+        setCourse(response.data);  // Set the course data into the state
+      })
+      .catch((error) => {
+        console.error("Error fetching course:", error);
+      });
+  }, [courseId]);  // Re-run this effect when courseId changes
+
+  if (!course) {
+    return <div>Loading...</div>;  // Show a loading message until course data is fetched
+  }
 
   return (
     <div className="min-h-screen md:bg-gray-50 md:py-8 font-jakarta md:px-6">

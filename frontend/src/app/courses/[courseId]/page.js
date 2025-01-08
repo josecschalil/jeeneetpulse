@@ -14,7 +14,7 @@ const CoursePage = () => {
   useEffect(() => {
     const fetchCourse = async () => {
       try {
-        const response = await axios.get(`http://localhost:8000/courses/add-course/${courseId}`);
+        const response = await axios.get(`http://localhost:8000/api/courses/${courseId}`);
         setCourse(response.data); 
         setLoading(false);
       } catch (err) {
@@ -92,16 +92,16 @@ const CoursePage = () => {
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
             {[  
               { label: "Watch Hours", value: course.watch_hours },
-              { label: "Classes", value: course.classes_length },
-              { label: "Test Series", value: course.tests_length },
-              { label: "Videos", value: course.videos },
+              { label: "Classes", value: course.classes},
+              { label: "Test Series", value: course.chapters },
+              { label: "Videos", value: course.classes },
             ].map((item, index) => (
               <div
                 key={index}
                 className="text-center border-t-4 border-teal-700 rounded-md py-3 bg-gray-50 shadow-md"
               >
                 <span className="text-2xl font-bold text-gray-800">
-                  {item.value}
+                  {item.value}+
                 </span>
                 <p className="text-sm text-gray-500">{item.label}</p>
               </div>
