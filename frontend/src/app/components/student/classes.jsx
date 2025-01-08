@@ -1,12 +1,26 @@
 import React from "react";
 import Link from "next/link";
+import { useState,useEffect } from "react";
 import { subjects ,chapters } from "@/app/student-portal/data";
 
 
-const Classes = ({id}) => {
-  const courseId = Number(id);
-  console.log(courseId);
-  console.log(subjects)
+const Classes = ({courseId}) => {
+  const [subjects,setSubjects]=useState(null);
+
+   useEffect(() => {
+      const fetchSubjects = async () => {
+        const response = await fetch(`http://localhost:8000/api/subjects?course=${courseId}`);
+        if (response.ok) {
+          const data = await response.json();
+          setSubjects(data);
+        } else {
+          console.error("Failed to fetch Subjects");
+        }
+      };
+  
+      fetchSubjects();
+    }, []);
+  
   const filteredSubjects =
     subjects?.filter((subject) => subject.courseId === courseId) || [];
 

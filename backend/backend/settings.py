@@ -192,6 +192,7 @@ DJOSER = {
         'current_user': 'djoser.serializers.UserSerializer',
     },
 }
+
 CSP_DEFAULT_SRC = ("'self'",)  # Only allow resources from the same origin
 CSP_FONT_SRC = ("'self'", "https://fonts.gstatic.com", "https://fonts.googleapis.com")  # Allow fonts from Google Fonts
 CSP_STYLE_SRC = ("'self'", "https://fonts.googleapis.com", "'unsafe-inline'")  # Allow inline styles and Google Fonts

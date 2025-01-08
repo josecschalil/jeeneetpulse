@@ -55,6 +55,7 @@ const Navbar = () => {
   const logout = () => {
     localStorage.removeItem("access_token");
     localStorage.removeItem("refresh_token");
+    localStorage.removeItem("user_id");
     setIsAuthenticated(false);
     setUsername(null);
     window.location.href = "/signin";
@@ -120,8 +121,8 @@ const Navbar = () => {
           ) : (
             <div className="flex items-center space-x-4">
               <Link href="/profile" passHref>
-                <div className="hover:text-gray-400 text-black">
-                  {username ? `Welcome ${username}` : "Profile"}
+                <div className="hover:text-gray-400 text-gray-900 font-jakarta">
+                  {username ? `${username}` : "Profile"}
                 </div>
               </Link>
               <button

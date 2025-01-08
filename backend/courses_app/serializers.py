@@ -21,6 +21,11 @@ class ChapterSerializer(serializers.ModelSerializer):
         model = Chapter
         fields = '__all__'
 
+
+# For bulk import, Django REST framework supports the use of ListSerializer
+class ChapterListSerializer(serializers.ListSerializer):
+    child = ChapterSerializer()
+
 class LectureVideoSerializer(serializers.ModelSerializer):
     class Meta:
         model = LectureVideo
