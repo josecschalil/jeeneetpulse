@@ -17,7 +17,7 @@ class SubjectViewSet(viewsets.ModelViewSet):
     ordering_fields = ['name', 'type']
 
 
-
+#for bulk orders in works if you put access token - (of any user now, since auth is __ALL__)
 @api_view(['POST'])
 def bulk_create_chapters(request):
     if request.method == 'POST':
@@ -27,6 +27,9 @@ def bulk_create_chapters(request):
             chapters = serializer.save()
             return Response(ChapterSerializer(chapters, many=True).data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+
+
 
 class CourseViewSet(viewsets.ModelViewSet):
     permission_classes = [AllowAny]

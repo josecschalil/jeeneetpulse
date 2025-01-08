@@ -12,7 +12,6 @@ import Link from "next/link";
 const CoursePage = () => {
   const { courseId } = useParams();
   
-
   const [course, setCourse] = useState(null);
   const [activeTab, setActiveTab] = useState("exams");
 
@@ -74,7 +73,7 @@ const CoursePage = () => {
         {/* Content Section */}
         <div>
           {activeTab === "exams" && <Exams id={courseId} />}
-          {activeTab === "questions" && <PracticeQuestions id={courseId}  />}
+          {activeTab === "questions" &&  <PracticeQuestions id={courseId}  />}
           {activeTab === "classes" && <Classes id={courseId}  />}
           {activeTab === "materials" && <StudyMaterials id={courseId}  />}
         </div>

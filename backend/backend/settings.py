@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'corsheaders',
 
     'courses_app',
+    'django_filters',
    
 
 ]
