@@ -1,9 +1,33 @@
-from rest_framework import viewsets
+from rest_framework import viewsets,status
 from .models import Course, Subject, Chapter, LectureVideo, Exam, Question,UserCourseData
 from .serializers import CourseSerializer, SubjectSerializer, ChapterSerializer, LectureVideoSerializer, ExamSerializer, QuestionSerializer,UserCourseDataSerializer
 from rest_framework.permissions import AllowAny
-from rest_framework.decorators import action
+from rest_framework.decorators import action,api_view
 from rest_framework.response import Response
+from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework.filters import OrderingFilter, SearchFilter
+
+class SubjectViewSet(viewsets.ModelViewSet):
+    permission_classes = [AllowAny]
+    queryset = Subject.objects.all()
+    serializer_class = SubjectSerializer
+    filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
+    filterset_fields = ['course_id']  
+    search_fields = ['name', 'type']
+    ordering_fields = ['name', 'type']
+
+
+#for bulk orders in works if you put access token - (of any user now, since auth is __ALL__)
+@api_view(['POST'])
+def bulk_create_chapters(request):
+    if request.method == 'POST':
+        serializer = ChapterSerializer(data=request.data, many=True)
+        if serializer.is_valid():
+            # Bulk create chapters in the database
+            chapters = serializer.save()
+            return Response(ChapterSerializer(chapters, many=True).data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
 
 
 
@@ -12,24 +36,13 @@ class CourseViewSet(viewsets.ModelViewSet):
     queryset = Course.objects.all()
     serializer_class = CourseSerializer
 
-class SubjectViewSet(viewsets.ModelViewSet):
-    permission_classes = [AllowAny]
-    queryset = Subject.objects.all()
-    serializer_class = SubjectSerializer
-
-    @action(detail=False, methods=['get'], url_path='(?P<course_id>[^/.]+)')
-    def get_subjects_by_course(self, request, course_id=None):
-        subjects = Subject.objects.filter(course_id=course_id)
-        if subjects.exists():
-            serializer = self.get_serializer(subjects, many=True)
-            return Response(serializer.data, status=200)
-        return Response({"detail": "No subjects found for this course ID."}, status=404)
 
 
 class ChapterViewSet(viewsets.ModelViewSet):
     permission_classes = [AllowAny]
     queryset = Chapter.objects.all()
     serializer_class = ChapterSerializer
+
 
 class LectureVideoViewSet(viewsets.ModelViewSet):
     permission_classes = [AllowAny]
