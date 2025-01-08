@@ -39,10 +39,14 @@ class Subject(models.Model):
         return f"{self.name} - {self.course.title}"
 
 class Chapter(models.Model):
+    id = models.UUIDField(default=uuid.uuid4, editable=False, unique=True,primary_key=True)
     subject = models.ForeignKey(Subject, on_delete=models.CASCADE, related_name='chapters')
     name = models.CharField(max_length=255)
-    description = models.TextField()
-    lecture_note_path = models.CharField(max_length=500)
+
+
+    def __str__(self):
+        return f"{self.name} - {self.subject.name} - {self.subject.course.title}"
+    
 
 class LectureVideo(models.Model):
     chapter = models.ForeignKey(Chapter, on_delete=models.CASCADE, related_name='lecture_videos')
@@ -52,6 +56,9 @@ class LectureVideo(models.Model):
 class Exam(models.Model):
     chapter = models.ForeignKey(Chapter, on_delete=models.CASCADE, related_name='exams')
     exam_title = models.CharField(max_length=255)
+    def __str__(self):
+        return f"{self.exam_title}"
+    
 
 class Question(models.Model):
     exam = models.ForeignKey(Exam, on_delete=models.CASCADE, related_name='questions')
