@@ -16,10 +16,13 @@ class SubjectSerializer(serializers.ModelSerializer):
         model = Subject
         fields = '__all__'
 
+
+
 class ChapterSerializer(serializers.ModelSerializer):
     class Meta:
         model = Chapter
-        fields = '__all__'
+        fields = ['name',   'subject']  # Exclude 'id'
+
 
 
 # For bulk import, Django REST framework supports the use of ListSerializer

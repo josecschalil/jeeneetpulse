@@ -11,3 +11,20 @@ db.sqlite3
 
 # Ignore Django logs
 *.log
+
+# Ignore media files (for uploaded content)
+media/
+
+# Ignore static files (for generated assets like CSS, JS)
+static/
+
+# Ignore Django migrations
+*/migrations/
+
+# Ignore IDE files (for common text editors and IDEs)
+.idea/
+.vscode/
+*.swp
+
+# Ignore environment files
+.env

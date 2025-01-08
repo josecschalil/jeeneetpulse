@@ -142,7 +142,7 @@ import Exams from "@/app/components/student/exams";
 import StudyMaterials from "@/app/components/student/studym";
 import PracticeQuestions from "@/app/components/student/questionsets";
 import QuestionBank from "../components/student/questionbank";
-import Classes from "@/app/components/student/classes";
+import Classes from "@/app/components/student/Contents";
 import { courses } from "../student-portal/data";
 
 const VideosPage = () => {

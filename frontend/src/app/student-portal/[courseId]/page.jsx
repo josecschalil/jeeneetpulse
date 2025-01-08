@@ -6,7 +6,7 @@ import { useParams } from "next/navigation";
 import Exams from "@/app/components/student/exams";
 import StudyMaterials from "@/app/components/student/studym";
 import PracticeQuestions from "@/app/components/student/questionsets";
-import Classes from "@/app/components/student/classes";
+import Contents from "@/app/components/student/Contents";
 import Link from "next/link";
 
 const CoursePage = () => {
@@ -54,7 +54,7 @@ const CoursePage = () => {
 
           {/* Tabs */}
           <div className=" w-fit sm:w-full flex justify-between g-0 sm:gap-4 sm:justify-normal text-sm">
-            {["exams", "questions", "classes", "materials"].map((tab) => (
+            {["Exams", "Contents", "Recents"].map((tab) => (
               <button
                 key={tab}
                 className={`px-3 sm:px-4 py-1 sm:rounded-3xl bg-none sm:bg-gray-100 shadow-none sm:shadow ${
@@ -72,10 +72,10 @@ const CoursePage = () => {
 
         {/* Content Section */}
         <div>
-          {activeTab === "exams" && <Exams id={courseId} />}
-          {activeTab === "questions" &&  <PracticeQuestions id={courseId}  />}
-          {activeTab === "classes" && <Classes id={courseId}  />}
-          {activeTab === "materials" && <StudyMaterials id={courseId}  />}
+          {activeTab === "Exams" && <Exams id={courseId} />}
+          {/* {activeTab === "questions" &&  <PracticeQuestions id={courseId}  />} */}
+          {activeTab === "Contents" && <Contents id={courseId}  />}
+          {activeTab === "Recents" && <StudyMaterials id={courseId}  />}
         </div>
       </div>
     </div>

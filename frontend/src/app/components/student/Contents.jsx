@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
-const Classes = ( courseId) => {
+const Contents = ( courseId) => {
   const [subjects, setSubjects] = useState(null);
 
   useEffect(() => {
@@ -51,7 +51,7 @@ const Classes = ( courseId) => {
 
             {/* Progress and Button */}
             <div className="flex items-center space-x-4">
-              <Link href={`http://localhost:3000/classes/subject/${subject.id}`}>
+              <Link href={`http://localhost:3000/learn/chapters/${subject.id}`}>
                 <button className="px-4 py-2 border border-teal-900 shadow rounded-full hover:bg-teal-800 hover:text-white text-sm">
                   Contents
                 </button>
@@ -64,4 +64,4 @@ const Classes = ( courseId) => {
   );
 };
 
-export default Classes;
+export default Contents;

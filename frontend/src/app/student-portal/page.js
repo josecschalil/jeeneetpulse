@@ -13,7 +13,7 @@ const CourseList = () => {
 
     // Get user courses
     axios
-      .get(`http://127.0.0.1:8000/api/userCourses/users/${userId}`)
+      .get(`http://127.0.0.1:8000/api/userCourses/${userId}`)
       .then((response) => {
         console.log("User courses data:", response.data);
 

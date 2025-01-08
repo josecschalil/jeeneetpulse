@@ -39,9 +39,9 @@ class Subject(models.Model):
         return f"{self.name} - {self.course.title}"
 
 class Chapter(models.Model):
-    id = models.UUIDField(default=uuid.uuid4, editable=False, unique=True,primary_key=True)
-    subject = models.ForeignKey(Subject, on_delete=models.CASCADE, related_name='chapters')
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     name = models.CharField(max_length=255)
+    subject = models.ForeignKey(Subject, on_delete=models.CASCADE)
 
 
     def __str__(self):
