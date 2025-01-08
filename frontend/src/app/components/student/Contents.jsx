@@ -33,9 +33,9 @@ const Contents = ( courseId) => {
             {/* Course Details */}
             <div className="flex items-center space-x-4">
               {/* Icon */}
-              <div className="h-10 w-10 flex items-center mr-3 justify-center rounded-full">
+              <div className="h-12 w-12 flex items-center mr-3 justify-center bg-teal-100 rounded-full">
                 <span role="img" aria-label="course-icon" className="text-2xl">
-                  {subject.icon}
+                🎓
                 </span>
               </div>
               {/* Details */}

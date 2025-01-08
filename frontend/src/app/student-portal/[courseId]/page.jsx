@@ -13,7 +13,7 @@ const CoursePage = () => {
   const { courseId } = useParams();
   
   const [course, setCourse] = useState(null);
-  const [activeTab, setActiveTab] = useState("exams");
+  const [activeTab, setActiveTab] = useState("Exams");
 
   const handleTabChange = (tab) => {
     setActiveTab(tab);
