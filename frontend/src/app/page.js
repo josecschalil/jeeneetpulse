@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 import Navbar from "./components/navbar";
 import Hero from "./components/home/hero";
@@ -10,11 +11,19 @@ import PrepareSection from "./components/home/preparesection";
 import StartLearning from "./components/home/startlearning";
 import FeaturedCourses from "./components/home/featuredcourses";
 import SuccessStories from "./components/home/successstories";
-
+import MathRenderer from "./components/Mathrender";
 export default function Home() {
+
+ const question = `\frac{\text{LI}}{\text{R}}
+`;
+
   return (
     <div className="flex flex-col items-center font-poppins w-[100vw] overflow-x-hidden ">
       <div className="w-screen" style={{ backgroundColor: "#EBFFF9" }}>
+          {/* <div>
+    <h1>Math Question</h1>
+    <MathRenderer content={question} />
+  </div> */}
         <Hero />
 
         <Sections />

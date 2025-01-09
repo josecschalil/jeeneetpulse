@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import axios from "axios";
 
+
 const CourseList = () => {
   const [coursesData, setCoursesData] = useState([]);
   const [progressArray, setProgressArray] = useState([]); 
