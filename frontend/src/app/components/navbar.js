@@ -39,7 +39,6 @@ const Navbar = () => {
         },
       });
       setUsername(response.data.username);
-      
     } catch (error) {
       if (error.response && error.response.status === 401) {
         const newToken = await refreshToken();
@@ -70,6 +69,11 @@ const Navbar = () => {
       setIsAuthenticated(false);
     }
   }, []);
+
+  // Check if the current page is a /tests/{testid} page
+  const isTestPage = pathname.startsWith("/tests/");
+
+  if (isTestPage) return null; // Do not render Navbar on /tests/{testid} pages
 
   return (
     <nav
@@ -144,7 +148,7 @@ const Navbar = () => {
               &times;
             </button>
           </div>
-          <Link href="/" passHref  onClick={() => setMenuOpen(false)}>
+          <Link href="/" passHref onClick={() => setMenuOpen(false)}>
             <div className="hover:text-gray-400">Home</div>
           </Link>
           <Link href="/student-portal" passHref onClick={() => setMenuOpen(false)}>

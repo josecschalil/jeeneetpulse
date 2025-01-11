@@ -54,6 +54,7 @@ class LectureVideo(models.Model):
     video_path = models.CharField(max_length=500)
 
 class Exam(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     chapter = models.ForeignKey(Chapter, on_delete=models.CASCADE, related_name='exams')
     exam_title = models.CharField(max_length=255)
     def __str__(self):
@@ -61,14 +62,24 @@ class Exam(models.Model):
     
 
 class Question(models.Model):
-    exam = models.ForeignKey(Exam, on_delete=models.CASCADE, related_name='questions')
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    exam = models.ForeignKey(Exam, on_delete=models.CASCADE, related_name='exam_questions', db_index=True, blank=True, null=True)
+    chapter = models.ForeignKey(Chapter, on_delete=models.CASCADE, related_name='chapter_questions', db_index=True, blank=True, null=True)
     question_text = models.TextField()
-    option_a = models.CharField(max_length=255)
-    option_b = models.CharField(max_length=255)
-    option_c = models.CharField(max_length=255)
-    option_d = models.CharField(max_length=255)
-    correct_answer = models.CharField(max_length=1)
+    option_a = models.TextField()
+    option_b = models.TextField()
+    option_c = models.TextField()
+    option_d = models.TextField()
+    correct_answer = models.CharField(max_length=1, choices=[('A', 'Option A'), ('B', 'Option B'), ('C', 'Option C'), ('D', 'Option D')])
+    concept_involved = models.CharField(max_length=255, blank=True, null=True)
+    solution_text = models.TextField(blank=True, null=True)
+    diagram_image = models.ImageField(upload_to='question_diagrams/', blank=True, null=True)
 
+    class Meta:
+        ordering = ['chapter', 'id']
+
+    def __str__(self):
+        return f"Question {self.id} - Exam {self.exam.name}"
 
 class UserCourseData(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='purchases')

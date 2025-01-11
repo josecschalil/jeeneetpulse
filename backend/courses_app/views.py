@@ -80,12 +80,12 @@ class QuestionViewSet(viewsets.ModelViewSet):
     queryset = Question.objects.all()
     serializer_class = QuestionSerializer
     @action(detail=False, methods=['get'], url_path='(?P<chapter_id>[^/.]+)')
-    def get_exams_by_chapter(self, request, chapter_id=None):
-        exams = Exam.objects.filter(chapter_id=chapter_id)
-        if exams.exists():
-            serializer = ExamSerializer(exams, many=True)
+    def get_questions_by_chapter(self, request, chapter_id=None):
+        questions = Question.objects.filter(chapter_id=chapter_id)
+        if questions.exists():
+            serializer = ExamSerializer(questions, many=True)
             return Response(serializer.data, status=200)
-        return Response({"detail": "No exams found for this chapter."}, status=404)
+        return Response({"detail": "No questions found for this chapter."}, status=404)
 
     
 

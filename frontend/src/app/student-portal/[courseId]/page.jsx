@@ -1,7 +1,6 @@
 "use client";
 import React, { useState,useEffect } from "react";
 import {courses} from "../data"
-import Breadcrumb from "@/app/components/BreadCrumb";
 import axios from "axios";
 import { useParams } from "next/navigation";
 import Exams from "@/app/components/student/exams";
@@ -38,8 +37,8 @@ const CoursePage = () => {
 
   return (
     <div className="min-h-screen md:bg-gray-50 md:py-8 font-jakarta md:px-6">
-      <div className="max-w-5xl mx-auto bg-white md:shadow-md md:rounded-2xl p-6">
-      <Breadcrumb />
+      <div className="max-w-5xl mx-auto  p-6">
+
        
         {/* Header: Course Title and Navbar */}
         <div className="flex flex-col gap-4  mb-6">
