@@ -27,13 +27,14 @@ const TestPage = () => {
         setVisited(new Set(parsedData.visited || []));
         setMarkedForReview(new Set(parsedData.markedForReview || []));
         setTimeRemaining(parsedData.timeRemaining || 1800);
+        setIsSubmitted(parsedData.isSubmitted || false); // Ensure correct retrieval
         setIsTimerRunning(parsedData.isTimerRunning); // Restore the exact state
       }
       setIsInitialized(true);
     }
   }, [testId]);
+  
 
-  // Save data to localStorage whenever one of these states changes
   useEffect(() => {
     if (isInitialized) {
       const dataToSave = {
@@ -43,21 +44,32 @@ const TestPage = () => {
         markedForReview: Array.from(markedForReview), // Convert Set to Array for storage
         timeRemaining,
         isTimerRunning,
+        isSubmitted, // Include this to persist submission status
       };
       localStorage.setItem(testId, JSON.stringify(dataToSave));
     }
-  }, [currentQuestionIndex, answers, visited, markedForReview, timeRemaining, isTimerRunning, testId, isInitialized]);
-
+  }, [
+    currentQuestionIndex,
+    answers,
+    visited,
+    markedForReview,
+    timeRemaining,
+    isTimerRunning,
+    testId,
+    isInitialized,
+    isSubmitted,
+  ]);
+  
   useEffect(() => {
-    if (isInitialized) {
+    if (isInitialized && !isSubmitted) {
       const timer = setInterval(() => {
         setTimeRemaining((prevTime) => (prevTime > 0 ? prevTime - 1 : 0));
       }, 1000);
-
-      return () => clearInterval(timer); // Cleanup timer on unmount
+  
+      return () => clearInterval(timer); // Cleanup timer on unmount or when dependencies change
     }
-  }, [isInitialized]);
-
+  }, [isInitialized, isSubmitted]);
+  
   const AttemptLater = () => {
     saveData(); // Save current progress to localStorage
     router.push("/tests"); // Navigate to the tests page
@@ -78,7 +90,9 @@ const TestPage = () => {
       visited: Array.from(visited), // Convert Set to Array for storage
       markedForReview: Array.from(markedForReview), // Convert Set to Array for storage
       timeRemaining,
+      
       isTimerRunning,
+      isSubmitted,
     };
     localStorage.setItem(testId, JSON.stringify(dataToSave));
   };
@@ -89,8 +103,11 @@ const TestPage = () => {
     );
     if (confirmSubmit) {
       setIsSubmitted(true);
+      router.push(`/analysis/${testId}`);
+      saveData(); // Persist the submission state immediately
     }
   };
+  
 
   const TimerComponent = ({ timeRemaining }) => {
     const formatTime = (time) => {
@@ -103,7 +120,7 @@ const TestPage = () => {
     };
 
     return (
-      <div className="mr-4 border border-black p-4 py-2 rounded-xl">
+      <div className=" border border-black p-4 py-2 rounded-xl">
         {formatTime(timeRemaining)}
       </div>
     );
@@ -156,7 +173,7 @@ const TestPage = () => {
   // Rendering
   return (
     <div className="h-screen">
-      <header className="items-center font-jakarta flex justify-between text-2xl h-[10vh] px-4">
+      <header className="items-center font-instSansB flex justify-between text-2xl h-[10%] px-4">
         <div className="flex justify-start items-center">
           <button
             className="border p-4 py-2 rounded-xl border-black text-sm"
@@ -173,7 +190,7 @@ const TestPage = () => {
         <div className="flex justify-end items-center text-sm ">
           <TimerComponent timeRemaining={timeRemaining} />
           <button
-            className="border p-4 py-2 rounded-xl border-black"
+            className="border p-4 py-2 rounded-xl ml-4 border-black"
             onClick={handleSubmit}
           >
             Submit
@@ -181,7 +198,7 @@ const TestPage = () => {
         </div>
       </header>
 
-      <div className="flex justify-between bg-white border-t flex-col md:flex-row ">
+      <div className="flex justify-between bg-white border-t flex-col md:flex-row h-[90%] ">
         <div className="md:w-[70vw] flex flex-col">
           <div className="p-6 bg-white rounded-xl font-jakarta">
             {isSubmitted ? (
@@ -192,11 +209,9 @@ const TestPage = () => {
               </div>
             ) : (
               <>
-                <h2 className="text-xl mb-4">
-                  Question {currentQuestionIndex + 1}
-                </h2>
+              
                 <p className="text-lg mb-4">
-                  {testQuestions[currentQuestionIndex]?.question}
+                {currentQuestionIndex + 1}. {testQuestions[currentQuestionIndex]?.question}
                 </p>
                 {/* Options */}
                 <div className="grid grid-cols-2 gap-3 w-[80%] mt-8">
@@ -226,43 +241,42 @@ const TestPage = () => {
             )}
           </div>
           <div className="border-t flex p-2 px-6 mt-auto flex-row max1:flex-col">
-            <div className="mt-6 flex font-jakarta ">
+            <div className="my-5 flex font-instSansB mx-auto gap-5 items-center ">
               <button
                 onClick={saveandNext}
-                className="px-4 py-4 h-fit bg-teal-100 border-teal-600  border text-black hover:border-black font-semibold opacity-90 hover:opacity-100  rounded-lg  mr-4 shadow-md active:border-[2px] transition-all duration-300"
+                className="px-4 py-2 h-fit text-white hover:border-black border    rounded-2xl   active:border-[2px] transition-all duration-300 bg-emerald-500"
               >
                 Save and Next
               </button>
+
               <button
                 onClick={clearAnswer}
-                className="px-4 py-4 h-fit  text-black hover:border-black font-semibold border shadow-md rounded-lg mr-4 hover:opacity-100 opacity-90 active:border-[2px] transition-all duration-300"
+                className="px-4 py-2 h-fit  text-white bg-red-500 hover:border-black   border  rounded-2xl    active:border-[2px] transition-all duration-300"
               >
                 Clear
               </button>
               <button
                 onClick={markForReview}
-                className="px-4 py-4 h-fit  text-black hover:border-black border opacity-90 shadow-md font-semibold rounded-lg mr-4 hover:opacity-100 active:border-[2px] transition-all duration-300"
+                className="px-4 py-2 h-fit  text-white bg-violet-500 hover:border-black border     rounded-2xl   active:border-[2px] transition-all duration-300"
               >
                 Mark for Review and Next
               </button>
-            </div>
 
-            <div className="border-black py-6 flex gap-5">
               <button
                 onClick={prevQuestion}
                 disabled={currentQuestionIndex === 0}
-                className="px-4 py-4 text-black bg-gray-100 shadow font-semibold border border-gray-100 hover:border-gray-800 rounded-lg tracking-wider disabled:text-gray-300 active:border-[2px] transition-all duration-300"
+                className="px-4 py-2 text-black bg-gray-100 shadow h-fit   border border-gray-100 hover:border-gray-600 rounded-2xl tracking-wider disabled:text-gray-300 active:border-[2px] transition-all duration-300"
               >
                 Previous
               </button>
               <button
                 onClick={nextQuestion}
                 disabled={currentQuestionIndex === totalQuestions - 1}
-                className="px-7 py-4 text-black bg-gray-100 shadow font-semibold border border-gray-100 hover:border-gray-800 rounded-lg tracking-wider disabled:text-gray-300 active:border-[2px] transition-all duration-300"
+                className="px-7 py-2 text-black bg-gray-100 shadow h-fit  border border-gray-100 hover:border-gray-600 rounded-2xl tracking-wider disabled:text-gray-300 active:border-[2px] transition-all duration-300"
               >
                 Next
               </button>
-            </div>
+            </div>{" "}
           </div>
         </div>
 
@@ -303,7 +317,7 @@ const TestPage = () => {
           {["Physics", "Chemistry", "Mathematics"].map((subject) => (
             <div key={subject} className="bg-white rounded-md mb-5">
               <div className="border-b mb-4 py-2">{subject}</div>
-              <div className="flex flex-wrap gap-3">
+              <div className="flex flex-wrap gap-3  ">
                 {testQuestions
                   .filter((question) => question.subject === subject)
                   .map((question, overallIndex) => {
@@ -313,13 +327,14 @@ const TestPage = () => {
                     if (visited.has(index)) bgColor = "bg-orange-300"; // Visited
                     if (answers[index]) bgColor = "bg-emerald-500"; // Answered
                     if (markedForReview.has(index)) bgColor = "bg-violet-300"; // Marked for Review
-                    
-                    if (markedForReview.has(index)&&answers[index]) bgColor = "bg-violet-500"; // Marked for Review
+
+                    if (markedForReview.has(index) && answers[index])
+                      bgColor = "bg-violet-500"; // Marked for Review
 
                     return (
                       <button
                         key={index}
-                        className={`w-10 h-10 rounded-xl text-white ${bgColor}`}
+                        className={`w-10 h-10 rounded-xl text-white font-instSansB font-semibold ${bgColor}`}
                         onClick={() => goToQuestion(index)}
                       >
                         {index + 1}
