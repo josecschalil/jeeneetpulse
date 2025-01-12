@@ -55,20 +55,20 @@ class LectureVideo(models.Model):
     video_path = models.CharField(max_length=500)
 
 class Exam(models.Model):
-    LEVEL_CHOICES = [
-        (1, 'Level 1'),
-        (2, 'Level 2'),
-        (3, 'Level 3'),
-    ]
+   
     exam_id = models.UUIDField(default=uuid.uuid4, editable=False, unique=True,primary_key=True)
     chapter = models.ForeignKey(Chapter, on_delete=models.CASCADE, related_name='exams')
     exam_title = models.CharField(max_length=255)
-    level = models.IntegerField(choices=LEVEL_CHOICES, default=1)
     def __str__(self):
         return f"{self.exam_title}"
     
 
 class Question(models.Model):
+    LEVEL_CHOICES = [
+        (1, 'Level 1'),
+        (2, 'Level 2'),
+        (3, 'Level 3'),
+    ]
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     exam = models.ForeignKey(
         'Exam', 
@@ -103,6 +103,7 @@ class Question(models.Model):
     concept_involved = models.CharField(max_length=255, blank=True, null=True)
     solution_text = models.TextField(blank=True, null=True)
     diagram_image = models.ImageField(upload_to='question_diagrams/', blank=True, null=True)
+    level = models.IntegerField(choices=LEVEL_CHOICES, default=1)
 
     class Meta:
         ordering = ['chapter', 'id']
