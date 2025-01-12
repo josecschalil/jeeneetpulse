@@ -40,7 +40,7 @@ class Subject(models.Model):
         return f"{self.name} - {self.course.title}"
 
 class Chapter(models.Model):
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    id = models.UUIDField(default=uuid.uuid4, editable=False, unique=True,primary_key=True)
     name = models.CharField(max_length=255)
     subject = models.ForeignKey(Subject, on_delete=models.CASCADE)
 
@@ -55,7 +55,8 @@ class LectureVideo(models.Model):
     video_path = models.CharField(max_length=500)
 
 class Exam(models.Model):
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+   
+    exam_id = models.UUIDField(default=uuid.uuid4, editable=False, unique=True,primary_key=True)
     chapter = models.ForeignKey(Chapter, on_delete=models.CASCADE, related_name='exams')
     exam_title = models.CharField(max_length=255)
     def __str__(self):
@@ -63,18 +64,46 @@ class Exam(models.Model):
     
 
 class Question(models.Model):
+    LEVEL_CHOICES = [
+        (1, 'Level 1'),
+        (2, 'Level 2'),
+        (3, 'Level 3'),
+    ]
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    exam = models.ForeignKey(Exam, on_delete=models.CASCADE, related_name='exam_questions', db_index=True, blank=True, null=True)
-    chapter = models.ForeignKey(Chapter, on_delete=models.CASCADE, related_name='chapter_questions', db_index=True, blank=True, null=True)
-    question_text = models.TextField()
-    option_a = models.TextField()
-    option_b = models.TextField()
-    option_c = models.TextField()
-    option_d = models.TextField()
-    correct_answer = models.CharField(max_length=1, choices=[('A', 'Option A'), ('B', 'Option B'), ('C', 'Option C'), ('D', 'Option D')])
+    exam = models.ForeignKey(
+        'Exam', 
+        on_delete=models.CASCADE, 
+        related_name='exam_questions', 
+        db_index=True, 
+        blank=True, 
+        null=True
+    )
+    chapter = models.ForeignKey(
+        'Chapter', 
+        on_delete=models.CASCADE, 
+        related_name='chapter_questions', 
+        db_index=True, 
+        blank=True, 
+        null=True
+    )
+    question_text = models.TextField(blank=True, null=True)
+    question_image = models.ImageField(upload_to='question_images/', blank=True, null=True)
+    option_a_text = models.TextField(blank=True, null=True)
+    option_a_image = models.ImageField(upload_to='option_images/', blank=True, null=True)
+    option_b_text = models.TextField(blank=True, null=True)
+    option_b_image = models.ImageField(upload_to='option_images/', blank=True, null=True)
+    option_c_text = models.TextField(blank=True, null=True)
+    option_c_image = models.ImageField(upload_to='option_images/', blank=True, null=True)
+    option_d_text = models.TextField(blank=True, null=True)
+    option_d_image = models.ImageField(upload_to='option_images/', blank=True, null=True)
+    correct_answer = models.CharField(
+        max_length=1, 
+        choices=[('A', 'Option A'), ('B', 'Option B'), ('C', 'Option C'), ('D', 'Option D')]
+    )
     concept_involved = models.CharField(max_length=255, blank=True, null=True)
     solution_text = models.TextField(blank=True, null=True)
     diagram_image = models.ImageField(upload_to='question_diagrams/', blank=True, null=True)
+    level = models.IntegerField(choices=LEVEL_CHOICES, default=1)
 
     class Meta:
         ordering = ['chapter', 'id']
@@ -111,3 +140,8 @@ class UserExamData(models.Model):
 
     def __str__(self):
         return f"ExamAttempt (User: {self.user.username}, Exam: {self.exam_id}, Attempt: {self.attempt_number})"
+
+
+
+
+

@@ -7,7 +7,6 @@ from rest_framework.response import Response
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.filters import OrderingFilter, SearchFilter
 
-
 class SubjectViewSet(viewsets.ModelViewSet):
     permission_classes = [AllowAny]
     queryset = Subject.objects.all()
@@ -27,6 +26,9 @@ def bulk_create_chapters(request):
             return Response(ChapterSerializer(chapters, many=True).data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
+
+
+
 class CourseViewSet(viewsets.ModelViewSet):
     permission_classes = [AllowAny]
     queryset = Course.objects.all()
@@ -73,13 +75,42 @@ class QuestionViewSet(viewsets.ModelViewSet):
     permission_classes = [AllowAny]
     queryset = Question.objects.all()
     serializer_class = QuestionSerializer
-    @action(detail=False, methods=['get'], url_path='(?P<chapter_id>[^/.]+)')
+    @action(detail=False, methods=['get'], url_path='chapter/(?P<chapter_id>[^/.]+)')
     def get_questions_by_chapter(self, request, chapter_id=None):
         questions = Question.objects.filter(chapter_id=chapter_id)
         if questions.exists():
-            serializer = ExamSerializer(questions, many=True)
+            serializer = QuestionSerializer(questions, many=True)
             return Response(serializer.data, status=200)
         return Response({"detail": "No questions found for this chapter."}, status=404)
+
+    @action(detail=False, methods=['get'], url_path='exam-id/(?P<exam_id>[^/.]+)')
+    def get_questions_by_exam_id(self, request, exam_id=None):
+        questions = Question.objects.filter(exam_id=exam_id)
+        if questions.exists():
+            serializer = QuestionSerializer(questions, many=True)
+            return Response(serializer.data, status=200)
+        return Response({"detail": "No questions found for this Exam."}, status=404)
+    @action(detail=True, methods=['put'], url_path='update')
+    def update_question(self, request, pk=None):
+    
+        question = self.get_object() 
+        serializer = self.get_serializer(question, data=request.data)
+        
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    @action(detail=True, methods=['patch'], url_path='partial-update')
+    def partial_update_question(self, request, pk=None):
+        question = self.get_object()  # Retrieve the question instance based on the pk
+        serializer = self.get_serializer(question, data=request.data, partial=True)
+        
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
 
 class CourseAddViewSet(viewsets.ModelViewSet):
     
