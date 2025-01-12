@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
-import { tests } from "../data"; // Assuming you have a test data file
+import { tests } from "../data"; 
 import {
   Chart as ChartJS,
   BarElement,
@@ -38,8 +38,7 @@ const AnalysisPage = () => {
 
   const totalQuestions = testQuestions.length;
 
-  // Subject-wise categorization
-  // Categorize questions first
+
 const categorizedQuestions = testQuestions.map((question, index) => {
   const isCorrect = answers[index] === question.correct;
   const isAnswered = answers[index] !== undefined;
@@ -53,7 +52,7 @@ const categorizedQuestions = testQuestions.map((question, index) => {
   };
 });
 
-// Subject-wise data aggregation
+
 const subjects = ["Physics", "Chemistry", "Mathematics"];
 const subjectData = subjects.map((subject) => {
   const subjectQuestions = categorizedQuestions.filter(

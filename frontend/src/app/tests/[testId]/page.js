@@ -13,7 +13,7 @@ const TestPage = () => {
   const [visited, setVisited] = useState(new Set());
   const [markedForReview, setMarkedForReview] = useState(new Set());
   const [isSubmitted, setIsSubmitted] = useState(false);
-  const [timeRemaining, setTimeRemaining] = useState(1900); // Default 30 mins
+  const [timeRemaining, setTimeRemaining] = useState(1000); 
   const [isTimerRunning, setIsTimerRunning] = useState(true);
   const [isInitialized, setIsInitialized] = useState(false);
 
@@ -37,16 +37,7 @@ const TestPage = () => {
 
   useEffect(() => {
     if (isInitialized) {
-      const dataToSave = {
-        currentQuestionIndex,
-        answers,
-        visited: Array.from(visited), // Convert Set to Array for storage
-        markedForReview: Array.from(markedForReview), // Convert Set to Array for storage
-        timeRemaining,
-        isTimerRunning,
-        isSubmitted, // Include this to persist submission status
-      };
-      localStorage.setItem(testId, JSON.stringify(dataToSave));
+      saveData();
     }
   }, [
     currentQuestionIndex,
@@ -90,7 +81,6 @@ const TestPage = () => {
       visited: Array.from(visited), // Convert Set to Array for storage
       markedForReview: Array.from(markedForReview), // Convert Set to Array for storage
       timeRemaining,
-      
       isTimerRunning,
       isSubmitted,
     };
@@ -201,14 +191,7 @@ const TestPage = () => {
       <div className="flex justify-between bg-white border-t flex-col md:flex-row h-[90%] ">
         <div className="md:w-[70vw] flex flex-col">
           <div className="p-6 bg-white rounded-xl font-jakarta">
-            {isSubmitted ? (
-              <div className="text-center">
-                <h2 className="text-2xl ">
-                  Your Score: {calculateScore()} / {totalQuestions}
-                </h2>
-              </div>
-            ) : (
-              <>
+           
               
                 <p className="text-lg mb-4">
                 {currentQuestionIndex + 1}. {testQuestions[currentQuestionIndex]?.question}
@@ -237,8 +220,7 @@ const TestPage = () => {
                     )
                   )}
                 </div>
-              </>
-            )}
+ 
           </div>
           <div className="border-t flex p-2 px-6 mt-auto flex-row max1:flex-col">
             <div className="my-5 flex font-instSansB mx-auto gap-5 items-center ">
