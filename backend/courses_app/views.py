@@ -16,14 +16,12 @@ class SubjectViewSet(viewsets.ModelViewSet):
     search_fields = ['name', 'type']
     ordering_fields = ['name', 'type']
 
-
-#for bulk orders in works if you put access token - (of any user now, since auth is __ALL__)
 @api_view(['POST'])
 def bulk_create_chapters(request):
     if request.method == 'POST':
         serializer = ChapterSerializer(data=request.data, many=True)
         if serializer.is_valid():
-            # Bulk create chapters in the database
+          
             chapters = serializer.save()
             return Response(ChapterSerializer(chapters, many=True).data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
@@ -90,19 +88,103 @@ class QuestionViewSet(viewsets.ModelViewSet):
     
 
 class CourseAddViewSet(viewsets.ModelViewSet):
+    
     permission_classes = [AllowAny]
     queryset = UserCourseData.objects.all()
     serializer_class = UserCourseDataSerializer
+
     @action(detail=False, methods=['get'], url_path='(?P<user_id>[^/.]+)')
     def get_courses_by_user(self, request, user_id=None):
-        purchases = UserCourseData.objects.filter(user_id=user_id).select_related('course')
+        """
+        Retrieve courses for a specific user by user_id.
+        """
+        if not user_id:
+            return Response(
+                {"error": "User ID is required."},
+                status=status.HTTP_400_BAD_REQUEST
+            )
         
+        purchases = UserCourseData.objects.filter(user_id=user_id).select_related('course')
+
         course_data = [
             {
-                "course_code": purchase.course.id,
+                "course_id": purchase.course.id,
                 "progress": purchase.progress,
             }
             for purchase in purchases
         ]
-        
-        return Response({'user_id': user_id, 'courses': course_data})
+
+        return Response(
+            {
+                "user_id": user_id,
+                "courses": course_data,
+            },
+            status=status.HTTP_200_OK
+        )
+
+    @action(detail=False, methods=['put'], url_path='(?P<user_id>[^/.]+)/(?P<course_id>[^/.]+)/update-progress')
+    def update_course_progress(self, request, user_id=None, course_id=None):
+        """
+        Update the progress of a specific course for a user using user_id and course_id from the URL.
+        """
+        try:
+            if not user_id or not course_id:
+                return Response(
+                    {"error": "Both user_id and course_id are required in the URL."},
+                    status=status.HTTP_400_BAD_REQUEST
+                )
+
+            # Retrieve the specific UserCourseData object
+            user_course_data = UserCourseData.objects.filter(user_id=user_id, course_id=course_id).first()
+
+            if not user_course_data:
+                return Response(
+                    {"error": "No matching record found for the provided user_id and course_id."},
+                    status=status.HTTP_404_NOT_FOUND
+                )
+
+            # Use the serializer to validate and save the progress update
+            serializer = self.get_serializer(user_course_data, data=request.data, partial=True)
+            serializer.is_valid(raise_exception=True)
+            serializer.save()
+
+            return Response(serializer.data, status=status.HTTP_200_OK)
+
+        except Exception as e:
+            return Response(
+                {"error": str(e)},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
+    @action(detail=False, methods=['post'], url_path='purchase-course')
+    def purchase_course(self, request):
+       
+        user_id = request.data.get('user_id')
+        course_id = request.data.get('course_id')
+
+        if not user_id or not course_id:
+            return Response(
+                {"error": "Both user_id and course_id are required."},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
+        try:
+            # Try to create a new purchase record
+            data = {
+                'user': user_id,
+                'course': course_id,
+                'progress': 0  # Initial progress can be set to 0 or as needed
+            }
+
+            serializer = UserCourseDataSerializer(data=data)
+            if serializer.is_valid():
+                serializer.save()
+                return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+        except IntegrityError:
+            return Response(
+                {"error": "This course has already been purchased by the user."},
+                status=status.HTTP_400_BAD_REQUEST
+            )

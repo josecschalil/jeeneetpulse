@@ -80,14 +80,17 @@ class Question(models.Model):
 
     def __str__(self):
         return f"Question {self.id} - Exam {self.exam.name}"
-
+        
 class UserCourseData(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='purchases')
-    course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name='purchased_courses')
-    progress = models.IntegerField(default=0) #for progress showing in front
+    course = models.ForeignKey('Course', on_delete=models.CASCADE, related_name='purchased_courses')
+    progress = models.IntegerField(default=0)  # Progress showing in front
 
     def __str__(self):
         return f"{self.user.username} - {self.course.code} - {self.progress}%"
 
-
-
+    class Meta:
+        # Ensure that a user can only purchase a course once by making the combination of user and course unique
+        constraints = [
+            models.UniqueConstraint(fields=['user', 'course'], name='unique_user_course_purchase')
+        ]
