@@ -46,7 +46,7 @@ INSTALLED_APPS = [
     'djoser',
     'django.contrib.sites',
     'corsheaders',
-
+    'channels',
     'courses_app',
     'django_filters',
    
@@ -113,6 +113,17 @@ TEMPLATES = [
 WSGI_APPLICATION = 'backend.wsgi.application'
 
 
+ASGI_APPLICATION = 'backend.asgi.application'
+
+
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            "hosts": [('127.0.0.1', 6379)],  # Use Redis' default port
+        },
+    },
+}
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 

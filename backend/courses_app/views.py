@@ -27,15 +27,10 @@ def bulk_create_chapters(request):
             return Response(ChapterSerializer(chapters, many=True).data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
-
-
-
 class CourseViewSet(viewsets.ModelViewSet):
     permission_classes = [AllowAny]
     queryset = Course.objects.all()
     serializer_class = CourseSerializer
-
-
 
 class ChapterViewSet(viewsets.ModelViewSet):
     permission_classes = [AllowAny]
@@ -85,8 +80,6 @@ class QuestionViewSet(viewsets.ModelViewSet):
             serializer = ExamSerializer(questions, many=True)
             return Response(serializer.data, status=200)
         return Response({"detail": "No questions found for this chapter."}, status=404)
-
-    
 
 class CourseAddViewSet(viewsets.ModelViewSet):
     
@@ -186,8 +179,6 @@ class CourseAddViewSet(viewsets.ModelViewSet):
                 status=status.HTTP_400_BAD_REQUEST
             )
 
-
-
 class UserExamDataViewSet(viewsets.ModelViewSet):
     
     permission_classes = [AllowAny]
@@ -209,6 +200,7 @@ class UserExamDataViewSet(viewsets.ModelViewSet):
 
         serializer = self.get_serializer(queryset, many=True)
         return Response(serializer.data)
+    
     @action(detail=False, methods=['put'], url_path='update')
     def update_exam_data(self, request):
     

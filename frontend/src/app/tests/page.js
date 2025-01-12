@@ -1,71 +1,117 @@
 "use client";
 import React, { useEffect, useState } from "react";
+import axios from "axios";
+import Head from "next/head";
+import { useParams } from "next/navigation";
 import Link from "next/link";
 
 const TestsPage = () => {
-  const tests = [
-    { id: 1, title: "Mock Test 1", date: "2024-12-15" },
-    { id: 2, title: "Mock Test 2", date: "2024-12-22" },
-    { id: 3, title: "Mock Test 3 - main guy", date: "2024-12-22" },
-  ];
+  const userId = localStorage.getItem("user_id");  // Assuming "user_id" is stored in localStorage
+  const testId = "3"; // This can be dynamic depending on your route
 
-  const [completedTests, setCompletedTests] = useState({});
+  const [isactive, setIsactive] = useState(false);
+  const [isInitialized, setIsInitialized] = useState(false);
 
+  // Fetch the test data on mount
   useEffect(() => {
-    // Check localStorage for test IDs
-    const storedTests = {};
-    tests.forEach((test) => {
-      const savedData = localStorage.getItem(test.id);
-      if (savedData) {
-        storedTests[test.id] = true;
+    const fetchTestData = async () => {
+      try {
+        const response = await axios.get(
+          `http://127.0.0.1:8000/api/exam-data/filter/?user=${userId}&exam_id=${testId}`
+        );
+        if (response.data && response.data.length > 0) {
+          const examData = response.data[0];
+          console.log(examData.is_active)
+          setIsactive(examData.is_active); 
+        }
+      } catch (error) {
+        console.error("Error fetching exam data:", error);
       }
-    });
-    setCompletedTests(storedTests);
-  }, []);
+    };
+
+    if (userId && testId) {
+      fetchTestData();
+    }
+  }, [userId, testId]); // Fetch when either userId or testId changes
+
+  // Function to handle posting the payload when starting a test
+  const handleStartTest = async () => {
+    if (!userId || !testId) {
+      console.error("Missing user_id or testId");
+      return;
+    }
+
+    const payload = {
+      exam_id: testId,
+      current_question_index: 1,
+      answers: {},
+      visited: [],
+      marked_for_review: [],
+      time_remaining: 1800,
+      is_timer_running: false,
+      is_active: false,
+      attempt_number: 1,
+      user: userId,
+      isactive:true
+    };
+
+    try {
+      const response = await axios.post("http://127.0.0.1:8000/api/exam-data/", payload);
+      console.log("Test started successfully:", response.data);
+    } catch (error) {
+      console.error("Error starting the test:", error);
+    }
+  };
+
+  // Function to handle resuming the test
+  const handleResumeTest = () => {
+    console.log("Resuming test...");
+    // Implement logic to resume the test here, like navigating to the test page
+  };
 
   return (
-    <div className="min-h-screen bg-gray-100 py-10">
-      <div className="max-w-6xl mx-auto">
-        <h2 className="text-3xl font-bold text-gray-800">Tests</h2>
-        <div className="mt-6">
-          {tests.map((test) => (
-            <div key={test.id} className="bg-white shadow-md p-4 rounded-lg my-4">
-              <h3 className="text-xl font-semibold">{test.title}</h3>
-              <p className="text-gray-600">Scheduled on: {test.date}</p>
-              <div className="mt-4 flex space-x-4">
-
-  {!completedTests[test.id] &&(
     <>
-     <Link href={`/tests/${test.id}`}>
-                  <button className="bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700">
-                    Start Test
+      <Head>
+        <title>Mock Tests | Schedule & Analysis</title>
+        <meta
+          name="description"
+          content="Prepare for exams with our mock tests. Check schedules, start tests, and analyze your performance."
+        />
+      </Head>
+      <main className="min-h-screen bg-gray-100 py-10">
+        <section className="max-w-6xl mx-auto">
+          <h1 className="text-3xl font-bold text-gray-800">Mock Tests</h1>
+          <div className="mt-6">
+            <article className="bg-white shadow p-4 rounded-lg my-4">
+              <h2 className="text-xl font-semibold">Mock Test {testId}</h2>
+              <p className="text-gray-600">Scheduled on: December 22, 2024</p>
+              <div className="mt-4 flex space-x-4">
+                {/* Conditional rendering based on isactive and isInitialized */}
+                {!isactive ? (
+                  <Link href={`/tests/${testId}`}>
+                    <button
+                      onClick={handleStartTest}
+                      aria-label={`Start Mock Test ${testId}`}
+                      className="bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700"
+                    >
+                      Start Test
+                    </button>
+                  </Link>
+                ) : isactive ? (
+                  <button
+                    onClick={handleResumeTest}
+                    aria-label={`Resume Mock Test ${testId}`}
+                    className="bg-orange-600 text-white py-2 px-4 rounded hover:bg-orange-700"
+                  >
+                    Resume Test
                   </button>
-                </Link>
-</>  )}
-               
-                {completedTests[test.id] && (
-                  <>
-
-                    <Link href={`/analysis/${test.id}`}>
-                      <button className="bg-green-600 text-white py-2 px-4 rounded-lg hover:bg-green-700">
-                        Analysis
-                      </button>
-                    </Link>
-
-
-                    <Link href={`/tests/${test.id}`}>
-                      <button className="bg-yellow-600 text-white py-2 px-4 rounded-lg hover:bg-yellow-700">
-                        Retake Exam
-                      </button>
-                    </Link>
-                  </>
-                )}
+                ) : null}
               </div>
-            </div>
-          ))}
-        </div>
-      </div>
-    </div>
+            </article>
+          </div>
+        </section>
+      </main>
+    </>
   );
 };
 

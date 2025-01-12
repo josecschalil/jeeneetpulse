@@ -13,8 +13,7 @@ router.register(r'userCourses', CourseAddViewSet)
 router.register(r'exam-data',UserExamDataViewSet)
 
 urlpatterns = [
-    path('chapters/bulk/', bulk_create_chapters, name='bulk-create-chapters'),
-   
+    path('chapters/bulk/', bulk_create_chapters, name='bulk-create-chapters'),  
 ]
 
 

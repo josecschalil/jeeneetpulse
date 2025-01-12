@@ -3,37 +3,71 @@
 import { useParams } from "next/navigation";
 import { useState, useEffect } from "react";
 import { tests } from "../data";
+import axios from "axios";
 import { useRouter } from "next/navigation";
 const TestPage = () => {
   const router = useRouter();
   const { testId } = useParams();
+  const userId = localStorage.getItem("user_id");
 
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [answers, setAnswers] = useState({});
   const [visited, setVisited] = useState(new Set());
   const [markedForReview, setMarkedForReview] = useState(new Set());
   const [isSubmitted, setIsSubmitted] = useState(false);
-  const [timeRemaining, setTimeRemaining] = useState(1000); 
+  const [timeRemaining, setTimeRemaining] = useState(1000);
   const [isTimerRunning, setIsTimerRunning] = useState(true);
   const [isInitialized, setIsInitialized] = useState(false);
+  const [tableId, setTableId] = useState(null);
 
   useEffect(() => {
-    if (testId) {
-      const savedData = localStorage.getItem(testId);
-      if (savedData) {
-        const parsedData = JSON.parse(savedData);
-        setCurrentQuestionIndex(parsedData.currentQuestionIndex || 0);
-        setAnswers(parsedData.answers || {});
-        setVisited(new Set(parsedData.visited || []));
-        setMarkedForReview(new Set(parsedData.markedForReview || []));
-        setTimeRemaining(parsedData.timeRemaining || 1800);
-        setIsSubmitted(parsedData.isSubmitted || false); // Ensure correct retrieval
-        setIsTimerRunning(parsedData.isTimerRunning); // Restore the exact state
+    const fetchInstanceId = async () => {
+      try {
+        const response = await axios.get(
+          `http://127.0.0.1:8000/api/exam-data/filter/?user=${userId}&exam_id=${testId}`
+        );
+        if (response.data) {
+          const fetchedId = response.data[0].id;
+          setTableId(fetchedId);
+        }
+      } catch (error) {
+        console.error("Error fetching exam data:", error);
       }
-      setIsInitialized(true);
+    };
+
+    fetchInstanceId();
+  }, [testId, userId]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        if (!tableId) return;
+
+        const response = await axios.get(
+          `http://127.0.0.1:8000/api/exam-data/${tableId}`
+        );
+        const data = response.data;
+        console.log(data);
+
+        if (data) {
+          setCurrentQuestionIndex(data.current_question_index || 0);
+          setAnswers(data.answers || {});
+          setVisited(new Set(data.visited || []));
+          setMarkedForReview(new Set(data.marked_for_review || []));
+          setTimeRemaining(data.time_remaining || 1800);
+          setIsSubmitted(data.is_submitted || false);
+          setIsTimerRunning(data.is_timer_running || false);
+        }
+        setIsInitialized(true);
+      } catch (error) {
+        console.error("Error fetching exam data:", error);
+      }
+    };
+
+    if (tableId) {
+      fetchData();
     }
-  }, [testId]);
-  
+  }, [tableId]);
 
   useEffect(() => {
     if (isInitialized) {
@@ -50,20 +84,20 @@ const TestPage = () => {
     isInitialized,
     isSubmitted,
   ]);
-  
+
   useEffect(() => {
     if (isInitialized && !isSubmitted) {
       const timer = setInterval(() => {
         setTimeRemaining((prevTime) => (prevTime > 0 ? prevTime - 1 : 0));
       }, 1000);
-  
-      return () => clearInterval(timer); // Cleanup timer on unmount or when dependencies change
+
+      return () => clearInterval(timer);
     }
   }, [isInitialized, isSubmitted]);
-  
+
   const AttemptLater = () => {
-    saveData(); // Save current progress to localStorage
-    router.push("/tests"); // Navigate to the tests page
+    saveData();
+    router.push("/tests");
   };
 
   const testQuestions = tests[testId] || [];
@@ -74,17 +108,26 @@ const TestPage = () => {
     setVisited(new Set([...visited, currentQuestionIndex]));
   };
 
-  const saveData = () => {
+  const saveData = async () => {
     const dataToSave = {
-      currentQuestionIndex,
+      current_question_index: currentQuestionIndex,
       answers,
-      visited: Array.from(visited), // Convert Set to Array for storage
-      markedForReview: Array.from(markedForReview), // Convert Set to Array for storage
-      timeRemaining,
-      isTimerRunning,
-      isSubmitted,
+      visited: Array.from(visited),
+      marked_for_review: Array.from(markedForReview),
+      time_remaining: timeRemaining,
+      is_timer_running: isTimerRunning,
+      is_submitted: isSubmitted,
     };
-    localStorage.setItem(testId, JSON.stringify(dataToSave));
+
+    try {
+      const response = await axios.patch(
+        `http://127.0.0.1:8000/api/exam-data/${tableId}/`,
+        dataToSave
+      );
+      console.log("Data saved successfully:", response.data);
+    } catch (error) {
+      console.error("Error saving data:", error);
+    }
   };
 
   const handleSubmit = () => {
@@ -94,10 +137,9 @@ const TestPage = () => {
     if (confirmSubmit) {
       setIsSubmitted(true);
       router.push(`/analysis/${testId}`);
-      saveData(); // Persist the submission state immediately
+      saveData();
     }
   };
-  
 
   const TimerComponent = ({ timeRemaining }) => {
     const formatTime = (time) => {
@@ -191,36 +233,34 @@ const TestPage = () => {
       <div className="flex justify-between bg-white border-t flex-col md:flex-row h-[90%] ">
         <div className="md:w-[70vw] flex flex-col">
           <div className="p-6 bg-white rounded-xl font-jakarta">
-           
-              
-                <p className="text-lg mb-4">
-                {currentQuestionIndex + 1}. {testQuestions[currentQuestionIndex]?.question}
-                </p>
-                {/* Options */}
-                <div className="grid grid-cols-2 gap-3 w-[80%] mt-8">
-                  {testQuestions[currentQuestionIndex]?.options.map(
-                    (option, index) => (
-                      <label
-                        key={index}
-                        className={`block p-2 px-4 py-4 rounded-xl transition cursor-pointer border ${
-                          answers[currentQuestionIndex] === option
-                            ? "bg-blue-100 border-blue-500"
-                            : "border-gray-300"
-                        }`}
-                      >
-                        <input
-                          type="radio"
-                          name={`question-${currentQuestionIndex}`}
-                          checked={answers[currentQuestionIndex] === option}
-                          onChange={() => handleAnswer(option)}
-                          className="hidden"
-                        />
-                        {option}
-                      </label>
-                    )
-                  )}
-                </div>
- 
+            <p className="text-lg mb-4">
+              {currentQuestionIndex + 1}.{" "}
+              {testQuestions[currentQuestionIndex]?.question}
+            </p>
+            {/* Options */}
+            <div className="grid grid-cols-2 gap-3 w-[80%] mt-8">
+              {testQuestions[currentQuestionIndex]?.options.map(
+                (option, index) => (
+                  <label
+                    key={index}
+                    className={`block p-2 px-4 py-4 rounded-xl transition cursor-pointer border ${
+                      answers[currentQuestionIndex] === option
+                        ? "bg-blue-100 border-blue-500"
+                        : "border-gray-300"
+                    }`}
+                  >
+                    <input
+                      type="radio"
+                      name={`question-${currentQuestionIndex}`}
+                      checked={answers[currentQuestionIndex] === option}
+                      onChange={() => handleAnswer(option)}
+                      className="hidden"
+                    />
+                    {option}
+                  </label>
+                )
+              )}
+            </div>
           </div>
           <div className="border-t flex p-2 px-6 mt-auto flex-row max1:flex-col">
             <div className="my-5 flex font-instSansB mx-auto gap-5 items-center ">

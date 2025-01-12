@@ -106,6 +106,7 @@ class UserExamData(models.Model):
     time_remaining = models.IntegerField()
     is_timer_running = models.BooleanField()
     is_submitted = models.BooleanField()
+    is_active = models.BooleanField()
     attempt_number = models.IntegerField()
 
     def __str__(self):
