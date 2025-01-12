@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Course, Subject, Chapter, LectureVideo, Exam, Question,UserCourseData,QuizState
+from .models import Course, Subject, Chapter, LectureVideo, Exam, Question,UserCourseData,UserExamData
 
 class CourseSerializer(serializers.ModelSerializer):
     class Meta:
@@ -43,25 +43,8 @@ class QuestionSerializer(serializers.ModelSerializer):
         model = Question
         fields = '__all__'
 
-class QuizStateSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = QuizState
-        fields = [
-            'id',
-            'user',
-            'exam_id',
-            'current_question_index',
-            'answers',
-            'visited',
-            'marked_for_review',
-            'time_remaining',
-            'is_timer_running',
-            'is_submitted',
-            'attempt_number',
-        ]
-        read_only_fields = ['user', 'attempt_number']
 
-        
+
 class UserCourseDataSerializer(serializers.ModelSerializer):
     course = serializers.PrimaryKeyRelatedField(queryset=Course.objects.all())
     course_details = CourseUserSerializer(source='course', read_only=True)
@@ -69,5 +52,11 @@ class UserCourseDataSerializer(serializers.ModelSerializer):
     class Meta:
         model = UserCourseData
         fields = '__all__'  
+
+class UserExamDataSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = UserExamData
+        fields = '__all__'  
+
 
 

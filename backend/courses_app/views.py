@@ -1,12 +1,12 @@
 from rest_framework import viewsets,status
-from .models import Course, Subject, Chapter, LectureVideo, Exam, Question,UserCourseData,QuizState
-from .serializers import CourseSerializer, SubjectSerializer, ChapterSerializer, LectureVideoSerializer, ExamSerializer, QuestionSerializer,UserCourseDataSerializer,QuizStateSerializer
+from .models import Course, Subject, Chapter, LectureVideo, Exam, Question,UserCourseData,UserExamData
+from .serializers import CourseSerializer, SubjectSerializer, ChapterSerializer, LectureVideoSerializer, ExamSerializer, QuestionSerializer,UserCourseDataSerializer,UserExamDataSerializer
 from rest_framework.permissions import AllowAny
 from rest_framework.decorators import action,api_view
 from rest_framework.response import Response
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.filters import OrderingFilter, SearchFilter
-from rest_framework.views import APIView
+
 
 class SubjectViewSet(viewsets.ModelViewSet):
     permission_classes = [AllowAny]
@@ -187,91 +187,59 @@ class CourseAddViewSet(viewsets.ModelViewSet):
             )
 
 
-class QuizStateView(APIView):
+
+class UserExamDataViewSet(viewsets.ModelViewSet):
+    
     permission_classes = [AllowAny]
+    queryset = UserExamData.objects.all()
+    serializer_class = UserExamDataSerializer
+    @action(detail=False, methods=['get'], url_path='filter')
+    def filter_exam_data(self, request):
+    
+        user_id = request.query_params.get('user', None)
+        exam_id = request.query_params.get('exam_id', None)
 
-    def get(self, request, pk=None):
-        user = request.user
+        queryset = UserExamData.objects.all()
 
-        if pk:
-            try:
-                quiz_state = QuizState.objects.get(pk=pk, user=user)
-                serializer = QuizStateSerializer(quiz_state)
-                return Response(serializer.data, status=status.HTTP_200_OK)
-            except QuizState.DoesNotExist:
-                return Response({"error": "QuizState not found or not accessible"}, status=status.HTTP_404_NOT_FOUND)
+        if user_id:
+            queryset = queryset.filter(user=user_id)
+        
+        if exam_id:
+            queryset = queryset.filter(exam_id=exam_id)
 
-        return Response({"error": "QuizState ID is required"}, status=status.HTTP_400_BAD_REQUEST)
+        serializer = self.get_serializer(queryset, many=True)
+        return Response(serializer.data)
+    @action(detail=False, methods=['put'], url_path='update')
+    def update_exam_data(self, request):
+    
+        user_id = request.query_params.get('user', None)
+        exam_id = request.query_params.get('exam_id', None)
 
-    def put(self, request, pk=None):
-        user = request.user
+        if not user_id or not exam_id:
+            return Response(
+                {"detail": "Both 'user' and 'exam_id' must be provided as query parameters."},
+                status=status.HTTP_400_BAD_REQUEST
+            )
 
-        if pk:
-            try:
-                quiz_state = QuizState.objects.get(pk=pk, user=user)
-                serializer = QuizStateSerializer(quiz_state, data=request.data, context={'request': request})
-                if serializer.is_valid():
-                    serializer.save()
-                    return Response(serializer.data, status=status.HTTP_200_OK)
-                return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-            except QuizState.DoesNotExist:
-                return Response({"error": "QuizState not found or not accessible"}, status=status.HTTP_404_NOT_FOUND)
+        try:
+            instance = UserExamData.objects.get(user=user_id, exam_id=exam_id)
+        except UserExamData.DoesNotExist:
+            return Response(
+                {"detail": "UserExamData with the given user and exam_id does not exist."},
+                status=status.HTTP_404_NOT_FOUND
+            )
 
-        return Response({"error": "QuizState ID is required"}, status=status.HTTP_400_BAD_REQUEST)
+        update_data = request.data.copy()
 
-    def delete(self, request, pk=None):
-        user = request.user
+        
+        update_data.pop('user', None)
+        update_data.pop('exam_id', None)
 
-        if pk:
-            try:
-                quiz_state = QuizState.objects.get(pk=pk, user=user)
-                quiz_state.delete()
-                return Response({"message": "QuizState deleted successfully"}, status=status.HTTP_204_NO_CONTENT)
-            except QuizState.DoesNotExist:
-                return Response({"error": "QuizState not found or not accessible"}, status=status.HTTP_404_NOT_FOUND)
 
-        return Response({"error": "QuizState ID is required"}, status=status.HTTP_400_BAD_REQUEST)
+        serializer = self.get_serializer(instance, data=update_data, partial=True)
 
-class StartExamView(APIView):
-    permission_classes =[AllowAny]
-
-    def post(self, request):
-        user = request.user
-        exam_id = request.data.get('exam_id')
-
-        if not exam_id:
-            return Response({"error": "Exam ID is required"}, status=status.HTTP_400_BAD_REQUEST)
-
-        # Get the latest attempt number for this user and exam
-        latest_attempt = QuizState.objects.filter(user=user, exam_id=exam_id).order_by('-attempt_number').first()
-        attempt_number = latest_attempt.attempt_number + 1 if latest_attempt else 1
-
-        # Create a new attempt row
-        quiz_state = QuizState.objects.create(
-            user=user,
-            exam_id=exam_id,
-            current_question_index=0,
-            answers={},
-            visited=[],
-            marked_for_review=[],
-            time_remaining=600,  # Example: 10 minutes
-            is_timer_running=True,
-            is_submitted=False,
-            attempt_number=attempt_number,
-        )
-
-        serializer = QuizStateSerializer(quiz_state)
-        return Response(serializer.data, status=status.HTTP_201_CREATED)
-
-class GetAttemptsView(APIView):
-    permission_classes =[AllowAny]
-
-    def get(self, request, exam_id):
-        user = request.user
-        quiz_states = QuizState.objects.filter(user=user, exam_id=exam_id).order_by('attempt_number')
-
-        if not quiz_states.exists():
-            return Response({"error": "No attempts found for this exam"}, status=status.HTTP_404_NOT_FOUND)
-
-        serializer = QuizStateSerializer(quiz_states, many=True)
-        return Response(serializer.data, status=status.HTTP_200_OK)
+        if serializer.is_valid():
+         
+            serializer.save()
+            return Response(serializer.data)  
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
