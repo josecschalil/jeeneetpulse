@@ -1,13 +1,16 @@
-import React, { useState } from "react";
-import Modal from "./Modal"; 
-import TestCreator from "./TestCreator"; 
-import { exams } from "../../student-portal/data"; 
+import React, { useState, useEffect } from "react";
+import Modal from "./Modal";
+import TestCreator from "./TestCreator";
+import axios from "axios"; // Import axios
 
 const Exams = ({ id }) => {
   const courseId = Number(id);
 
-  const [isModalOpen, setIsModalOpen] = useState(false); 
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [isTestCreatorOpen, setIsTestCreatorOpen] = useState(false);
+  const [exams, setExams] = useState([]); // State to hold exams data
+  const [loading, setLoading] = useState(true); // State for loading status
+  const [error, setError] = useState(null); // State for handling errors
 
   const handleStartClick = () => {
     setIsModalOpen(true);
@@ -17,23 +20,39 @@ const Exams = ({ id }) => {
     setIsModalOpen(false);
   };
 
-
   const createtesttoggler = () => {
-    setIsTestCreatorOpen(!isTestCreatorOpen); 
+    setIsTestCreatorOpen(!isTestCreatorOpen);
   };
 
-  const filteredExams =
-    exams?.filter((exam) => exam.courseId === courseId) || [];
+  // Fetch exams from API
+  useEffect(() => {
+    const fetchExams = async () => {
+      try {
+        const response = await axios.get("http://127.0.0.1:8000/api/exams/"); // Change this URL as per your actual endpoint
+        setExams(response.data);
+        setLoading(false);
+      } catch (err) {
+        setError("Failed to fetch exams.");
+        setLoading(false);
+      }
+    };
+
+    fetchExams();
+  }, []);
+
+  // Filter exams based on courseId
+  const filteredExams = exams;
 
   return (
-    <div className="relative ">
-
+    <div className="relative">
       <div
-  className={`flex  transition-all duration-100  items-center justify-between p-4 border border-gray-300  mb-4 ${isTestCreatorOpen ? 'border-b-0 border-gray-500 rounded-t-2xl' : 'rounded-2xl hover:shadow hover:border-gray-500 '}`}
->
-
+        className={`flex  transition-all duration-100  items-center justify-between p-4 border border-gray-300  mb-4 ${
+          isTestCreatorOpen
+            ? "border-b-0 border-gray-500 rounded-t-2xl"
+            : "rounded-2xl hover:shadow hover:border-gray-500 "
+        }`}
+      >
         <div className="flex items-center space-x-4">
-
           <div className="h-10 w-10 bg-none flex items-center justify-center rounded-full">
             <span role="img" aria-label="exam-icon" className="text-2xl">
               🛠️
@@ -70,6 +89,11 @@ const Exams = ({ id }) => {
         </div>
       )}
 
+      {/* Show loading or error message */}
+      {loading && <p>Loading exams...</p>}
+      {error && <p className="text-red-500">{error}</p>}
+
+      {/* Render filtered exams */}
       {filteredExams.length > 0 ? (
         filteredExams.map((exam, index) => (
           <div
@@ -87,7 +111,7 @@ const Exams = ({ id }) => {
               {/* Details */}
               <div>
                 <h3 className="text-lg font-bold font-instSansB text-gray-800">
-                  {exam.title}
+                  {exam.exam_title}
                 </h3>
                 <p className="text-sm text-gray-500 mt-1">{exam.time}</p>
               </div>

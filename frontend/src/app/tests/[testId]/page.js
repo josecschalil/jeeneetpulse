@@ -2,7 +2,6 @@
 
 import { useParams } from "next/navigation";
 import { useState, useEffect } from "react";
-import { tests } from "../data";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 const TestPage = () => {
@@ -19,6 +18,26 @@ const TestPage = () => {
   const [isTimerRunning, setIsTimerRunning] = useState(true);
   const [isInitialized, setIsInitialized] = useState(false);
   const [tableId, setTableId] = useState(null);
+
+  useEffect(() => {
+    const fetchInstanceId = async () => {
+      try {
+        const response = await axios.get(
+          `http://127.0.0.1:8000/api/questions/${testId}`
+        );
+        if (response.data) {
+          const fetchedId = response.data[0].id;
+          setTableId(fetchedId);
+        }
+      } catch (error) {
+        console.error("Error fetching exam data:", error);
+      }
+    };
+
+    fetchInstanceId();
+  }, [testId, userId]);
+
+  
 
   useEffect(() => {
     const fetchInstanceId = async () => {

@@ -2,49 +2,71 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Head from "next/head";
-import { useParams } from "next/navigation";
 import Link from "next/link";
 
 const TestsPage = () => {
-  const userId = localStorage.getItem("user_id");  // Assuming "user_id" is stored in localStorage
-  const testId = "3"; // This can be dynamic depending on your route
-
-  const [isactive, setIsactive] = useState(false);
-
+  const userId = localStorage.getItem("user_id");
+  const [exams, setExams] = useState([]);
+  const [examMetadata, setExamMetadata] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    const fetchAllTestData = async () => {
+    const fetchExams = async () => {
       try {
-        const response = await axios.get(
-          `http://127.0.0.1:8000/api/exam-data/filter/?user=${userId}&exam_id=${testId}`
-        );
-        if (response.data && response.data.length > 0) {
-          const examData = response.data[0];
-          console.log(examData.is_active)
-          setIsactive(examData.is_active); 
-        }
-        else{
-          console.log("no data");
-        }
-      } catch (error) {
-        console.error("Error fetching exam data:", error);
+        const response = await axios.get("http://127.0.0.1:8000/api/exams/");
+        console.log(response.data);
+        setExams(response.data);
+        setLoading(false);
+      } catch (err) {
+        setError("Failed to fetch exams.");
+        setLoading(false);
       }
     };
 
-    if (userId && testId) {
-      fetchAllTestData();
-    }
-  }, [userId, testId]); // Fetch when either userId or testId changes
+    fetchExams();
+  }, []);
 
-  // Function to handle posting the payload when starting a test
-  const handleStartTest = async () => {
-    if (!userId || !testId) {
-      console.error("Missing user_id or testId");
+  useEffect(() => {
+    const fetchAllExamMetaData = async () => {
+      if (!userId) return;
+
+      try {
+        const metadataPromises = exams.map((exam) =>
+          axios.get(`http://127.0.0.1:8000/api/exam-data/filter/?user=${userId}&exam_id=${exam.exam_id}`)
+        );
+
+        const metadataResponses = await Promise.all(metadataPromises);
+
+        const metadata = metadataResponses.map((response, index) => {
+          const examData = response.data[0];
+          return {
+            examId: exams[index].exam_id,
+            is_active: examData ? examData.is_active : false,
+          };
+        });
+
+        setExamMetadata(metadata);
+        console.log("Fetched Exam Metadata: ", metadata);
+
+      } catch (error) {
+        console.error("Error fetching exam metadata:", error);
+      }
+    };
+
+    if (exams.length > 0) {
+      fetchAllExamMetaData();
+    }
+  }, [exams, userId]);
+
+  const handleStartTest = async (examId) => {
+    if (!userId || !examId) {
+      console.error("Missing user_id or examId");
       return;
     }
 
     const payload = {
-      exam_id: testId,
+      exam_id: examId,
       current_question_index: 1,
       answers: {},
       visited: [],
@@ -54,7 +76,7 @@ const TestsPage = () => {
       is_active: true,
       attempt_number: 1,
       user: userId,
-      is_submitted:false
+      is_submitted: false,
     };
 
     try {
@@ -65,10 +87,8 @@ const TestsPage = () => {
     }
   };
 
-  // Function to handle resuming the test
-  const handleResumeTest = () => {
-    console.log("Resuming test...");
-    // Implement logic to resume the test here, like navigating to the test page
+  const handleResumeTest = (examId) => {
+    console.log(`Resuming test ${examId}...`);
   };
 
   return (
@@ -84,34 +104,43 @@ const TestsPage = () => {
         <section className="max-w-6xl mx-auto">
           <h1 className="text-3xl font-bold text-gray-800">Mock Tests</h1>
           <div className="mt-6">
-            <article className="bg-white shadow p-4 rounded-lg my-4">
-              <h2 className="text-xl font-semibold">Mock Test {testId}</h2>
-              <p className="text-gray-600">Scheduled on: December 22, 2024</p>
-              <div className="mt-4 flex space-x-4">
-                {/* Conditional rendering based on isactive and isInitialized */}
-                {!isactive ? (
-                  <Link href={`/tests/${testId}`}>
-                    <button
-                      onClick={handleStartTest}
-                      aria-label={`Start Mock Test ${testId}`}
-                      className="bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700"
-                    >
-                      Start Test
-                    </button>
-                  </Link>
-                ) : isactive ? (
-                  <Link href={`/tests/${testId}`}>
-                  <button
-                    onClick={handleResumeTest}
-                    aria-label={`Resume Mock Test ${testId}`}
-                    className="bg-orange-600 text-white py-2 px-4 rounded hover:bg-orange-700"
-                  >
-                    Resume Test
-                  </button>
-                  </Link>
-                ) : null}
-              </div>
-            </article>
+            {loading ? (
+              <p>Loading exams...</p>
+            ) : error ? (
+              <p className="text-red-500">{error}</p>
+            ) : (
+              exams.map((exam) => {
+                const metadata = examMetadata.find((meta) => meta.examId === exam.exam_id);
+                return (
+                  <div key={exam.exam_id} className="bg-white shadow p-4 rounded-lg my-4">
+                    <h2 className="text-xl font-semibold">{exam.exam_title} {exam.exam_id} </h2>
+                    <div className="mt-4 flex space-x-4">
+                      {!metadata?.is_active ? (
+                        <Link href={`/tests/${exam.exam_id}`}>
+                          <button
+                            onClick={() => handleStartTest(exam.exam_id)}
+                            aria-label={`Start Mock Test ${exam.exam_id}`}
+                            className="bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700"
+                          >
+                            Start Test
+                          </button>
+                        </Link>
+                      ) : (
+                        <Link href={`/tests/${exam.exam_id}`}>
+                          <button
+                            onClick={() => handleResumeTest(exam.exam_id)}
+                            aria-label={`Resume Mock Test ${exam.exam_id}`}
+                            className="bg-orange-600 text-white py-2 px-4 rounded hover:bg-orange-700"
+                          >
+                            Resume Test
+                          </button>
+                        </Link>
+                      )}
+                    </div>
+                  </div>
+                );
+              })
+            )}
           </div>
         </section>
       </main>
