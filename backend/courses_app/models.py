@@ -30,6 +30,21 @@ class Course(models.Model):
     def __str__(self):
         return f"{self.title}"
 
+class QuizState(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='quiz_states')  # Link to User
+    exam_id = models.CharField(max_length=255)  # Unique identifier for the exam
+    current_question_index = models.IntegerField()
+    answers = models.JSONField()
+    visited = models.JSONField()
+    marked_for_review = models.JSONField()
+    time_remaining = models.IntegerField()
+    is_timer_running = models.BooleanField()
+    is_submitted = models.BooleanField()
+    attempt_number = models.IntegerField()  # Incremented for each attempt
+
+    def __str__(self):
+        return f"QuizState (User: {self.user.username}, Exam: {self.exam_id}, Attempt: {self.attempt_number})"
+
 class Subject(models.Model):
     id = models.UUIDField(default=uuid.uuid4, editable=False, unique=True,primary_key=True)
     course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name='subjects')
@@ -80,17 +95,17 @@ class Question(models.Model):
 
     def __str__(self):
         return f"Question {self.id} - Exam {self.exam.name}"
-        
+
 class UserCourseData(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='purchases')
     course = models.ForeignKey('Course', on_delete=models.CASCADE, related_name='purchased_courses')
-    progress = models.IntegerField(default=0)  # Progress showing in front
+    progress = models.IntegerField(default=0)
 
     def __str__(self):
         return f"{self.user.username} - {self.course.code} - {self.progress}%"
 
     class Meta:
-        # Ensure that a user can only purchase a course once by making the combination of user and course unique
+        
         constraints = [
             models.UniqueConstraint(fields=['user', 'course'], name='unique_user_course_purchase')
         ]

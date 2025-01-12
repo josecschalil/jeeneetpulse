@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Course, Subject, Chapter, LectureVideo, Exam, Question,UserCourseData
+from .models import Course, Subject, Chapter, LectureVideo, Exam, Question,UserCourseData,QuizState
 
 class CourseSerializer(serializers.ModelSerializer):
     class Meta:
@@ -25,7 +25,6 @@ class ChapterSerializer(serializers.ModelSerializer):
 
 
 
-# For bulk import, Django REST framework supports the use of ListSerializer
 class ChapterListSerializer(serializers.ListSerializer):
     child = ChapterSerializer()
 
@@ -44,6 +43,25 @@ class QuestionSerializer(serializers.ModelSerializer):
         model = Question
         fields = '__all__'
 
+class QuizStateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = QuizState
+        fields = [
+            'id',
+            'user',
+            'exam_id',
+            'current_question_index',
+            'answers',
+            'visited',
+            'marked_for_review',
+            'time_remaining',
+            'is_timer_running',
+            'is_submitted',
+            'attempt_number',
+        ]
+        read_only_fields = ['user', 'attempt_number']
+
+        
 class UserCourseDataSerializer(serializers.ModelSerializer):
     course = serializers.PrimaryKeyRelatedField(queryset=Course.objects.all())
     course_details = CourseUserSerializer(source='course', read_only=True)
@@ -51,3 +69,5 @@ class UserCourseDataSerializer(serializers.ModelSerializer):
     class Meta:
         model = UserCourseData
         fields = '__all__'  
+
+
