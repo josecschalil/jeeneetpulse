@@ -40,7 +40,7 @@ class Subject(models.Model):
         return f"{self.name} - {self.course.title}"
 
 class Chapter(models.Model):
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    id = models.UUIDField(default=uuid.uuid4, editable=False, unique=True,primary_key=True)
     name = models.CharField(max_length=255)
     subject = models.ForeignKey(Subject, on_delete=models.CASCADE)
 
@@ -55,7 +55,7 @@ class LectureVideo(models.Model):
     video_path = models.CharField(max_length=500)
 
 class Exam(models.Model):
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    exam_id = models.UUIDField(default=uuid.uuid4, editable=False, unique=True,primary_key=True)
     chapter = models.ForeignKey(Chapter, on_delete=models.CASCADE, related_name='exams')
     exam_title = models.CharField(max_length=255)
     def __str__(self):
@@ -110,3 +110,8 @@ class UserExamData(models.Model):
 
     def __str__(self):
         return f"ExamAttempt (User: {self.user.username}, Exam: {self.exam_id}, Attempt: {self.attempt_number})"
+
+
+
+
+
