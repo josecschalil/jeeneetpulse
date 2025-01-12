@@ -30,6 +30,7 @@ class Course(models.Model):
     def __str__(self):
         return f"{self.title}"
 
+
 class Subject(models.Model):
     id = models.UUIDField(default=uuid.uuid4, editable=False, unique=True,primary_key=True)
     course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name='subjects')
@@ -83,11 +84,29 @@ class Question(models.Model):
 
 class UserCourseData(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='purchases')
-    course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name='purchased_courses')
-    progress = models.IntegerField(default=0) #for progress showing in front
+    course = models.ForeignKey('Course', on_delete=models.CASCADE, related_name='purchased_courses')
+    progress = models.IntegerField(default=0)
 
     def __str__(self):
         return f"{self.user.username} - {self.course.code} - {self.progress}%"
 
+    class Meta:
+        
+        constraints = [
+            models.UniqueConstraint(fields=['user', 'course'], name='unique_user_course_purchase')
+        ]
 
+class UserExamData(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='exam_attempts')
+    exam_id = models.CharField(max_length=255)
+    current_question_index = models.IntegerField()
+    answers = models.JSONField()
+    visited = models.JSONField()
+    marked_for_review = models.JSONField()
+    time_remaining = models.IntegerField()
+    is_timer_running = models.BooleanField()
+    is_submitted = models.BooleanField()
+    attempt_number = models.IntegerField()
 
+    def __str__(self):
+        return f"ExamAttempt (User: {self.user.username}, Exam: {self.exam_id}, Attempt: {self.attempt_number})"
