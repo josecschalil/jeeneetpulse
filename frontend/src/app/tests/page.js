@@ -10,11 +10,10 @@ const TestsPage = () => {
   const testId = "3"; // This can be dynamic depending on your route
 
   const [isactive, setIsactive] = useState(false);
-  const [isInitialized, setIsInitialized] = useState(false);
 
-  // Fetch the test data on mount
+
   useEffect(() => {
-    const fetchTestData = async () => {
+    const fetchAllTestData = async () => {
       try {
         const response = await axios.get(
           `http://127.0.0.1:8000/api/exam-data/filter/?user=${userId}&exam_id=${testId}`
@@ -24,13 +23,16 @@ const TestsPage = () => {
           console.log(examData.is_active)
           setIsactive(examData.is_active); 
         }
+        else{
+          console.log("no data");
+        }
       } catch (error) {
         console.error("Error fetching exam data:", error);
       }
     };
 
     if (userId && testId) {
-      fetchTestData();
+      fetchAllTestData();
     }
   }, [userId, testId]); // Fetch when either userId or testId changes
 
@@ -49,10 +51,10 @@ const TestsPage = () => {
       marked_for_review: [],
       time_remaining: 1800,
       is_timer_running: false,
-      is_active: false,
+      is_active: true,
       attempt_number: 1,
       user: userId,
-      isactive:true
+      is_submitted:false
     };
 
     try {
@@ -98,6 +100,7 @@ const TestsPage = () => {
                     </button>
                   </Link>
                 ) : isactive ? (
+                  <Link href={`/tests/${testId}`}>
                   <button
                     onClick={handleResumeTest}
                     aria-label={`Resume Mock Test ${testId}`}
@@ -105,6 +108,7 @@ const TestsPage = () => {
                   >
                     Resume Test
                   </button>
+                  </Link>
                 ) : null}
               </div>
             </article>

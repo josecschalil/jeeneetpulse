@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { tests } from "../data"; 
+import axios from "axios";
 import {
   Chart as ChartJS,
   BarElement,
@@ -17,65 +18,77 @@ ChartJS.register(BarElement, CategoryScale, LinearScale, Tooltip, Legend);
 
 const AnalysisPage = () => {
   const { testId } = useParams();
+  const router = useRouter();
   const [testData, setTestData] = useState(null);
   const [expandedQuestions, setExpandedQuestions] = useState({});
-  const router = useRouter();
 
   useEffect(() => {
-    if (testId) {
-      const savedData = localStorage.getItem(testId);
-      if (savedData) {
-        setTestData(JSON.parse(savedData));
+    const fetchTestData = async () => {
+      try {
+        const userId = localStorage.getItem("user_id"); // Replace with context or global state if available
+        if (!userId || !testId) {
+          console.error("Missing user ID or test ID.");
+          return;
+        }
+
+        const response = await axios.get(
+          `http://127.0.0.1:8000/api/exam-data/filter/?user=${userId}&exam_id=${testId}`
+        );
+        if (response.data && response.data.length > 0) {
+          setTestData(response.data[0]);
+        } else {
+          console.error("No test data found.");
+        }
+      } catch (error) {
+        console.error("Error fetching test data:", error);
       }
-    }
+    };
+
+    fetchTestData();
   }, [testId]);
 
   if (!testData) return <div>Loading...</div>;
 
-  const testQuestions = tests[testId] || [];
-  const { answers, markedForReview, visited, timeRemaining, isSubmitted } =
+  const { answers, marked_for_review, visited, time_remaining, is_submitted } =
     testData;
 
-  const totalQuestions = testQuestions.length;
+    const testQuestions = tests[testId] || [];
+  const totalQuestions = testQuestions.length; // Assuming `questions` is part of the response
 
+  // Categorize questions
+  const categorizedQuestions = testQuestions.map((question, index) => {
+    const isCorrect = answers[index ] === question.correct; // Adjusting for 1-based indexing in answers
+    const isAnswered = answers[index] !== undefined;
+    const isMarkedForReview = marked_for_review.includes(index + 1);
 
-const categorizedQuestions = testQuestions.map((question, index) => {
-  const isCorrect = answers[index] === question.correct;
-  const isAnswered = answers[index] !== undefined;
-  const isMarkedForReview = markedForReview.includes(index);
+    return {
+      ...question,
+      isCorrect,
+      isAnswered,
+      isMarkedForReview,
+    };
+  });
 
-  return {
-    ...question,
-    isCorrect,
-    isAnswered,
-    isMarkedForReview,
-  };
-});
+  const subjects = ["Physics", "Chemistry", "Mathematics"];
+  const subjectData = subjects.map((subject) => {
+    const subjectQuestions = categorizedQuestions.filter(
+      (question) => question.subject === subject
+    );
 
+    const correct = subjectQuestions.filter((q) => q.isCorrect).length;
+    const answered = subjectQuestions.filter((q) => q.isAnswered).length;
+    const review = subjectQuestions.filter((q) => q.isMarkedForReview).length;
 
-const subjects = ["Physics", "Chemistry", "Mathematics"];
-const subjectData = subjects.map((subject) => {
-  const subjectQuestions = categorizedQuestions.filter(
-    (question) => question.subject === subject
-  );
+    return {
+      subject,
+      total: subjectQuestions.length,
+      correct,
+      answered,
+      review,
+    };
+  });
 
-  const correct = subjectQuestions.filter((q) => q.isCorrect).length;
-  const answered = subjectQuestions.filter((q) => q.isAnswered).length;
-  const review = subjectQuestions.filter((q) => q.isMarkedForReview).length;
-
-  return {
-    subject,
-    total: subjectQuestions.length,
-    correct,
-    answered,
-    review,
-  };
-});
-
-
-  const totalCorrect = testQuestions.filter(
-    (q, index) => answers[index] === q.correct
-  ).length;
+  const totalCorrect = categorizedQuestions.filter((q) => q.isCorrect).length;
 
   const barData = {
     labels: subjects,
@@ -126,10 +139,10 @@ const subjectData = subjects.map((subject) => {
           <li>Total Questions: {totalQuestions}</li>
           <li>Answered: {Object.keys(answers).length}</li>
           <li>Correct Answers: {totalCorrect}</li>
-          <li>Marked for Review: {markedForReview.length}</li>
+          <li>Marked for Review: {marked_for_review.length}</li>
           <li>
-            Time Remaining: {Math.floor(timeRemaining / 60)}m{" "}
-            {timeRemaining % 60}s
+            Time Remaining: {Math.floor(time_remaining / 60)}m{" "}
+            {time_remaining % 60}s
           </li>
         </ul>
       </div>
@@ -169,64 +182,39 @@ const subjectData = subjects.map((subject) => {
 
       {/* Questions with Dropdown */}
       <div>
-  <h2 className="text-2xl font-semibold mb-4 text-gray-700">
-    Question-wise Analysis
-  </h2>
-  <div className="">
-    {testQuestions.map((question, index) => {
-      // Determine the status of each question
-      const status =
-        answers[index] === question.correct
-          ? "correct" // Answer is correct
-          : answers[index]
-          ? "wrong" // Answer is wrong
-          : "not-answered"; // Question is not answered
+        <h2 className="text-2xl font-semibold mb-4 text-gray-700">
+          Question-wise Analysis
+        </h2>
+        <div>
+          {categorizedQuestions.map((question, index) => {
+            const status =
+              question.isCorrect
+                ? "Correct"
+                : question.isAnswered
+                ? "Wrong"
+                : "Not Answered";
 
-      // Map statuses to colors
-      const borderColors = {
-        correct: "border-green-600 bg-green-100", // Green for correct answers
-        wrong: "border-red-600 bg-red-100", // Red for wrong answers
-        "not-answered": "border-gray-600 bg-gray-50", // Gray for not answered
-      };
-
-      return (
-        <div
-          key={index}
-          className={`border-b p-2 bg-opacity-90 hover:bg-opacity-100  ${
-            borderColors[status]
-          }`}
-        >
-          <div
-            className="flex justify-between items-center cursor-pointer "
-            onClick={() => toggleQuestionDetails(index)}
-          >
-            <span className="text-lg font-medium text-gray-800">
-              {index+1}. {question.question}
-            </span>
-            <span className="text-xl text-gray-600">
-              {expandedQuestions[index] ? "-" : "+"}
-            </span>
-          </div>
-          {expandedQuestions[index] && (
-            <div className="mt-4 text-gray-700">
-              <p>
-                <strong>Selected Answer:</strong>{" "}
-                {answers[index] || "Not Answered"}
-              </p>
-              <p>
-                <strong>Correct Answer:</strong> {question.correct}
-              </p>
-              <p>
-                <strong>Status:</strong> {status.replace("-", " ")}
-              </p>
-            </div>
-          )}
+            return (
+              <div key={index} className="border-b p-4">
+                <div
+                  className="flex justify-between items-center cursor-pointer"
+                  onClick={() => toggleQuestionDetails(index)}
+                >
+                  <span>{index + 1}. {question.question}</span>
+                  <span>{expandedQuestions[index] ? "-" : "+"}</span>
+                </div>
+                {expandedQuestions[index] && (
+                  <div className="mt-2">
+                    <p>Selected Answer: {answers[index + 1] || "Not Answered"}</p>
+                    <p>Correct Answer: {question.correct}</p>
+                    <p>Status: {status}</p>
+                  </div>
+                )}
+              </div>
+            );
+          })}
         </div>
-      );
-    })}
-  </div>
-</div>
-
+      </div>
     </div>
   );
 };

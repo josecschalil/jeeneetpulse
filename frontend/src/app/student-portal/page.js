@@ -23,8 +23,10 @@ const CourseList = () => {
 
         // Fetch course details for each course
         const coursePromises = courses.map((coursedata) => {
+          console.log("Courdddses found:", coursedata);
           return axios.get(
-            `http://127.0.0.1:8000/api/courses/${coursedata.course_code}`
+    
+            `http://127.0.0.1:8000/api/courses/${coursedata.course_id}`
           );
         });
 
