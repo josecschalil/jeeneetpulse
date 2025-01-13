@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Course, Subject, Chapter, LectureVideo, Exam, Question,UserCourseData,UserExamData
+from .models import Course, Subject, Chapter, LectureVideo, Exam, Question,UserCourseData,UserExamData,ExamQuestion,ChapterQuestion
 
 class CourseSerializer(serializers.ModelSerializer):
     class Meta:
@@ -23,6 +23,15 @@ class ChapterSerializer(serializers.ModelSerializer):
         model = Chapter
         fields = '__all__'
 
+class ChapterQuestionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ChapterQuestion
+        fields = '__all__'
+
+class ExamQuestionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ExamQuestion
+        fields ='__all__'
 
 
 class ChapterListSerializer(serializers.ListSerializer):
@@ -60,3 +69,12 @@ class UserExamDataSerializer(serializers.ModelSerializer):
 
 
 
+from .models import ExamQuestion
+
+class ExamQuestionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ExamQuestion
+        fields = ['exam', 'question']
+
+    def validate(self, data):
+        return data

@@ -20,29 +20,46 @@ const TestPage = () => {
   const [tableId, setTableId] = useState(null);
   const [Questions, setQuestions] = useState(null);
 
+  // useEffect(() => {
+  //   const fetchQuestions = async () => {
+  //     try {
+  //       const chapterResponse = await axios.get(
+  //         `http://127.0.0.1:8000/api/exams/${testId}`
+  //       );
+  //       if (chapterResponse.data) {
+  //         console.log("Chapter ID:", chapterResponse.data.chapter);
+  //         const chapterId = chapterResponse.data.chapter;
+
+  //         const questionsResponse = await axios.get(
+  //           `http://127.0.0.1:8000/api/questions/chapter/${chapterId}`
+  //         );
+  //         if (questionsResponse.data) {
+  //           console.log("Fetched Questions:", questionsResponse.data);
+  //           setQuestions(questionsResponse.data);
+  //         }
+  //       }
+  //     } catch (error) {
+  //       console.error("Error fetching data:", error);
+  //     }
+  //   };
+
+  //   fetchQuestions();
+  //}, [testId]);
+
   useEffect(() => {
     const fetchQuestions = async () => {
       try {
-        const chapterResponse = await axios.get(
-          `http://127.0.0.1:8000/api/exams/${testId}`
-        );
-        if (chapterResponse.data) {
-          console.log("Chapter ID:", chapterResponse.data.chapter);
-          const chapterId = chapterResponse.data.chapter;
-
-          const questionsResponse = await axios.get(
-            `http://127.0.0.1:8000/api/questions/chapter/${chapterId}`
-          );
-          if (questionsResponse.data) {
-            console.log("Fetched Questions:", questionsResponse.data);
-            setQuestions(questionsResponse.data);
-          }
+        const response = await axios.get(`http://127.0.0.1:8000/api/exams/${testId}`);
+        
+        if (response.data) {
+          console.log("Fetched Questions:", response.data.questions);
+          setQuestions(response.data);
         }
       } catch (error) {
-        console.error("Error fetching data:", error);
+        console.error("Error fetching questions:", error);
       }
     };
-
+  
     fetchQuestions();
   }, [testId]);
 

@@ -1,6 +1,7 @@
 from django.db import models
 import uuid
 from django.conf import settings
+from django.core.exceptions import ValidationError
 
 class Course(models.Model):
     course_type = models.CharField(max_length=100)
@@ -43,6 +44,8 @@ class Chapter(models.Model):
     id = models.UUIDField(default=uuid.uuid4, editable=False, unique=True,primary_key=True)
     name = models.CharField(max_length=255)
     subject = models.ForeignKey(Subject, on_delete=models.CASCADE)
+    questions = models.ManyToManyField('Question', through='ChapterQuestion', related_name='chapters_related')  
+    #you cant name it chapters here - error will come. since its being there in questions MODEL as well.
 
 
     def __str__(self):
@@ -55,13 +58,62 @@ class LectureVideo(models.Model):
     video_path = models.CharField(max_length=500)
 
 class Exam(models.Model):
-   
-    exam_id = models.UUIDField(default=uuid.uuid4, editable=False, unique=True,primary_key=True)
-    chapter = models.ForeignKey(Chapter, on_delete=models.CASCADE, related_name='exams')
+    exam_id = models.UUIDField(default=uuid.uuid4, editable=False, unique=True, primary_key=True)
     exam_title = models.CharField(max_length=255)
+
+    is_fullCourseExam = models.BooleanField(default=False)
+    is_fullSubjectExam = models.BooleanField(default=False)
+    is_fullChapterExam = models.BooleanField(default=False)
+
+    course = models.ForeignKey('Course', null=True, blank=True, on_delete=models.SET_NULL)
+    subject = models.ForeignKey('Subject', null=True, blank=True, on_delete=models.SET_NULL)
+    chapter = models.ForeignKey('Chapter', null=True, blank=True, on_delete=models.SET_NULL)
+
+
+    #new field to see all questions associated to an exam.
+    questions = models.ManyToManyField('Question', through='ExamQuestion', related_name='exams_related')
+
+
+    #code for validation-additionall
+    def clean(self):
+        booleans = [self.is_fullCourseExam, self.is_fullSubjectExam, self.is_fullChapterExam]
+        
+        # Ensure only one of the flags is True
+        if sum(booleans) > 1:
+            raise ValidationError("Only one of 'is_fullCourseExam', 'is_fullSubjectExam', or 'is_fullChapterExam' can be True.")
+        
+        # Validation for full-course exam
+        if self.is_fullCourseExam:
+            if not self.course:
+                raise ValidationError("course is required when is_fullCourseExam is True.")
+            if self.subject or self.chapter:
+                raise ValidationError("Subject and Chapter fields should not be set for a full course exam.")
+        
+        # Validation for full-subject exam
+        if self.is_fullSubjectExam:
+            if not self.subject:
+                raise ValidationError("subject is required when is_fullSubjectExam is True.")
+            if self.chapter:
+                raise ValidationError("Chapter field should not be set for a full subject exam.")
+            if self.course:
+                raise ValidationError("Course field should not be set for a full subject exam.")
+        
+        # Validation for full-chapter exam
+        if self.is_fullChapterExam:
+            if not self.chapter:
+                raise ValidationError("chapter is required when is_fullChapterExam is True.")
+        
+        # Ensure all required foreign keys are set based on the exam type
+        if self.is_fullChapterExam and (self.course or self.subject):
+            raise ValidationError("Course and Subject fields should not be set for a full chapter exam.")
+
+    def save(self, *args, **kwargs):
+        self.clean()
+        super().save(*args, **kwargs)
+
     def __str__(self):
         return f"{self.exam_title}"
-    
+
 
 class Question(models.Model):
     LEVEL_CHOICES = [
@@ -70,22 +122,33 @@ class Question(models.Model):
         (3, 'Level 3'),
     ]
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    exam = models.ForeignKey(
-        'Exam', 
-        on_delete=models.CASCADE, 
-        related_name='exam_questions', 
-        db_index=True, 
-        blank=True, 
-        null=True
-    )
-    chapter = models.ForeignKey(
-        'Chapter', 
-        on_delete=models.CASCADE, 
-        related_name='chapter_questions', 
-        db_index=True, 
-        blank=True, 
-        null=True
-    )
+    chapters = models.ManyToManyField('Chapter', through='ChapterQuestion', related_name='chapters')
+    exams = models.ManyToManyField('Exam', through='ExamQuestion', related_name='exams')
+
+    # since error courses_app.Chapter.questions: (fields.E302) Reverse accessor 'Question.chapters' for 'courses_app.Chapter.questions' clashes with field name 'courses_app.Question.chapters'.
+    #we modified name of chater MODEL's method question
+
+
+    #not reuqired now since there is a many one relation table initated?
+    #old code only associates single chapter and exam.
+
+    # exam = models.ForeignKey(
+    #     'Exam', 
+    #     on_delete=models.CASCADE, 
+    #     related_name='exam_questions', 
+    #     db_index=True, 
+    #     blank=True, 
+    #     null=True
+    # )
+    # chapter = models.ForeignKey(
+    #     'Chapter', 
+    #     on_delete=models.CASCADE, 
+    #     related_name='chapter_questions', 
+    #     db_index=True, 
+    #     blank=True, 
+    #     null=True
+    # )
+
     question_text = models.TextField(blank=True, null=True)
     question_image = models.ImageField(upload_to='question_images/', blank=True, null=True)
     option_a_text = models.TextField(blank=True, null=True)
@@ -106,10 +169,11 @@ class Question(models.Model):
     level = models.IntegerField(choices=LEVEL_CHOICES, default=1)
 
     class Meta:
-        ordering = ['chapter', 'id']
+        ordering = ['id']
 
     def __str__(self):
-        return f"Question {self.id} - Exam {self.exam.name}"
+        # return f"Question {self.id} - Exam {self.exam.name}" i dont know why it was written like this here.
+        return f"{self.question_text}"
 
 class UserCourseData(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='purchases')
@@ -142,6 +206,40 @@ class UserExamData(models.Model):
         return f"ExamAttempt (User: {self.user.username}, Exam: {self.exam_id}, Attempt: {self.attempt_number})"
 
 
+class ChapterQuestion(models.Model):
+    chapter = models.ForeignKey(
+        Chapter,
+        on_delete=models.CASCADE,
+        related_name='chapter_questions_relation',  
+    )
+    question = models.ForeignKey(
+        Question,
+        on_delete=models.CASCADE,
+        related_name='chapter_questions_relation',  
+    )
+
+    class Meta:
+        unique_together = ('chapter', 'question')
+
+    def __str__(self):
+        return f"Chapter: {self.chapter.name}, Question: {self.question.id}"
 
 
+class ExamQuestion(models.Model):
+    exam = models.ForeignKey(
+        Exam,
+        on_delete=models.CASCADE,
+        related_name='exam_questions_relation', 
+    )
+    question = models.ForeignKey(
+        Question,
+        on_delete=models.CASCADE,
+        related_name='exam_questions_relation',  
+    )
+
+    class Meta:
+        unique_together = ('exam', 'question')
+
+    def __str__(self):
+        return f"Exam: {self.exam.exam_title}, Question: {self.question.id}"
 

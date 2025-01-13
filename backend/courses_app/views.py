@@ -1,6 +1,6 @@
 from rest_framework import viewsets,status
-from .models import Course, Subject, Chapter, LectureVideo, Exam, Question,UserCourseData,UserExamData
-from .serializers import CourseSerializer, SubjectSerializer, ChapterSerializer, LectureVideoSerializer, ExamSerializer, QuestionSerializer,UserCourseDataSerializer,UserExamDataSerializer
+from .models import Course, Subject, Chapter, LectureVideo, Exam, Question,UserCourseData,UserExamData,ExamQuestion,ChapterQuestion
+from .serializers import CourseSerializer, SubjectSerializer, ChapterSerializer, LectureVideoSerializer, ExamSerializer, QuestionSerializer,UserCourseDataSerializer,UserExamDataSerializer,ExamQuestionSerializer,ChapterQuestionSerializer
 from rest_framework.permissions import AllowAny
 from rest_framework.decorators import action,api_view
 from rest_framework.response import Response
@@ -57,6 +57,8 @@ class LectureVideoViewSet(viewsets.ModelViewSet):
     permission_classes = [AllowAny]
     queryset = LectureVideo.objects.all()
     serializer_class = LectureVideoSerializer
+
+
 
 class ExamViewSet(viewsets.ModelViewSet):
     permission_classes = [AllowAny]
@@ -273,3 +275,18 @@ class UserExamDataViewSet(viewsets.ModelViewSet):
             serializer.save()
             return Response(serializer.data)  
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    from .serializers import ExamQuestionSerializer
+
+
+
+#new additions
+
+class ExamQuestionViewSet(viewsets.ModelViewSet):
+    queryset = ExamQuestion.objects.all()
+    serializer_class = ExamQuestionSerializer
+    permission_classes = [AllowAny]
+
+class ChapterQuestionViewSet(viewsets.ModelViewSet):
+    queryset = ChapterQuestion.objects.all()
+    serializer_class = ChapterQuestionSerializer
+    permission_classes = [AllowAny]
