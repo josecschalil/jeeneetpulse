@@ -1,11 +1,9 @@
 "use client";
 import React, { useState,useEffect } from "react";
-import {courses} from "../data"
 import axios from "axios";
 import { useParams } from "next/navigation";
 import Exams from "@/app/components/student/exams";
 import StudyMaterials from "@/app/components/student/studym";
-import PracticeQuestions from "@/app/components/student/questionsets";
 import Contents from "@/app/components/student/Contents";
 import Link from "next/link";
 
@@ -21,23 +19,23 @@ const CoursePage = () => {
 
   useEffect(() => {
     axios
-      .get(`http://127.0.0.1:8000/api/courses/${courseId}`)  // Replace with your API endpoint
+      .get(`http://127.0.0.1:8000/api/courses/${courseId}`) 
       .then((response) => {
         console.log("Course fetched:", response.data);
-        setCourse(response.data);  // Set the course data into the state
+        setCourse(response.data);  
       })
       .catch((error) => {
         console.error("Error fetching course:", error);
       });
-  }, [courseId]);  // Re-run this effect when courseId changes
+  }, [courseId]);  
 
   if (!course) {
-    return <div>Loading...</div>;  // Show a loading message until course data is fetched
+    return <div>Loading...</div>; 
   }
 
   return (
     <div className="min-h-screen md:bg-gray-50 md:py-8 font-jakarta md:px-6">
-      <div className="max-w-5xl mx-auto  p-6">
+      <div className="max-w-5xl mx-auto bg-white shadow-md rounded-xl  p-6">
 
        
         {/* Header: Course Title and Navbar */}

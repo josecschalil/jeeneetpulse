@@ -49,17 +49,19 @@ const TestPage = () => {
   useEffect(() => {
     const fetchQuestions = async () => {
       try {
-        const response = await axios.get(`http://127.0.0.1:8000/api/exams/${testId}`);
-        
+        const response = await axios.get(
+          `http://127.0.0.1:8000/api/questions/exam-id/${testId}`
+        );
+
         if (response.data) {
-          console.log("Fetched Questions:", response.data.questions);
+          console.log("Fetched Questions:", response.data);
           setQuestions(response.data);
         }
       } catch (error) {
         console.error("Error fetching questions:", error);
       }
     };
-  
+
     fetchQuestions();
   }, [testId]);
 
@@ -70,7 +72,7 @@ const TestPage = () => {
           `http://127.0.0.1:8000/api/exam-data/filter/?user=${userId}&exam_id=${testId}`
         );
         if (response.data) {
-          console.log(`sss$`)
+          console.log(`sss$`);
           const fetchedId = response.data[0].id;
           setTableId(fetchedId);
         }
@@ -398,7 +400,7 @@ const TestPage = () => {
               </div>
             </div>
           </div>
-{/* 
+          {/* 
           {["Physics", "Chemistry", "Mathematics"].map((subject) => (
             <div key={subject} className="bg-white rounded-md mb-5">
               <div className="border-b mb-4 py-2">{subject}</div>
@@ -430,34 +432,33 @@ const TestPage = () => {
             </div>
           ))} */}
 
-{/*myr thattip code need to make it read*/}
-            <div className="bg-white rounded-md mb-5">
-              <div className="border-b mb-4 py-2">Questions</div>
-              <div className="flex flex-wrap gap-3  ">
-                {Questions?.map((question, overallIndex) => {
-                    const index = Questions.indexOf(question);
-                    // Define background colors for buttons
-                    let bgColor = "bg-gray-300"; // Default: Not Visited
-                    if (visited.has(index)) bgColor = "bg-orange-300"; // Visited
-                    if (answers[index]) bgColor = "bg-emerald-500"; // Answered
-                    if (markedForReview.has(index)) bgColor = "bg-violet-300"; // Marked for Review
+          {/*myr thattip code need to make it read*/}
+          <div className="bg-white rounded-md mb-5">
+            <div className="border-b mb-4 py-2">Questions</div>
+            <div className="flex flex-wrap gap-3  ">
+              {Questions?.map((question, overallIndex) => {
+                const index = Questions.indexOf(question);
+                // Define background colors for buttons
+                let bgColor = "bg-gray-300"; // Default: Not Visited
+                if (visited.has(index)) bgColor = "bg-orange-300"; // Visited
+                if (answers[index]) bgColor = "bg-emerald-500"; // Answered
+                if (markedForReview.has(index)) bgColor = "bg-violet-300"; // Marked for Review
 
-                    if (markedForReview.has(index) && answers[index])
-                      bgColor = "bg-violet-500"; // Marked for Review
+                if (markedForReview.has(index) && answers[index])
+                  bgColor = "bg-violet-500"; // Marked for Review
 
-                    return (
-                      <button
-                        key={index}
-                        className={`w-10 h-10 rounded-xl text-white font-instSansB font-semibold ${bgColor}`}
-                        onClick={() => goToQuestion(index)}
-                      >
-                        {index + 1}
-                      </button>
-                    );
-                  })}
-              </div>
+                return (
+                  <button
+                    key={index}
+                    className={`w-10 h-10 rounded-xl text-white font-instSansB font-semibold ${bgColor}`}
+                    onClick={() => goToQuestion(index)}
+                  >
+                    {index + 1}
+                  </button>
+                );
+              })}
             </div>
-      
+          </div>
         </div>
       </div>
     </div>

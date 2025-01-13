@@ -64,6 +64,10 @@ class ExamViewSet(viewsets.ModelViewSet):
     permission_classes = [AllowAny]
     queryset = Exam.objects.all()
     serializer_class = ExamSerializer
+    filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
+    filterset_fields = ['course_id','subject_id','chapter_id']  
+    search_fields = ['name', 'type']
+    ordering_fields = ['name', 'type']
 
     @action(detail=False, methods=['get'], url_path='chapter/(?P<chapter_id>[^/.]+)')
     def get_exams_by_chapter(self, request, chapter_id=None):
@@ -86,19 +90,20 @@ class QuestionViewSet(viewsets.ModelViewSet):
     serializer_class = QuestionSerializer
     @action(detail=False, methods=['get'], url_path='chapter/(?P<chapter_id>[^/.]+)')
     def get_questions_by_chapter(self, request, chapter_id=None):
-        questions = Question.objects.filter(chapter_id=chapter_id)
+        questions = Question.objects.filter(chapters__chapter_id=[chapter_id])
         if questions.exists():
             serializer = QuestionSerializer(questions, many=True)
             return Response(serializer.data, status=200)
         return Response({"detail": "No questions found for this chapter."}, status=404)
 
     @action(detail=False, methods=['get'], url_path='exam-id/(?P<exam_id>[^/.]+)')
-    def get_questions_by_exam_id(self, request, exam_id=None):
-        questions = Question.objects.filter(exam_id=exam_id)
+    def get_questions_by_exam_id(self, request, exam_id=None): #fixed this
+        questions = Question.objects.filter(exams__exam_id=exam_id)
         if questions.exists():
-            serializer = QuestionSerializer(questions, many=True)
+            serializer = self.get_serializer(questions, many=True)
             return Response(serializer.data, status=200)
-        return Response({"detail": "No questions found for this Exam."}, status=404)
+        return Response({"detail": "No questions found for this exam."}, status=404)
+   
     @action(detail=True, methods=['put'], url_path='update')
     def update_question(self, request, pk=None):
     

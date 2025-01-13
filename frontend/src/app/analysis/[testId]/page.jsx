@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+
 import { useParams, useRouter } from "next/navigation";
 import axios from "axios";
 import {
@@ -42,19 +43,12 @@ const AnalysisPage = () => {
           return;
         }
 
-        // Fetch Questions
-        const chapterResponse = await axios.get(
-          `http://127.0.0.1:8000/api/exams/${testId}`
+        const Response = await axios.get(
+          `http://127.0.0.1:8000/api/questions/exam-id/${testId}`
         );
-        if (chapterResponse.data) {
-          const chapterId = chapterResponse.data.chapter;
-          const questionsResponse = await axios.get(
-            `http://127.0.0.1:8000/api/questions/chapter/${chapterId}`
-          );
-          if (questionsResponse.data) {
-            setQuestions(questionsResponse.data);
+        if (Response.data) {
+            setQuestions(Response.data);
           }
-        }
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -134,10 +128,10 @@ const AnalysisPage = () => {
     <div className="p-6 max-w-6xl mx-auto font-jakarta">
       <header className="flex justify-between items-center mb-6">
         <h1 className="text-3xl font-bold text-gray-800">
-          Analysis of Test {testId}
+          Analysis and Data
         </h1>
         <button
-          onClick={() => router.push("/tests")}
+          onClick={() => router.push(`/student-portal`)}
           className="border border-gray-600 bg-gray-100 hover:bg-gray-200 px-4 py-2 rounded-md transition"
         >
           Back to Tests

@@ -82,30 +82,6 @@ class Exam(models.Model):
         if sum(booleans) > 1:
             raise ValidationError("Only one of 'is_fullCourseExam', 'is_fullSubjectExam', or 'is_fullChapterExam' can be True.")
         
-        # Validation for full-course exam
-        if self.is_fullCourseExam:
-            if not self.course:
-                raise ValidationError("course is required when is_fullCourseExam is True.")
-            if self.subject or self.chapter:
-                raise ValidationError("Subject and Chapter fields should not be set for a full course exam.")
-        
-        # Validation for full-subject exam
-        if self.is_fullSubjectExam:
-            if not self.subject:
-                raise ValidationError("subject is required when is_fullSubjectExam is True.")
-            if self.chapter:
-                raise ValidationError("Chapter field should not be set for a full subject exam.")
-            if self.course:
-                raise ValidationError("Course field should not be set for a full subject exam.")
-        
-        # Validation for full-chapter exam
-        if self.is_fullChapterExam:
-            if not self.chapter:
-                raise ValidationError("chapter is required when is_fullChapterExam is True.")
-        
-        # Ensure all required foreign keys are set based on the exam type
-        if self.is_fullChapterExam and (self.course or self.subject):
-            raise ValidationError("Course and Subject fields should not be set for a full chapter exam.")
 
     def save(self, *args, **kwargs):
         self.clean()
