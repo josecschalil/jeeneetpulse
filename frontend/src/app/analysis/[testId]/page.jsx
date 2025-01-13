@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
-import { tests } from "../data"; 
 import axios from "axios";
 import {
   Chart as ChartJS,
@@ -20,10 +19,11 @@ const AnalysisPage = () => {
   const { testId } = useParams();
   const router = useRouter();
   const [testData, setTestData] = useState(null);
+  const [questions, setQuestions] = useState([]);
   const [expandedQuestions, setExpandedQuestions] = useState({});
 
   useEffect(() => {
-    const fetchTestData = async () => {
+    const fetchTestDataAndQuestions = async () => {
       try {
         const userId = localStorage.getItem("user_id"); // Replace with context or global state if available
         if (!userId || !testId) {
@@ -31,34 +31,46 @@ const AnalysisPage = () => {
           return;
         }
 
-        const response = await axios.get(
+        // Fetch Test Data
+        const testResponse = await axios.get(
           `http://127.0.0.1:8000/api/exam-data/filter/?user=${userId}&exam_id=${testId}`
         );
-        if (response.data && response.data.length > 0) {
-          setTestData(response.data[0]);
+        if (testResponse.data && testResponse.data.length > 0) {
+          setTestData(testResponse.data[0]);
         } else {
           console.error("No test data found.");
+          return;
+        }
+
+        // Fetch Questions
+        const chapterResponse = await axios.get(
+          `http://127.0.0.1:8000/api/exams/${testId}`
+        );
+        if (chapterResponse.data) {
+          const chapterId = chapterResponse.data.chapter;
+          const questionsResponse = await axios.get(
+            `http://127.0.0.1:8000/api/questions/chapter/${chapterId}`
+          );
+          if (questionsResponse.data) {
+            setQuestions(questionsResponse.data);
+          }
         }
       } catch (error) {
-        console.error("Error fetching test data:", error);
+        console.error("Error fetching data:", error);
       }
     };
 
-    fetchTestData();
+    fetchTestDataAndQuestions();
   }, [testId]);
 
   if (!testData) return <div>Loading...</div>;
 
-  const { answers, marked_for_review, visited, time_remaining, is_submitted } =
-    testData;
+  const { answers, marked_for_review, time_remaining, is_submitted } = testData;
 
-    const testQuestions = tests[testId] || [];
-  const totalQuestions = testQuestions.length; // Assuming `questions` is part of the response
-
-  // Categorize questions
-  const categorizedQuestions = testQuestions.map((question, index) => {
-    const isCorrect = answers[index ] === question.correct; // Adjusting for 1-based indexing in answers
-    const isAnswered = answers[index] !== undefined;
+  // Categorize Questions
+  const categorizedQuestions = questions.map((question, index) => {
+    const isCorrect = answers?.[index + 1] === question.correct_answer;
+    const isAnswered = answers?.[index + 1] !== undefined;
     const isMarkedForReview = marked_for_review.includes(index + 1);
 
     return {
@@ -69,27 +81,26 @@ const AnalysisPage = () => {
     };
   });
 
+  // Subject Data
   const subjects = ["Physics", "Chemistry", "Mathematics"];
   const subjectData = subjects.map((subject) => {
     const subjectQuestions = categorizedQuestions.filter(
       (question) => question.subject === subject
     );
 
-    const correct = subjectQuestions.filter((q) => q.isCorrect).length;
-    const answered = subjectQuestions.filter((q) => q.isAnswered).length;
-    const review = subjectQuestions.filter((q) => q.isMarkedForReview).length;
-
     return {
       subject,
       total: subjectQuestions.length,
-      correct,
-      answered,
-      review,
+      correct: subjectQuestions.filter((q) => q.isCorrect).length,
+      answered: subjectQuestions.filter((q) => q.isAnswered).length,
+      review: subjectQuestions.filter((q) => q.isMarkedForReview).length,
     };
   });
 
+  // Total Correct Answers
   const totalCorrect = categorizedQuestions.filter((q) => q.isCorrect).length;
 
+  // Bar Chart Data
   const barData = {
     labels: subjects,
     datasets: [
@@ -111,6 +122,7 @@ const AnalysisPage = () => {
     ],
   };
 
+  // Toggle Question Details
   const toggleQuestionDetails = (index) => {
     setExpandedQuestions((prev) => ({
       ...prev,
@@ -136,8 +148,8 @@ const AnalysisPage = () => {
       <div className="mb-8">
         <h2 className="text-2xl font-semibold mb-3 text-gray-700">Summary</h2>
         <ul className="list-disc ml-6 text-lg">
-          <li>Total Questions: {totalQuestions}</li>
-          <li>Answered: {Object.keys(answers).length}</li>
+          <li>Total Questions: {questions.length}</li>
+          <li>Answered: {Object.keys(answers || {}).length}</li>
           <li>Correct Answers: {totalCorrect}</li>
           <li>Marked for Review: {marked_for_review.length}</li>
           <li>
@@ -147,18 +159,17 @@ const AnalysisPage = () => {
         </ul>
       </div>
 
-      {/* Graph */}
-      <div className="mb-8">
+      {/* <div className="mb-8">
         <h2 className="text-2xl font-semibold mb-3 text-gray-700">
           Performance Graph
         </h2>
         <div className="w-full md:w-3/4">
           <Bar data={barData} options={{ responsive: true }} />
         </div>
-      </div>
+      </div> */}
 
       {/* Subject-wise Analysis */}
-      <div className="mb-8">
+      {/* <div className="mb-8">
         <h2 className="text-2xl font-semibold mb-3 text-gray-700">
           Subject-wise Analysis
         </h2>
@@ -178,7 +189,7 @@ const AnalysisPage = () => {
             </div>
           ))}
         </div>
-      </div>
+      </div> */}
 
       {/* Questions with Dropdown */}
       <div>
@@ -187,12 +198,11 @@ const AnalysisPage = () => {
         </h2>
         <div>
           {categorizedQuestions.map((question, index) => {
-            const status =
-              question.isCorrect
-                ? "Correct"
-                : question.isAnswered
-                ? "Wrong"
-                : "Not Answered";
+            const status = question.isCorrect
+              ? "Correct"
+              : question.isAnswered
+              ? "Wrong"
+              : "Not Answered";
 
             return (
               <div key={index} className="border-b p-4">
@@ -200,13 +210,15 @@ const AnalysisPage = () => {
                   className="flex justify-between items-center cursor-pointer"
                   onClick={() => toggleQuestionDetails(index)}
                 >
-                  <span>{index + 1}. {question.question}</span>
+                  <span>
+                    {index + 1}. {question.question_text}
+                  </span>
                   <span>{expandedQuestions[index] ? "-" : "+"}</span>
                 </div>
                 {expandedQuestions[index] && (
                   <div className="mt-2">
-                    <p>Selected Answer: {answers[index + 1] || "Not Answered"}</p>
-                    <p>Correct Answer: {question.correct}</p>
+                    <p>Selected Answer: {answers?.[index + 1] || "Not Answered"}</p>
+                    <p>Correct Answer: {question.correct_answer}</p>
                     <p>Status: {status}</p>
                   </div>
                 )}

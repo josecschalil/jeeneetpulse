@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import Modal from "./Modal";
 import TestCreator from "./TestCreator";
 import axios from "axios"; // Import axios
-
+import Link from "next/link";
 const Exams = ({ id }) => {
   const courseId = Number(id);
 
@@ -40,8 +40,7 @@ const Exams = ({ id }) => {
     fetchExams();
   }, []);
 
-  // Filter exams based on courseId
-  const filteredExams = exams;
+
 
   return (
     <div className="relative">
@@ -80,7 +79,6 @@ const Exams = ({ id }) => {
         </div>
       </div>
 
-      {/* TestCreator Modal */}
       {isTestCreatorOpen && (
         <div className="modal-overlay relative">
           <div className="modal-content my-4 mb-8 bg-white border border-gray-500 border-t-0 p-4 rounded-b-2xl -mt-4 w-full">
@@ -89,26 +87,23 @@ const Exams = ({ id }) => {
         </div>
       )}
 
-      {/* Show loading or error message */}
       {loading && <p>Loading exams...</p>}
       {error && <p className="text-red-500">{error}</p>}
 
       {/* Render filtered exams */}
-      {filteredExams.length > 0 ? (
-        filteredExams.map((exam, index) => (
+      {exams.length > 0 ? (
+        exams.map((exam, index) => (
           <div
-            key={exam.id || index} // Use exam.id if available, otherwise fallback to index
+            key={exam.id || index}
             className="flex hover:border-gray-500 hover:shadow transition-all duration-100 items-center justify-between p-4 border rounded-2xl mb-4"
           >
-            {/* Course Details */}
             <div className="flex items-center space-x-4">
-              {/* Icon */}
+       
               <div className="h-10 w-10 bg-blue-100 flex items-center mr-3 justify-center rounded-full">
                 <span role="img" aria-label="exam-icon" className="text-2xl">
                   🏆
                 </span>
               </div>
-              {/* Details */}
               <div>
                 <h3 className="text-lg font-bold font-instSansB text-gray-800">
                   {exam.exam_title}
@@ -117,21 +112,21 @@ const Exams = ({ id }) => {
               </div>
             </div>
 
-            {/* Progress and Button */}
             <div className="flex items-center space-x-4">
+            <Link href={`/tests/${exam.exam_id}`}>
+
               <button
-                onClick={handleStartClick}
+                
                 className="px-4 py-2 border border-teal-900 transition-all duration-100 rounded-full hover:bg-teal-800 hover:text-white text-sm"
               >
                 Start
               </button>
-
-              {/* Modal Component for Exam */}
-              <Modal
+              </Link>
+              {/* <Modal
                 isOpen={isModalOpen}
                 onClose={handleCloseModal}
                 exam={exam}
-              />
+              /> */}
             </div>
           </div>
         ))

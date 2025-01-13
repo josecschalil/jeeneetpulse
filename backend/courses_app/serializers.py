@@ -21,7 +21,7 @@ class SubjectSerializer(serializers.ModelSerializer):
 class ChapterSerializer(serializers.ModelSerializer):
     class Meta:
         model = Chapter
-        fields = ['name',   'subject']  
+        fields = '__all__'
 
 
 

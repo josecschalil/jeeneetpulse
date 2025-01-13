@@ -26,8 +26,15 @@ def bulk_create_chapters(request):
             return Response(ChapterSerializer(chapters, many=True).data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
-
-
+@api_view(['POST'])
+def bulk_create_questions(request):
+    if request.method == 'POST':
+        serializer = QuestionSerializer(data=request.data, many=True)
+        if serializer.is_valid():
+            questions = serializer.save()
+            return Response(QuestionSerializer(questions, many=True).data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
 
 class CourseViewSet(viewsets.ModelViewSet):
     permission_classes = [AllowAny]
@@ -56,7 +63,7 @@ class ExamViewSet(viewsets.ModelViewSet):
     queryset = Exam.objects.all()
     serializer_class = ExamSerializer
 
-    @action(detail=False, methods=['get'], url_path='(?P<chapter_id>[^/.]+)')
+    @action(detail=False, methods=['get'], url_path='chapter/(?P<chapter_id>[^/.]+)')
     def get_exams_by_chapter(self, request, chapter_id=None):
         try:
  

@@ -43,6 +43,7 @@ const TestsPage = () => {
           return {
             examId: exams[index].exam_id,
             is_active: examData ? examData.is_active : false,
+            is_submitted: examData ? examData.is_submitted : false,
           };
         });
 
@@ -115,27 +116,37 @@ const TestsPage = () => {
                   <div key={exam.exam_id} className="bg-white shadow p-4 rounded-lg my-4">
                     <h2 className="text-xl font-semibold">{exam.exam_title} {exam.exam_id} </h2>
                     <div className="mt-4 flex space-x-4">
-                      {!metadata?.is_active ? (
-                        <Link href={`/tests/${exam.exam_id}`}>
-                          <button
-                            onClick={() => handleStartTest(exam.exam_id)}
-                            aria-label={`Start Mock Test ${exam.exam_id}`}
-                            className="bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700"
-                          >
-                            Start Test
-                          </button>
-                        </Link>
-                      ) : (
-                        <Link href={`/tests/${exam.exam_id}`}>
-                          <button
-                            onClick={() => handleResumeTest(exam.exam_id)}
-                            aria-label={`Resume Mock Test ${exam.exam_id}`}
-                            className="bg-orange-600 text-white py-2 px-4 rounded hover:bg-orange-700"
-                          >
-                            Resume Test
-                          </button>
-                        </Link>
-                      )}
+                    {!metadata?.is_active && !metadata?.is_submitted ? (
+  <Link href={`/tests/${exam.exam_id}`}>
+    <button
+      onClick={() => handleStartTest(exam.exam_id)}
+      aria-label={`Start Mock Test ${exam.exam_id}`}
+      className="bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700"
+    >
+      Start Test
+    </button>
+  </Link>
+) : metadata?.is_submitted ? (
+  <Link href={`/analysis/${exam.exam_id}`}>
+    <button
+      aria-label={`See Analysis of Mock Test ${exam.exam_id}`}
+      className="bg-green-600 text-white py-2 px-4 rounded hover:bg-green-700"
+    >
+      See Analysis
+    </button>
+  </Link>
+) : (
+  <Link href={`/tests/${exam.exam_id}`}>
+    <button
+      onClick={() => handleResumeTest(exam.exam_id)}
+      aria-label={`Resume Mock Test ${exam.exam_id}`}
+      className="bg-orange-600 text-white py-2 px-4 rounded hover:bg-orange-700"
+    >
+      Resume Test
+    </button>
+  </Link>
+)}
+
                     </div>
                   </div>
                 );
