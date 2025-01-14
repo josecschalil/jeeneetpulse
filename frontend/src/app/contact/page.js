@@ -5,7 +5,7 @@ const ContactUsPage = () => {
     <div className="md:min-h-screen md:bg-gray-50 md:py-8 font-jakarta md:px-6">
       <div className="max-w-5xl mx-auto bg-white md:shadow-md md:rounded-2xl p-6">
         <div className=" bg-white mx-auto flex flex-col md:flex-row ">
-          {/* Left Column: Contact Form */}
+
           <div className="px-6 font-instSansB md:w-[50%]">
             <h2 className="text-2xl  font-bold text-gray-800 mb-2">
               Get in Touch With Us.
@@ -76,7 +76,7 @@ const ContactUsPage = () => {
             </form>
           </div>
 
-          {/* Right Column: Image */}
+
           <div className="hidden md:block relative md:w-[50%] pr-6">
             <img
               src="/1 (2).avif"
@@ -86,33 +86,7 @@ const ContactUsPage = () => {
           </div>
         </div>
 
-        {/* Contact Details Row */}
-        {/* <div className="max-w-6xl mx-auto text-center px-4 my-[10vh] mt-[vh]">
-        <h3 className="text-2xl font-bold text-gray-800 mb-3">
-          Contact Our Team
-        </h3>
-        <p className="text-gray-600 text-sm md:text-base">
-          Whether you have questions, feedback, or just want to say hello, we're here to assist you. Connect with us today!
-        </p>
-      </div> */}
 
-        {/* 
-<div className="px-8  mt-8 grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div className=" border-r">
-          <h3 className="text-lg font-instSansB text-black mb-2">Email</h3>
-          <p className="text-gray-600">jeeneeet@example.com</p>
-        </div>
-        <div className=" border-r">
-          <h3 className="text-lg font-instSansB text-black mb-2">Contact</h3>
-          <p className="text-gray-600">+91   94465235509</p>
-        </div>
-        <div className=" ">
-          <h3 className="text-lg font-instSansB text-black mb-2">Location</h3>
-          <p className="text-gray-600">
-            123 Academic Lane, Knowledge City, Eduland 45678
-          </p>
-        </div>
-      </div> */}
       </div>
     </div>
   );

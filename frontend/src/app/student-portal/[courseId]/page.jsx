@@ -38,9 +38,8 @@ const CoursePage = () => {
       <div className="max-w-5xl mx-auto bg-white shadow-md rounded-xl  p-6 min-h-screen">
 
        
-        {/* Header: Course Title and Navbar */}
         <div className="flex flex-col gap-4  mb-6">
-          {/* Course Title */}
+
           <div className="flex items-center">
             <Link href={"/student-portal"}> <div className="border w-fit h-fit px-2 pb-1 pt-[2px] rounded-lg hover:border-gray-500 mr-3">&lt;</div></Link>
          
@@ -50,7 +49,6 @@ const CoursePage = () => {
           </div>
           
 
-          {/* Tabs */}
           <div className=" w-fit sm:w-full flex justify-between g-0 sm:gap-4 sm:justify-normal text-sm">
             {["Exams", "Recents"].map((tab) => (
               <button
@@ -68,7 +66,6 @@ const CoursePage = () => {
           </div>
         </div>
 
-        {/* Content Section */}
         <div>
           {activeTab === "Exams" && <Exams id={courseId} />}
           {activeTab === "Recents" && <StudyMaterials id={courseId}  />}

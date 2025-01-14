@@ -12,7 +12,6 @@ const CourseList = () => {
   useEffect(() => {
     console.log("Fetching courses for user:", userId);
 
-    // Get user courses
     axios
       .get(`http://127.0.0.1:8000/api/userCourses/${userId}`)
       .then((response) => {
@@ -21,7 +20,6 @@ const CourseList = () => {
         const courses = response.data.courses;
         console.log("Courses found:", courses);
 
-        // Fetch course details for each course
         const coursePromises = courses.map((coursedata) => {
           console.log("Courdddses found:", coursedata);
           return axios.get(
@@ -30,7 +28,6 @@ const CourseList = () => {
           );
         });
 
-        // Wait for course details
         Promise.all(coursePromises)
           .then((courseResponses) => {
             const coursesData = courseResponses.map((res) => res.data);
@@ -38,7 +35,6 @@ const CourseList = () => {
 
             setCoursesData(coursesData);
 
-            // Set progress for each course
             const progressArray = courses.map((course) => course.progress);
             setProgressArray(progressArray);
           })

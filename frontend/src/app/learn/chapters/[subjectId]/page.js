@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useState, useEffect } from "react";
 
 const SubjectPage = () => {
-  const { subjectId } = useParams(); // Get the dynamic parameter
+  const { subjectId } = useParams(); 
   const [chapters, setChapters] = useState(null);
   const [loading, setLoading] = useState(true);
 
@@ -29,7 +29,7 @@ const SubjectPage = () => {
       } catch (error) {
         console.error("Error fetching chapters:", error);
       } finally {
-        setLoading(false); // Set loading to false regardless of success or failure
+        setLoading(false); 
       }
     };
 
@@ -64,9 +64,9 @@ const SubjectPage = () => {
             {chapters.map((chapter, index) => (
               <Link key={index} href={`http://localhost:3000/learn/contents/${chapter.id}`}>
                 <div className="w-full hover:border-gray-400   flex  items-center justify-between pl-2 pr-4 py-3 border rounded-xl">
-                  {/* Course Details */}
+
                   <div className="flex items-center space-x-4">
-                    {/* Icon */}
+
                     <div className="h-10 w-10 flex items-center justify-center rounded-full">
                       <span
                         role="img"
@@ -76,7 +76,7 @@ const SubjectPage = () => {
                         {chapter.icon || "📘"}
                       </span>
                     </div>
-                    {/* Details */}
+
                     <div>
                       <h3 className="text-md font-instSansB text-gray-800 line-clamp-1">
                         {chapter.name}

@@ -30,7 +30,7 @@ const ChapterPage = () => {
       } catch (error) {
         console.error("Error fetching :", error);
       } finally {
-        setLoading(false); // Set loading to false regardless of success or failure
+        setLoading(false); 
       }
     };
 
@@ -59,7 +59,7 @@ const ChapterPage = () => {
         } catch (error) {
           console.error("Error fetching chapters:", error);
         } finally {
-          setLoading(false); // Set loading to false regardless of success or failure
+          setLoading(false); 
         }
       };
   
@@ -81,8 +81,7 @@ const ChapterPage = () => {
               link={video.thumbnail}
               url={`/learn/video/${video.id}`}
               title={video.video_title}
-              // faculty={video.video_path}
-              // time={video.video_path}
+
             />
           ))}
         </ul>

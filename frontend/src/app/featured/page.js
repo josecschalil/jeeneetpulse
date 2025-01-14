@@ -10,26 +10,24 @@ const VideosPage = () => {
   const [examType, setExamType] = useState("jee");
   const [selectedSubject, setSelectedSubject] = useState("");
 
-  // Map examType to course IDs
+
   const examTypeToCourseId = {
-    jee: 4, // JEE Mains ID
-    iit: 3, // JEE Advanced ID
-    neet: 2, // NEET ID
+    jee: 4,
+    iit: 3, 
+    neet: 2, 
   };
 
-  // Get courseId based on selected examType
   const courseId = examTypeToCourseId[examType];
 
   return (
     <div className="min-h-screen md:bg-gray-50 md:py-8 font-jakarta md:px-6">
       <div className="max-w-5xl mx-auto bg-white md:shadow-md md:rounded-2xl p-6">
-        {/* Page Header */}
+
         <div className="flex justify-between">
           <h2 className="text-2xl font-bold text-gray-700 mb-3 font-instSansB">
             Featured Videos and Practice Sets
           </h2>
 
-          {/* Exam Type Selection */}
           <div className="mb-4">
             <select
               id="examType"
@@ -47,7 +45,6 @@ const VideosPage = () => {
           </div>
         </div>
 
-        {/* Dynamic Content Based on Selected Exam */}
         {examType && (
           <div>
             <h3 className="text-lg font-instSansB text-gray-700 my-4">

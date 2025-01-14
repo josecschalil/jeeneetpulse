@@ -126,7 +126,6 @@ const Exams = ({ id }) => {
           </div>
         </div>
 
-        {/* Action Button */}
         <div className="flex items-center space-x-4">
           <button
             onClick={createtesttoggler}
