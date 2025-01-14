@@ -53,6 +53,7 @@ class Chapter(models.Model):
     
 
 class LectureVideo(models.Model):
+    thumbnail = models.ImageField(upload_to='video_images/', blank=True, null=True)
     chapter = models.ForeignKey(Chapter, on_delete=models.CASCADE, related_name='lecture_videos')
     video_title = models.CharField(max_length=255)
     video_path = models.CharField(max_length=500)

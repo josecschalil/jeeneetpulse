@@ -17,7 +17,7 @@ const SubjectPage = () => {
     const fetchChapters = async () => {
       try {
         const response = await fetch(
-          `http://localhost:8000/api/chapters/${subjectId}`
+          `http://localhost:8000/api/chapters/subject/${subjectId}`
         );
 
         if (response.ok) {
@@ -55,7 +55,11 @@ const SubjectPage = () => {
   return (
     <div className="min-h-screen md:bg-gray-50 md:py-8 font-jakarta md:px-6">
       <div className="max-w-5xl mx-auto bg-white md:shadow-md md:rounded-2xl p-6">
-        <div className="flex justify-center gap-4 mb-6">
+      
+        <div className="flex-col justify-center gap-4 mb-6">
+        <h2 className="text-2xl text-gray-700 font-instSansB mb-4">
+      Chapters
+          </h2>
           <div className="w-[95%] grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 md:gap-6 ">
             {chapters.map((chapter, index) => (
               <Link key={index} href={`http://localhost:3000/learn/contents/${chapter.id}`}>

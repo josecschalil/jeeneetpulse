@@ -35,7 +35,7 @@ const CoursePage = () => {
 
   return (
     <div className="min-h-screen md:bg-gray-50 md:py-8 font-jakarta md:px-6">
-      <div className="max-w-5xl mx-auto bg-white shadow-md rounded-xl  p-6">
+      <div className="max-w-5xl mx-auto bg-white shadow-md rounded-xl  p-6 min-h-screen">
 
        
         {/* Header: Course Title and Navbar */}
@@ -52,7 +52,7 @@ const CoursePage = () => {
 
           {/* Tabs */}
           <div className=" w-fit sm:w-full flex justify-between g-0 sm:gap-4 sm:justify-normal text-sm">
-            {["Exams", "Contents", "Recents"].map((tab) => (
+            {["Exams", "Recents"].map((tab) => (
               <button
                 key={tab}
                 className={`px-3 sm:px-4 py-1 sm:rounded-3xl bg-none sm:bg-gray-100 shadow-none sm:shadow ${
@@ -71,8 +71,6 @@ const CoursePage = () => {
         {/* Content Section */}
         <div>
           {activeTab === "Exams" && <Exams id={courseId} />}
-          {/* {activeTab === "questions" &&  <PracticeQuestions id={courseId}  />} */}
-          {activeTab === "Contents" && <Contents id={courseId}  />}
           {activeTab === "Recents" && <StudyMaterials id={courseId}  />}
         </div>
       </div>

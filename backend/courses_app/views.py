@@ -45,7 +45,7 @@ class ChapterViewSet(viewsets.ModelViewSet):
     permission_classes = [AllowAny]
     queryset = Chapter.objects.all()
     serializer_class = ChapterSerializer
-    @action(detail=False, methods=['get'], url_path='(?P<subject_id>[^/.]+)')
+    @action(detail=False, methods=['get'], url_path='subject/(?P<subject_id>[^/.]+)')
     def get_chapters_by_course(self, request, subject_id=None):
         chapters = Chapter.objects.filter(subject_id=subject_id)
         if chapters.exists():
@@ -57,6 +57,10 @@ class LectureVideoViewSet(viewsets.ModelViewSet):
     permission_classes = [AllowAny]
     queryset = LectureVideo.objects.all()
     serializer_class = LectureVideoSerializer
+    filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
+    filterset_fields = ['chapter_id']  
+    search_fields = ['name', 'type']
+    ordering_fields = ['name', 'type']
 
 
 

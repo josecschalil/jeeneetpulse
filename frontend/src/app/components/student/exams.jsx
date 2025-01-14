@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
 import Modal from "./Modal";
 import TestCreator from "./TestCreator";
-import axios from "axios"; // Import axios
+import axios from "axios"; 
+import InfoCard from "../Card";
 import Link from "next/link";
 const Exams = ({ id }) => {
+  
   const courseId = Number(id);
-
   const userId = localStorage.getItem("user_id");
   const [examMetadata, setExamMetadata] = useState([]);
   const [isTestCreatorOpen, setIsTestCreatorOpen] = useState(false);
@@ -144,38 +145,35 @@ const Exams = ({ id }) => {
         </div>
       )}
 
-      <div
-        className={`flex  transition-all duration-100 hover:shadow hover:border-gray-500 rounded-2xl  items-center justify-between p-4 border border-gray-300  mb-4`}
-      >
-        <div className="flex items-center space-x-4">
-          <div className="h-10 w-10 bg-none flex items-center justify-center rounded-full">
-            <span role="img" aria-label="exam-icon" className="text-2xl">
-              🏆
-            </span>
-          </div>
-          <div>
-            <h3 className="text-lg font-bold font-instSansB text-gray-800">
-              Proctored Examinations
-            </h3>
-            <p className="text-sm text-gray-500 mt-1">
-              Write carefully curated Tests by our faculties.
-            </p>
-          </div>
-        </div>
 
-        <div className="flex items-center space-x-4">
-          <Link href={`/tests/${id}`}>
-          <button 
-            className="px-4 py-2 border border-teal-900 transition-all duration-100 rounded-full hover:bg-teal-800 hover:text-white text-sm"
-          >
-            View
-          </button>
-          </Link>
-        </div>
-      </div>
-
-
-      
+      <InfoCard
+        title="Proctored Examinations"
+        description="Write tests carefully curated by our faculties."
+        icon="🏆"
+        buttonText="View"
+        link={`/tests/${id}`}
+      />
+      <InfoCard
+        title="Watch Classes"
+        description="Original and dedicated classes for each chapter."
+        icon="🎥"
+        buttonText="View"
+        link={`/learn/subjects/${id}`}
+      />
+      <InfoCard
+        title="Practice Questions"
+        description="Exam oriented questions and answers."
+        icon="📜"
+        buttonText="View"
+        link={`/questions/${id}`}
+      />
+      <InfoCard
+        title="General & Announcements"
+        description="Latest updates and information."
+        icon="🎓"
+        buttonText="View"
+        link={`/`}
+      />
     </div>
   );
 };
