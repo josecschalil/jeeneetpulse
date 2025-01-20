@@ -2,10 +2,11 @@ from rest_framework import viewsets,status
 from .models import Course, Subject, Chapter, LectureVideo, Exam, Question,UserCourseData,UserExamData,ExamQuestion,ChapterQuestion
 from .serializers import CourseSerializer, SubjectSerializer, ChapterSerializer, LectureVideoSerializer, ExamSerializer, QuestionSerializer,UserCourseDataSerializer,UserExamDataSerializer,ExamQuestionSerializer,ChapterQuestionSerializer
 from rest_framework.permissions import AllowAny
-from rest_framework.decorators import action,api_view
+from rest_framework.decorators import action,api_view,permission_classes
 from rest_framework.response import Response
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.filters import OrderingFilter, SearchFilter
+
 
 class SubjectViewSet(viewsets.ModelViewSet):
     permission_classes = [AllowAny]
@@ -17,6 +18,7 @@ class SubjectViewSet(viewsets.ModelViewSet):
     ordering_fields = ['name', 'type']
 
 @api_view(['POST'])
+@permission_classes([AllowAny])
 def bulk_create_chapters(request):
     if request.method == 'POST':
         serializer = ChapterSerializer(data=request.data, many=True)
@@ -27,6 +29,7 @@ def bulk_create_chapters(request):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
 @api_view(['POST'])
+@permission_classes([AllowAny])
 def bulk_create_questions(request):
     if request.method == 'POST':
         serializer = QuestionSerializer(data=request.data, many=True)
