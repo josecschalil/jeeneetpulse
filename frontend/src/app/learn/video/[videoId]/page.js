@@ -23,7 +23,7 @@ const VideosPage = () => {
           const data = await response.json();
           setVideo(data);
         } else {
-          console.error("Failed to fetch video");
+          console.error(`Failed to fetch video: ${response.statusText}`);
         }
       } catch (error) {
         console.error("Error fetching video:", error);
@@ -36,28 +36,36 @@ const VideosPage = () => {
   }, [videoId]);
 
   if (loading) {
-    return <div>Loading...</div>;
+    return (
+      <div className="flex justify-center items-center min-h-screen">
+        <p>Loading video...</p>
+      </div>
+    );
   }
 
   if (!video) {
-    return <div>Video not found!</div>;
+    return (
+      <div>
+        <p>Video not found! Please try refreshing the page or check back later.</p>
+      </div>
+    );
   }
 
-  const youtubeVideoId = video.video_path.split("v=")[1];
   return (
-    <div className="min-h-screen md:bg-gray-50 md:py-8 font-jakarta md:px-6">
-      <div className="max-w-5xl mx-auto bg-white md:shadow-md md:rounded-2xl p-6">
-        <div className="mt-4 p-4 ">
+    <div className="min-h-screen bg-gray-50 py-8 font-jakarta px-6">
+      <div className="max-w-5xl mx-auto bg-white shadow-md rounded-2xl p-6">
+        <div className="mt-4 p-4">
           <h2 className="text-xl font-semibold mb-4">{video.video_title}</h2>
-          <div className="video-container bg-black rounded-lg overflow-hidden">
+          <div
+            className="video-container bg-black rounded-lg overflow-hidden"
+            style={{ position: 'relative', paddingTop: '56.25%' }}
+          >
             <iframe
-              width="100%"
-              height="480"
-              src={`https://www.youtube.com/embed/${youtubeVideoId}`}
-              title={video.video_title}
+              src={video.video_path}
               frameBorder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowFullScreen
+              allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media"
+              className="absolute top-0 left-0 w-full h-full"
+              title={video.video_title}
             ></iframe>
           </div>
         </div>
