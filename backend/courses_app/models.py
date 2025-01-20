@@ -31,7 +31,6 @@ class Course(models.Model):
     def __str__(self):
         return f"{self.title}"
 
-
 class Subject(models.Model):
     id = models.UUIDField(default=uuid.uuid4, editable=False, unique=True,primary_key=True)
     course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name='subjects')
@@ -50,7 +49,6 @@ class Chapter(models.Model):
 
     def __str__(self):
         return f"{self.name} - {self.subject.name} - {self.subject.course.title}"
-    
 
 class LectureVideo(models.Model):
     thumbnail = models.ImageField(upload_to='video_images/', blank=True, null=True)
@@ -90,7 +88,6 @@ class Exam(models.Model):
 
     def __str__(self):
         return f"{self.exam_title}"
-
 
 class Question(models.Model):
     LEVEL_CHOICES = [
@@ -181,7 +178,6 @@ class UserExamData(models.Model):
 
     def __str__(self):
         return f"ExamAttempt (User: {self.user.username}, Exam: {self.exam_id}, Attempt: {self.attempt_number})"
-
 
 class ChapterQuestion(models.Model):
     chapter = models.ForeignKey(

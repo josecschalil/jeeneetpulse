@@ -4,11 +4,12 @@ import axios from "axios";
 import { useParams } from "next/navigation";
 import Exams from "@/app/components/student/exams";
 import StudyMaterials from "@/app/components/student/studym";
-import Contents from "@/app/components/student/Contents";
 import Link from "next/link";
+import TestCreator from "@/app/components/student/TestCreator";
 
 const CoursePage = () => {
   const { courseId } = useParams();
+  const [isTestCreatorOpen, setIsTestCreatorOpen] = useState(false);
   
   const [course, setCourse] = useState(null);
   const [activeTab, setActiveTab] = useState("Exams");
@@ -67,10 +68,20 @@ const CoursePage = () => {
         </div>
 
         <div>
-          {activeTab === "Exams" && <Exams id={courseId} />}
+        {activeTab === "Exams" && <Exams id={courseId} setIsTestCreatorOpen={setIsTestCreatorOpen} />}
           {activeTab === "Recents" && <StudyMaterials id={courseId}  />}
         </div>
+
+       
+
       </div>
+     {isTestCreatorOpen && (
+          <div className="modal-overlay fixed inset-0 bg-black bg-opacity-50 z-50 flex justify-center items-center">
+            <div className="modal-content my-4 mb-8 bg-white border border-gray-500 border-t-0 p-4 rounded-2xl w-full transition-transform h-auto duration-300  max-w-5xl">
+              <TestCreator id={courseId}/>
+            </div>
+          </div>
+        )}
     </div>
   );
 };

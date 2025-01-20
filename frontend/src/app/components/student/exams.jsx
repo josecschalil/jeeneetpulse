@@ -1,21 +1,22 @@
 import React, { useState, useEffect } from "react";
 import Modal from "./Modal";
-import TestCreator from "./TestCreator";
-import axios from "axios"; 
+
+import axios from "axios";
 import InfoCard from "../Card";
 import Link from "next/link";
-const Exams = ({ id }) => {
-  
+const Exams = ({ id, setIsTestCreatorOpen }) => {
   const courseId = Number(id);
   const userId = localStorage.getItem("user_id");
   const [examMetadata, setExamMetadata] = useState([]);
-  const [isTestCreatorOpen, setIsTestCreatorOpen] = useState(false);
+  const [isTestCreatorOpenInside, setIsTestCreatorOpenInside] = useState(false);
   const [exams, setExams] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   const createtesttoggler = () => {
-    setIsTestCreatorOpen(!isTestCreatorOpen);
+    const newState = !isTestCreatorOpenInside;
+    setIsTestCreatorOpenInside(newState);
+    setIsTestCreatorOpen(newState); 
   };
 
   useEffect(() => {
@@ -102,13 +103,7 @@ const Exams = ({ id }) => {
 
   return (
     <div className="relative">
-      <div
-        className={`flex  transition-all duration-100  items-center justify-between p-4 border border-gray-300  mb-4 ${
-          isTestCreatorOpen
-            ? "border-b-0 border-gray-500 rounded-t-2xl"
-            : "rounded-2xl hover:shadow hover:border-gray-500 "
-        }`}
-      >
+      <div className="flex  transition-all rounded-2xl hover:shadow hover:border-gray-500 duration-100  items-center justify-between p-4 border border-gray-300  mb-4">
         <div className="flex items-center space-x-4">
           <div className="h-10 w-10 bg-none flex items-center justify-center rounded-full">
             <span role="img" aria-label="exam-icon" className="text-2xl">
@@ -136,15 +131,7 @@ const Exams = ({ id }) => {
         </div>
       </div>
 
-      {isTestCreatorOpen && (
-        <div className="modal-overlay relative">
-          <div className="modal-content my-4 mb-8 bg-white border border-gray-500 border-t-0 p-4 rounded-b-2xl -mt-4 w-full">
-            <TestCreator />
-          </div>
-        </div>
-      )}
-
-
+     
       <InfoCard
         title="Proctored Examinations"
         description="Write tests carefully curated by our faculties."
