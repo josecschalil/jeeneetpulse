@@ -12,21 +12,22 @@ import StartLearning from "./components/home/startlearning";
 import FeaturedCourses from "./components/home/featuredcourses";
 import SuccessStories from "./components/home/successstories";
 import MathRenderer from "./components/Mathrender";
+import MathQuestion from "./components/question";
+
 export default function Home() {
 
- const question = `\frac{\text{LI}}{\text{R}}
-`;
 
   return (
     <div className="flex flex-col items-center font-poppins w-[100vw] overflow-x-hidden ">
       <div className="w-screen" style={{ backgroundColor: "#EBFFF9" }}>
-          {/* <div>
+          <div>
     <h1>Math Question</h1>
     <MathRenderer content={question} />
-  </div> */}
+  </div>
         <Hero />
 
         <Sections />
+
 
         <VideoHighlights />
         <PrepareSection />

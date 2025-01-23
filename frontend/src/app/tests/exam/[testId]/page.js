@@ -2,6 +2,7 @@
 
 import { useParams } from "next/navigation";
 import { useState, useEffect } from "react";
+import RenderTextWithLatex from "@/app/components/RenderWithLatex";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 const TestPage = () => {
@@ -124,7 +125,7 @@ const TestPage = () => {
     answers,
     visited,
     markedForReview,
-    timeRemaining,
+
     isTimerRunning,
     testId,
     isInitialized,
@@ -247,6 +248,7 @@ const TestPage = () => {
     }
   };
 
+
   // Rendering
   return (
     <div className="h-screen">
@@ -280,9 +282,9 @@ const TestPage = () => {
           <div className="p-6 bg-white rounded-xl font-jakarta">
             <p className="text-lg mb-4">
               {currentQuestionIndex + 1}.{" "}
-              {Questions?.[currentQuestionIndex]?.question_text}
+              <RenderTextWithLatex text={Questions?.[currentQuestionIndex]?.question_text}/> 
+              
             </p>
-
             {Questions?.[currentQuestionIndex]?.question_image && (
               <img
                 src={Questions[currentQuestionIndex].question_image}
@@ -293,6 +295,7 @@ const TestPage = () => {
 
             <div className="grid grid-cols-2 gap-3 w-[80%] mt-8">
               {["A", "B", "C", "D"].map((optionKey, index) => {
+                
                 const optionText =
                   Questions?.[currentQuestionIndex][
                     `option_${optionKey.toLowerCase()}_text`
@@ -325,7 +328,9 @@ const TestPage = () => {
                         className="w-full max-w-sm mb-2"
                       />
                     )}
-                    <span>{optionText}</span>
+                    
+              <RenderTextWithLatex text={optionText}/> 
+                    <span></span>
                   </label>
                 );
               })}

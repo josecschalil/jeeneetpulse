@@ -1,7 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
-
+import RenderTextWithMathJax from "@/app/components/RenderWithMathJax";
+import RenderTextWithLatex from "@/app/components/RenderWithLatex";
 import { useParams, useRouter } from "next/navigation";
 import axios from "axios";
 import {
@@ -201,19 +202,23 @@ const AnalysisPage = () => {
             return (
               <div key={index} className="border-b p-4">
                 <div
-                  className="flex justify-between items-center cursor-pointer"
+                  className=" cursor-pointer"
                   onClick={() => toggleQuestionDetails(index)}
                 >
                   <span>
-                    {index + 1}. {question.question_text}
+                    {index + 1}.
                   </span>
+                  <RenderTextWithLatex text= {question.question_text}/> 
+                 
                   <span>{expandedQuestions[index] ? "-" : "+"}</span>
                 </div>
                 {expandedQuestions[index] && (
                   <div className="mt-2">
                     <p>Selected Answer: {answers?.[index + 1] || "Not Answered"}</p>
+                    
                     <p>Correct Answer: {question.correct_answer}</p>
                     <p>Status: {status}</p>
+                    <RenderTextWithLatex text= {question.solution_text_hindi}/> 
                   </div>
                 )}
               </div>

@@ -124,14 +124,19 @@ class Question(models.Model):
     # )
 
     question_text = models.TextField(blank=True, null=True)
+    question_text_hindi = models.TextField(blank=True, null=True)
     question_image = models.ImageField(upload_to='question_images/', blank=True, null=True)
     option_a_text = models.TextField(blank=True, null=True)
+    option_a_text_hindi = models.TextField(blank=True, null=True)
     option_a_image = models.ImageField(upload_to='option_images/', blank=True, null=True)
     option_b_text = models.TextField(blank=True, null=True)
+    option_b_text_hindi = models.TextField(blank=True, null=True)
     option_b_image = models.ImageField(upload_to='option_images/', blank=True, null=True)
     option_c_text = models.TextField(blank=True, null=True)
+    option_c_text_hindi = models.TextField(blank=True, null=True)
     option_c_image = models.ImageField(upload_to='option_images/', blank=True, null=True)
     option_d_text = models.TextField(blank=True, null=True)
+    option_d_text_hindi = models.TextField(blank=True, null=True)
     option_d_image = models.ImageField(upload_to='option_images/', blank=True, null=True)
     correct_answer = models.CharField(
         max_length=1, 
@@ -139,6 +144,7 @@ class Question(models.Model):
     )
     concept_involved = models.CharField(max_length=255, blank=True, null=True)
     solution_text = models.TextField(blank=True, null=True)
+    solution_text_hindi = models.TextField(blank=True, null=True)
     diagram_image = models.ImageField(upload_to='question_diagrams/', blank=True, null=True)
     level = models.IntegerField(choices=LEVEL_CHOICES, default=1)
 

@@ -16,6 +16,7 @@ module.exports = {
       fontFamily: {
       
         poppins: ['Poppins', 'Sans'],
+        hindi:['Hindi','Poppins'],
         jakarta:['Jakarta','Sans'], 
         istok:['Istok','Sans'],
         istokn:['IstokN','Sans'],
