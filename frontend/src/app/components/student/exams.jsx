@@ -137,7 +137,7 @@ const Exams = ({ id, setIsTestCreatorOpen }) => {
         description="Write tests carefully curated by our faculties."
         icon="🏆"
         buttonText="View"
-        link={`/tests/${id}`}
+        link={`/tests/proctored/${id}`}
       />
       <InfoCard
         title="Watch Classes"

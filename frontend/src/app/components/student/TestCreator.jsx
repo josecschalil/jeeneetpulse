@@ -1,5 +1,7 @@
-import React, { useEffect,useState } from "react";
+'use client'
+import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { useRouter } from "next/navigation";
 
 const TimeSelector = ({ time, setTime }) => {
   const times = [
@@ -22,9 +24,8 @@ const TimeSelector = ({ time, setTime }) => {
           onClick={() => setTime(t.value)}
         >
           <div className="flex items-center space-x-3">
-          <small className="text">{t.icon}</small>
+            <small className="text">{t.icon}</small>
             <div className="text-left">
-            
               <small className="text-sm ">{t.value} minutes </small>
             </div>
           </div>
@@ -54,7 +55,7 @@ const QuestionSelector = ({ numQuestions, setNumQuestions }) => {
           onClick={() => setNumQuestions(num.value)}
         >
           <div className="flex items-center space-x-2">
-          <small className="text">{num.icon}</small>
+            <small className="text">{num.icon}</small>
             <div className="text-left">
               <small className="text-sm ">{num.value} Questions</small>
             </div>
@@ -87,11 +88,9 @@ const DifficultySelector = ({ difficulty, setDifficulty }) => {
           onClick={() => setDifficulty(d.value)}
         >
           <div className="flex items-center space-x-3">
-          <small className="text">{d.icon}</small>
+            <small className="text">{d.icon}</small>
             <div className="text-left">
-              <small className="text-sm font-">
-               Level {d.value}
-              </small>
+              <small className="text-sm font-">Level {d.value}</small>
             </div>
           </div>
         </button>
@@ -100,10 +99,13 @@ const DifficultySelector = ({ difficulty, setDifficulty }) => {
   );
 };
 
-
-
-
-const SubjectSelector = ({ setSubjects, subjects, selectedChapters, setSelectedChapters, courseid }) => {
+const SubjectSelector = ({
+  setSubjects,
+  subjects,
+  selectedChapters,
+  setSelectedChapters,
+  courseid,
+}) => {
   const [subjectOptions, setSubjectOptions] = useState([]);
   const [expandedSubjects, setExpandedSubjects] = useState([]);
 
@@ -147,7 +149,7 @@ const SubjectSelector = ({ setSubjects, subjects, selectedChapters, setSelectedC
             };
           })
         );
-        setSubjectOptions(updatedSubjectOptions); 
+        setSubjectOptions(updatedSubjectOptions);
       } catch (error) {
         console.error("Error fetching subjects or chapters:", error);
       }
@@ -167,16 +169,16 @@ const SubjectSelector = ({ setSubjects, subjects, selectedChapters, setSelectedC
           <div
             key={subject.id}
             className={`p-4 border  transition-all duration-100 hover:border-gray-500 rounded-2xl  ${
-              subjects.includes(subject.name) ? "border-teal-800" : "border-gray-300"
+              subjects.includes(subject.name)
+                ? "border-teal-800"
+                : "border-gray-300"
             }`}
             onClick={() => toggleSubject(subject.name)}
           >
             <div className="flex items-center space-x-4 cursor-pointer">
-
-                <h3 className="text-sm font-instSansB font-bold text-gray-800">
-                  {subject.name}
-                </h3>
-               
+              <h3 className="text-sm font-instSansB font-bold text-gray-800">
+                {subject.name}
+              </h3>
             </div>
           </div>
         ))}
@@ -196,13 +198,15 @@ const SubjectSelector = ({ setSubjects, subjects, selectedChapters, setSelectedC
                 <div
                   key={chapter.id}
                   className={`p-4 border flex items-center  transition-all duration-100 hover:border-gray-500 hover:shadow rounded-2xl ${
-                    selectedChapters.includes(chapter.id) ? "border-teal-800" : "border-gray-300"
+                    selectedChapters.includes(chapter.id)
+                      ? "border-teal-800"
+                      : "border-gray-300"
                   }`}
                   onClick={() => toggleChapter(chapter.id)}
                 >
-
-                      <h4 className="text-sm font-bold text-gray-800 line-clamp-2" >{chapter.name}</h4>
-
+                  <h4 className="text-sm font-bold text-gray-800 line-clamp-2">
+                    {chapter.name}
+                  </h4>
                 </div>
               ))}
             </div>
@@ -213,23 +217,34 @@ const SubjectSelector = ({ setSubjects, subjects, selectedChapters, setSelectedC
   );
 };
 
-
-
-
-const ModalTimeQuestions = ({ onNext, setNumQuestions, setTime, setDifficulty, numQuestions, time, difficulty }) => {
+const ModalTimeQuestions = ({
+  onNext,
+  setNumQuestions,
+  setTime,
+  setDifficulty,
+  numQuestions,
+  time,
+  difficulty,
+}) => {
   const isNextEnabled = time && numQuestions && difficulty;
 
   return (
     <div className="px-2 modal w-fit rounded-lg  text-gray-800 mx-auto font-instSansB">
       <h2 className="text-lg text-left mb-4">Set Duration</h2>
       <TimeSelector time={time} setTime={setTime} />
-      
+
       <h2 className="text-lg text-left mb-4">Set Number of Questions</h2>
-      <QuestionSelector numQuestions={numQuestions} setNumQuestions={setNumQuestions} />
-      
+      <QuestionSelector
+        numQuestions={numQuestions}
+        setNumQuestions={setNumQuestions}
+      />
+
       <h2 className="text-lg text-left mb-4">Set Difficulty</h2>
-      <DifficultySelector difficulty={difficulty} setDifficulty={setDifficulty} />
-      
+      <DifficultySelector
+        difficulty={difficulty}
+        setDifficulty={setDifficulty}
+      />
+
       <div className="text-left mt-6">
         <button
           disabled={!isNextEnabled}
@@ -247,7 +262,6 @@ const ModalTimeQuestions = ({ onNext, setNumQuestions, setTime, setDifficulty, n
   );
 };
 
-
 const ModalSubjects = ({
   onNext,
   onBack,
@@ -261,7 +275,9 @@ const ModalSubjects = ({
 
   return (
     <div className="px-2 modal bg-white rounded-lg w-full mx-auto font-instSansB">
-      <h2 className="text-lg font-semibold text-left mb-4">Select Subjects and Chapters</h2>
+      <h2 className="text-lg font-semibold text-left mb-4">
+        Select Subjects and Chapters
+      </h2>
       <SubjectSelector
         setSubjects={setSubjects}
         subjects={subjects}
@@ -277,7 +293,6 @@ const ModalSubjects = ({
           Back
         </button>
 
-        
         <button
           onClick={onNext}
           disabled={!isNextEnabled}
@@ -294,22 +309,81 @@ const ModalSubjects = ({
   );
 };
 
-const TestCreator = ({id}) => {
+const TestCreator = ({ id }) => {
+
+  
+  const router = useRouter();
+
   const [showModal, setShowModal] = useState(1);
   const [numQuestions, setNumQuestions] = useState(null);
   const [time, setTime] = useState(null);
-  const [difficulty, setDifficulty] = useState(null);  // New state for difficulty
+  const [difficulty, setDifficulty] = useState(null); // New state for difficulty
   const [subjects, setSubjects] = useState([]);
   const [selectedChapters, setSelectedChapters] = useState([]);
-  const [formData, setFormData] = useState(null);
 
   const handleNext = () => setShowModal((prev) => prev + 1);
   const handleBack = () => setShowModal((prev) => prev - 1);
 
-  const handleSubmit = () => {
-    const data = { time, numQuestions, subjects, selectedChapters, difficulty };  // Add difficulty to form data
-    setFormData(data);
-    setShowModal(0); // Hide all modals
+  const handleSubmit = async () => {
+    if (!numQuestions || !difficulty || selectedChapters.length === 0) {
+      console.error("Please fill in all required fields.");
+      return;
+    }
+
+    try {
+      const chapterQueryString = selectedChapters
+        .map((chapterId) => `chapter_ids=${encodeURIComponent(chapterId)}`)
+        .join("&");
+
+      const questionApiUrl = `http://127.0.0.1:8000/api/chapter-questions?difficulty=${difficulty}&total_questions=${numQuestions}&${chapterQueryString}`;
+      const questionResponse = await axios.get(questionApiUrl);
+      const questionIds = questionResponse.data.map((q) => q.id);
+
+      console.log("Fetched Questions:", questionIds);
+
+      const examPayload = {
+        exam_title: "customtest",
+        time: time,
+        difficulty: difficulty,
+        is_fullCourseExam: false,
+        is_fullSubjectExam: false,
+        is_fullChapterExam: false,
+        is_customTest: true,
+        course: null,
+        subject: null,
+        chapter: null,
+      };
+
+      console.log(examPayload);
+      const createExamResponse = await axios.post(
+        "http://127.0.0.1:8000/api/exams/",
+        examPayload,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      const newExamId = createExamResponse.data.exam_id;
+      console.log("New Exam Created:", newExamId);
+      const linkRequests = questionIds.map((questionId) =>
+        axios.post("http://127.0.0.1:8000/api/examquestions/", {
+          exam: newExamId,
+          question: questionId,
+        })
+      );
+
+      await Promise.all(linkRequests);
+      console.log("All questions linked to exam successfully");
+
+      // router.push(`/tests/ct/${newExamId}`);
+
+    } catch (error) {
+      console.error("Error during exam creation process:", error);
+    }
+
+    setShowModal(0);
   };
 
   return (
@@ -319,7 +393,7 @@ const TestCreator = ({id}) => {
           onNext={handleNext}
           setNumQuestions={setNumQuestions}
           setTime={setTime}
-          setDifficulty={setDifficulty}  // Pass down setDifficulty
+          setDifficulty={setDifficulty}
           numQuestions={numQuestions}
           time={time}
           difficulty={difficulty}
@@ -336,31 +410,8 @@ const TestCreator = ({id}) => {
           courseid={id}
         />
       )}
-      {formData && (
-        <div className="mt-6 ">
-          <h2 className="text-2xl font-semibold mb-4">Test Summary</h2>
-          <ul className="list-disc pl-6">
-            <li>
-              <strong>Time:</strong> {formData.time} minutes
-            </li>
-            <li>
-              <strong>Number of Questions:</strong> {formData.numQuestions}
-            </li>
-            <li>
-              <strong>Subjects:</strong> {formData.subjects.join(", ")}
-            </li>
-            <li>
-              <strong>Chapters:</strong> {formData.selectedChapters.join(", ")}
-            </li>
-            <li>
-              <strong>Difficulty:</strong> {formData.difficulty} {/* Display selected difficulty */}
-            </li>
-          </ul>
-        </div>
-      )}
     </div>
   );
 };
-
 
 export default TestCreator;

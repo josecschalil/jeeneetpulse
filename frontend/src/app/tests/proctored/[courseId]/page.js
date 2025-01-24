@@ -136,7 +136,7 @@ const TestsPage = () => {
 
             <div className="flex items-center space-x-4">
               {!metadata?.is_active && !metadata?.is_submitted ? (
-                <Link href={`/tests/exam/${exam.exam_id}`}>
+                <Link href={`/tests/proctored/exams/${exam.exam_id}`}>
                   <button
                     onClick={() => handleStartTest(exam.exam_id)}
                     aria-label={`Start Mock Test ${exam.exam_id}`}
@@ -155,7 +155,7 @@ const TestsPage = () => {
                   </button>
                 </Link>
               ) : (
-                <Link href={`/tests/exam/${exam.exam_id}`}>
+                <Link href={`/tests/proctored/exams/${exam.exam_id}`}>
                   <button
                     onClick={() => handleResumeTest(exam.exam_id)}
                     aria-label={`Resume Mock Test ${exam.exam_id}`}

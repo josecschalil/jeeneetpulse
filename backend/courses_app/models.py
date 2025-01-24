@@ -60,9 +60,12 @@ class Exam(models.Model):
     exam_id = models.UUIDField(default=uuid.uuid4, editable=False, unique=True, primary_key=True)
     exam_title = models.CharField(max_length=255)
 
+    time = models.IntegerField(default=60 )
+    diffculty = models.IntegerField(default=1)
     is_fullCourseExam = models.BooleanField(default=False)
     is_fullSubjectExam = models.BooleanField(default=False)
     is_fullChapterExam = models.BooleanField(default=False)
+    is_customTest = models.BooleanField(default=False)
 
     course = models.ForeignKey('Course', null=True, blank=True, on_delete=models.SET_NULL)
     subject = models.ForeignKey('Subject', null=True, blank=True, on_delete=models.SET_NULL)
