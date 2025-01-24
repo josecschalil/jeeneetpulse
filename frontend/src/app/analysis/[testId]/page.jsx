@@ -126,7 +126,7 @@ const AnalysisPage = () => {
   };
 
   return (
-    <div className="p-6 max-w-6xl mx-auto font-jakarta">
+    <div className="p-6 max-w-6xl mx-auto font-hindi">
       <header className="flex justify-between items-center mb-6">
         <h1 className="text-3xl font-bold text-gray-800">
           Analysis and Data
@@ -188,7 +188,7 @@ const AnalysisPage = () => {
 
       {/* Questions with Dropdown */}
       <div>
-        <h2 className="text-2xl font-semibold mb-4 text-gray-700">
+        <h2 className="text-2xl font-semibold  mb-4 text-gray-700">
           Question-wise Analysis
         </h2>
         <div>
@@ -208,6 +208,7 @@ const AnalysisPage = () => {
                   <span>
                     {index + 1}.
                   </span>
+
                   <RenderTextWithLatex text= {question.question_text}/> 
                  
                   <span>{expandedQuestions[index] ? "-" : "+"}</span>
@@ -218,6 +219,9 @@ const AnalysisPage = () => {
                     
                     <p>Correct Answer: {question.correct_answer}</p>
                     <p>Status: {status}</p>
+                    <p className="font-hindi text-2xl my-3">Solution</p>
+                    <RenderTextWithLatex text= {question.solution_text}/> 
+                    <p className="font-hindi text-2xl my-3">Hindi Solution</p>
                     <RenderTextWithLatex text= {question.solution_text_hindi}/> 
                   </div>
                 )}
