@@ -1,5 +1,6 @@
 import React, { useEffect,useState } from "react";
 import axios from "axios";
+
 const TimeSelector = ({ time, setTime }) => {
   const times = [
     { value: 10, icon: "⏱️", catchphrase: "Quick Burst!" },
@@ -9,11 +10,11 @@ const TimeSelector = ({ time, setTime }) => {
   ];
 
   return (
-    <div className="flex gap-4 mb-4">
+    <div className="flex gap-4 mb-4 ">
       {times.map((t) => (
         <button
           key={t.value}
-          className={` border px-4 py-2 text-md font-jakarta rounded-lg font-bold transition-all ${
+          className={` px-4 p-3 text-black bg-gray-100 shadow h-fit text-[16px] border border-gray-100 hover:border-gray-600 rounded-lg tracking-wider disabled:text-gray-300 active:border-[2px] transition-all duration-300 ${
             time === t.value
               ? "border-gray-900"
               : "text-gray-700 hover:border-gray-900"
@@ -21,8 +22,10 @@ const TimeSelector = ({ time, setTime }) => {
           onClick={() => setTime(t.value)}
         >
           <div className="flex items-center space-x-3">
+          <small className="text">{t.icon}</small>
             <div className="text-left">
-              <small className="text-sm text-gray-500 font-normal font-jakarta">{t.value} minutes </small>
+            
+              <small className="text-sm ">{t.value} minutes </small>
             </div>
           </div>
         </button>
@@ -39,11 +42,11 @@ const QuestionSelector = ({ numQuestions, setNumQuestions }) => {
   ];
 
   return (
-    <div className="flex gap-4 mb-4">
+    <div className="flex gap-4 mb-4 ">
       {questionCounts.map((num) => (
         <button
           key={num.value}
-          className={`border  px-6 py-2 4ext-md font-jakarta rounded-lg font-bold transition-all ${
+          className={`px-4 py-3 text-black bg-gray-100 shadow h-fit text-[16px] border border-gray-100 hover:border-gray-600 rounded-lg tracking-wider disabled:text-gray-300 active:border-[2px] transition-all duration-300 ${
             numQuestions === num.value
               ? "border-gray-900"
               : "text-gray-700 hover:border-gray-900"
@@ -51,8 +54,9 @@ const QuestionSelector = ({ numQuestions, setNumQuestions }) => {
           onClick={() => setNumQuestions(num.value)}
         >
           <div className="flex items-center space-x-2">
+          <small className="text">{num.icon}</small>
             <div className="text-left">
-              <small className="text-sm font-jakarta font-medium text-gray-500">{num.value} Questions</small>
+              <small className="text-sm ">{num.value} Questions</small>
             </div>
           </div>
         </button>
@@ -71,11 +75,11 @@ const DifficultySelector = ({ difficulty, setDifficulty }) => {
   ];
 
   return (
-    <div className="flex gap-4 mb-4">
+    <div className="flex gap-4 mb-4 ">
       {difficulties.map((d) => (
         <button
           key={d.value}
-          className={` border px-4 py-2 text-md font-jakarta rounded-lg font-bold transition-all  w-fit ${
+          className={`px-4 py-3 text-black bg-gray-100 shadow h-fit text-[16px] border border-gray-100 hover:border-gray-600 rounded-lg tracking-wider disabled:text-gray-300 active:border-[2px] transition-all duration-300 ${
             difficulty === d.value
               ? "border-gray-900"
               : "text-gray-700 hover:border-gray-900"
@@ -83,8 +87,9 @@ const DifficultySelector = ({ difficulty, setDifficulty }) => {
           onClick={() => setDifficulty(d.value)}
         >
           <div className="flex items-center space-x-3">
+          <small className="text">{d.icon}</small>
             <div className="text-left">
-              <small className="text-sm text-gray-500 font-normal font-jakarta">
+              <small className="text-sm font-">
                Level {d.value}
               </small>
             </div>
@@ -215,7 +220,7 @@ const ModalTimeQuestions = ({ onNext, setNumQuestions, setTime, setDifficulty, n
   const isNextEnabled = time && numQuestions && difficulty;
 
   return (
-    <div className="px-2 modal bg-white rounded-lg w-full text-gray-800 mx-auto font-instSansB">
+    <div className="px-2 modal w-fit rounded-lg  text-gray-800 mx-auto font-instSansB">
       <h2 className="text-lg text-left mb-4">Set Duration</h2>
       <TimeSelector time={time} setTime={setTime} />
       
@@ -229,7 +234,7 @@ const ModalTimeQuestions = ({ onNext, setNumQuestions, setTime, setDifficulty, n
         <button
           disabled={!isNextEnabled}
           onClick={onNext}
-          className={`border px-6 py-2 text-md font-jakarta rounded-lg font-bold  transition-all ${
+          className={`px-4 py-1 text-black bg-gray-100 shadow h-fit text-[16px] border border-gray-100 hover:border-gray-600 rounded-full tracking-wider disabled:text-gray-300 active:border-[2px] transition-all duration-300${
             isNextEnabled
               ? "hover:border-gray-500"
               : "text-gray-500 cursor-not-allowed"

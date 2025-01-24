@@ -77,7 +77,7 @@ const CoursePage = () => {
       </div>
      {isTestCreatorOpen && (
           <div className="modal-overlay fixed inset-0 bg-black bg-opacity-50 z-50 flex justify-center items-center">
-            <div className="modal-content my-4 mb-8 bg-white border border-gray-500 border-t-0 p-4 rounded-2xl w-full transition-transform h-auto duration-300  max-w-5xl">
+            <div className="modal-content my-4 mb-8 bg-white border border-gray-500 border-t-0 p-4 rounded-2xl transition-transform h-auto duration-300 ">
               <TestCreator id={courseId}/>
             </div>
           </div>
