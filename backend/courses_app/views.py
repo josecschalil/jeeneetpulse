@@ -154,6 +154,10 @@ class ChapterViewSet(viewsets.ModelViewSet):
     permission_classes = [AllowAny]
     queryset = Chapter.objects.all()
     serializer_class = ChapterSerializer
+    filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
+    filterset_fields = ['subject']  
+    search_fields = ['name', 'type']
+    ordering_fields = ['name', 'type']
     @action(detail=False, methods=['get'], url_path='subject/(?P<subject_id>[^/.]+)')
     def get_chapters_by_course(self, request, subject_id=None):
         chapters = Chapter.objects.filter(subject_id=subject_id)

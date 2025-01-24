@@ -6,24 +6,17 @@ import Sections from "./components/sections";
 import Features_1 from "./components/home/features_1";
 import Features_2 from "./components/home/features_2";
 import VideoHighlights from "./components/home/videohighlights";
-import Footer from "./components/footer";
 import PrepareSection from "./components/home/preparesection";
 import StartLearning from "./components/home/startlearning";
 import FeaturedCourses from "./components/home/featuredcourses";
 import SuccessStories from "./components/home/successstories";
-import MathRenderer from "./components/Mathrender";
+import Footer from "./components/Footer";
+
 export default function Home() {
-
- const question = `\frac{\text{LI}}{\text{R}}
-`;
-
   return (
     <div className="flex flex-col items-center font-poppins w-[100vw] overflow-x-hidden ">
       <div className="w-screen" style={{ backgroundColor: "#EBFFF9" }}>
-          {/* <div>
-    <h1>Math Question</h1>
-    <MathRenderer content={question} />
-  </div> */}
+        <div></div>
         <Hero />
 
         <Sections />
@@ -37,6 +30,7 @@ export default function Home() {
         <Features_1 />
         <SuccessStories />
         <StartLearning />
+        <Footer/>
       </div>
     </div>
   );

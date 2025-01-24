@@ -2,7 +2,7 @@ import React from "react";
 import Link from "next/link";
 const StartLearning = () => {
   return (
-    <section className="py-10  text-black text-center">
+    <section className="pt-10  text-black text-center">
       <h2 className="text-3xl font-instSansB">Start Learning with Us</h2>
 
       <div className=" flex text-sm justify-center gap-4 font-jakarta">

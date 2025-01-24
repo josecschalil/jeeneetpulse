@@ -2,13 +2,14 @@
 
 import { useParams } from "next/navigation";
 import { useState, useEffect } from "react";
+import RenderTextWithLatex from "@/app/components/RenderWithLatex";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 const TestPage = () => {
   const router = useRouter();
   const { testId } = useParams();
   const userId = localStorage.getItem("user_id");
-
+  const [language, setLanguage] = useState("en"); // Default to English
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [answers, setAnswers] = useState({});
   const [visited, setVisited] = useState(new Set());
@@ -124,7 +125,7 @@ const TestPage = () => {
     answers,
     visited,
     markedForReview,
-    timeRemaining,
+
     isTimerRunning,
     testId,
     isInitialized,
@@ -197,7 +198,7 @@ const TestPage = () => {
     };
 
     return (
-      <div className=" border border-black p-4 py-2 rounded-xl">
+      <div  className="mx-4 px-4 py-2 text-black bg-gray-100 shadow w-20 h-fit text-[16px] border border-gray-100 hover:border-gray-600 rounded-2xl tracking-wider disabled:text-gray-300 active:border-[2px] transition-all duration-300">
         {formatTime(timeRemaining)}
       </div>
     );
@@ -247,13 +248,17 @@ const TestPage = () => {
     }
   };
 
+  const toggleLanguage = () => {
+    setLanguage((prevLanguage) => (prevLanguage === "en" ? "hi" : "en"));
+  };
+
   // Rendering
   return (
     <div className="h-screen">
       <header className="items-center font-instSansB flex justify-between text-2xl h-[10%] px-4">
         <div className="flex justify-start items-center">
           <button
-            className="border p-4 py-2 rounded-xl border-black text-sm"
+           className="px-4 py-1 text-black bg-gray-100 shadow h-fit text-[16px] border border-gray-100 hover:border-gray-600 rounded-2xl tracking-wider disabled:text-gray-300 active:border-[2px] transition-all duration-300"
             onClick={AttemptLater}
           >
             Attempt Later
@@ -265,13 +270,41 @@ const TestPage = () => {
         </div>
 
         <div className="flex justify-end items-center text-sm ">
-          <TimerComponent timeRemaining={timeRemaining} />
-          <button
-            className="border p-4 py-2 rounded-xl ml-4 border-black"
-            onClick={handleSubmit}
-          >
-            Submit
-          </button>
+          <div className="flex justify-end items-center text-sm">
+            <TimerComponent timeRemaining={timeRemaining} />
+            <button
+        className="px-4 py-2 text-black bg-gray-100 shadow h-fit text-[16px] border border-gray-100 hover:border-gray-600 rounded-2xl tracking-wider disabled:text-gray-300 active:border-[2px] transition-all duration-300"
+              onClick={handleSubmit}
+            >
+              Submit
+            </button>
+            <button
+              className={`mx-4 relative w-20 h-[37px] rounded-full border border-gray-700 flex items-center transition-all duration-300 ${
+                language === "en" ? "bg-black" : "bg-teal-800"
+              }`}
+              onClick={toggleLanguage}
+            >
+              <span
+                className={`absolute left-[6px] top-[5px] w-6 h-6 bg-white rounded-full shadow-md transition-all duration-300 transform ${
+                  language === "en" ? "translate-x-10" : "translate-x-0"
+                }`}
+              ></span>
+              <span
+                className={`absolute left-3 text-white font-bold transition-all duration-300 ${
+                  language === "en" ? "opacity-100" : "opacity-0"
+                }`}
+              >
+                EN
+              </span>
+              <span
+                className={`absolute right-3 text-white font-bold transition-all duration-300 ${
+                  language === "en" ? "opacity-0" : "opacity-100"
+                }`}
+              >
+                HI
+              </span>
+            </button>
+          </div>
         </div>
       </header>
 
@@ -280,23 +313,35 @@ const TestPage = () => {
           <div className="p-6 bg-white rounded-xl font-jakarta">
             <p className="text-lg mb-4">
               {currentQuestionIndex + 1}.{" "}
-              {Questions?.[currentQuestionIndex]?.question_text}
+              {language === "en" ? (
+                <RenderTextWithLatex
+                  text={Questions?.[currentQuestionIndex]?.question_text}
+                />
+              ) : (
+                <RenderTextWithLatex
+                  text={Questions?.[currentQuestionIndex]?.question_text_hindi}
+                />
+              )}
             </p>
-
             {Questions?.[currentQuestionIndex]?.question_image && (
               <img
                 src={Questions[currentQuestionIndex].question_image}
                 alt="Question"
-                className="w-full max-w-sm mb-4"
+                className="w-full max-w-36 mb-4"
               />
             )}
 
             <div className="grid grid-cols-2 gap-3 w-[80%] mt-8">
               {["A", "B", "C", "D"].map((optionKey, index) => {
                 const optionText =
-                  Questions?.[currentQuestionIndex][
-                    `option_${optionKey.toLowerCase()}_text`
-                  ];
+                  language === "en"
+                    ? Questions?.[currentQuestionIndex][
+                        `option_${optionKey.toLowerCase()}_text`
+                      ]
+                    : Questions?.[currentQuestionIndex][
+                        `option_${optionKey.toLowerCase()}_text_hindi`
+                      ];
+
                 const optionImage =
                   Questions?.[currentQuestionIndex][
                     `option_${optionKey.toLowerCase()}_image`
@@ -322,10 +367,12 @@ const TestPage = () => {
                       <img
                         src={optionImage}
                         alt={`Option ${optionKey}`}
-                        className="w-full max-w-sm mb-2"
+                        className="w-full max-w-36 mb-2"
                       />
                     )}
-                    <span>{optionText}</span>
+
+                    <RenderTextWithLatex text={optionText} />
+                    <span></span>
                   </label>
                 );
               })}

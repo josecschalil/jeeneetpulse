@@ -5,34 +5,34 @@ import Link from "next/link";
 const Hero = () => {
   return (
     <div>
-      <div className=" mt-4 sm:mt-0 md:h-auto max-w-7xl mx-auto flex flex-row container font-jakarta justify-center space-x-20 px-6 pt-5 pb-10 lg:py-20 lg:flex lg:items-center lg:justify-between">
-        <div className="text-center flex  flex-col justify-start lg:text-left">
-          <div className="text-5xl md:text-[68px] font-bold text-gray-800 md:max-w-[580px] leading-tight">
+      <div className=" mt-4 sm:mt-0 h-[90vh]  max-w-7xl mx-auto flex flex-row container font-instSansB justify-center space-x-20 px-6 pt-5 pb-10 lg:py-20 ">
+        <div className="text-center flex  flex-col my-auto ">
+          <div className="text-5xl md:text-[68px] font-bold text-gray-800  max-w-5xl leading-tight">
             one stop{" "}
             <span className="text-teal-500 font-istok font-normal ">
               Solution
             </span>{" "}
             for your entrance journey.
           </div>
-          <p className="mt-6 px-3 md:px-0  mx-auto lg:mx-0 text-[20px] font-semibold max-w-[500px]">
+          <p className="mt-6 px-3  mx-auto  text-[20px] font-semibold">
             Navigate all your exams with ease and confidence, all in one spot.
           </p>
-          <div className="mt-6 flex justify-center lg:justify-start space-x-4">
+          <div className="mt-8 flex justify-center  space-x-4">
             <a
               href="/courses"
-              className="px-8 py-2 font-semibold text-white bg-teal-500 rounded-3xl hover:bg-teal-600"
+              className="px-8 py-2 font-semibold text-white border border-teal-600 hover:border-gray-500 rounded-3xl bg-teal-600 transition-all duration-300 shadow-lg"
             >
               Courses
             </a>
             <a
               href="/signup"
-              className="px-6 font-semibold  py-2 bg-none border-[1.44px] border-black rounded-3xl hover:bg-teal-50"
+              className="px-6 font-semibold  py-2 bg-none border-[1.44px] bg-gray-50 transition-all duration-300 shadow-md rounded-3xl hover:border-gray-400"
             >
               Get Started
             </a>
           </div>
         </div>
-        <div className="mt-8 lg:mt-0 hidden lg:block">
+        <div className="mt-8 lg:mt-0 hidden ">
           <img
             src="/image.svg"
             alt="Student Studying"

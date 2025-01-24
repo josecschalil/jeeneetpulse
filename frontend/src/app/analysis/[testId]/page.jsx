@@ -1,7 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
-
+import RenderTextWithMathJax from "@/app/components/RenderWithMathJax";
+import RenderTextWithLatex from "@/app/components/RenderWithLatex";
 import { useParams, useRouter } from "next/navigation";
 import axios from "axios";
 import {
@@ -125,7 +126,7 @@ const AnalysisPage = () => {
   };
 
   return (
-    <div className="p-6 max-w-6xl mx-auto font-jakarta">
+    <div className="p-6 max-w-6xl mx-auto font-hindi">
       <header className="flex justify-between items-center mb-6">
         <h1 className="text-3xl font-bold text-gray-800">
           Analysis and Data
@@ -187,7 +188,7 @@ const AnalysisPage = () => {
 
       {/* Questions with Dropdown */}
       <div>
-        <h2 className="text-2xl font-semibold mb-4 text-gray-700">
+        <h2 className="text-2xl font-semibold  mb-4 text-gray-700">
           Question-wise Analysis
         </h2>
         <div>
@@ -201,19 +202,27 @@ const AnalysisPage = () => {
             return (
               <div key={index} className="border-b p-4">
                 <div
-                  className="flex justify-between items-center cursor-pointer"
+                  className=" cursor-pointer"
                   onClick={() => toggleQuestionDetails(index)}
                 >
                   <span>
-                    {index + 1}. {question.question_text}
+                    {index + 1}.
                   </span>
+
+                  <RenderTextWithLatex text= {question.question_text}/> 
+                 
                   <span>{expandedQuestions[index] ? "-" : "+"}</span>
                 </div>
                 {expandedQuestions[index] && (
                   <div className="mt-2">
                     <p>Selected Answer: {answers?.[index + 1] || "Not Answered"}</p>
+                    
                     <p>Correct Answer: {question.correct_answer}</p>
                     <p>Status: {status}</p>
+                    <p className="font-hindi text-2xl my-3">Solution</p>
+                    <RenderTextWithLatex text= {question.solution_text}/> 
+                    <p className="font-hindi text-2xl my-3">Hindi Solution</p>
+                    <RenderTextWithLatex text= {question.solution_text_hindi}/> 
                   </div>
                 )}
               </div>

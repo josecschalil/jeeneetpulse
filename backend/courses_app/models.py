@@ -31,7 +31,6 @@ class Course(models.Model):
     def __str__(self):
         return f"{self.title}"
 
-
 class Subject(models.Model):
     id = models.UUIDField(default=uuid.uuid4, editable=False, unique=True,primary_key=True)
     course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name='subjects')
@@ -50,7 +49,6 @@ class Chapter(models.Model):
 
     def __str__(self):
         return f"{self.name} - {self.subject.name} - {self.subject.course.title}"
-    
 
 class LectureVideo(models.Model):
     thumbnail = models.ImageField(upload_to='video_images/', blank=True, null=True)
@@ -91,7 +89,6 @@ class Exam(models.Model):
     def __str__(self):
         return f"{self.exam_title}"
 
-
 class Question(models.Model):
     LEVEL_CHOICES = [
         (1, 'Level 1'),
@@ -127,14 +124,19 @@ class Question(models.Model):
     # )
 
     question_text = models.TextField(blank=True, null=True)
+    question_text_hindi = models.TextField(blank=True, null=True)
     question_image = models.ImageField(upload_to='question_images/', blank=True, null=True)
     option_a_text = models.TextField(blank=True, null=True)
+    option_a_text_hindi = models.TextField(blank=True, null=True)
     option_a_image = models.ImageField(upload_to='option_images/', blank=True, null=True)
     option_b_text = models.TextField(blank=True, null=True)
+    option_b_text_hindi = models.TextField(blank=True, null=True)
     option_b_image = models.ImageField(upload_to='option_images/', blank=True, null=True)
     option_c_text = models.TextField(blank=True, null=True)
+    option_c_text_hindi = models.TextField(blank=True, null=True)
     option_c_image = models.ImageField(upload_to='option_images/', blank=True, null=True)
     option_d_text = models.TextField(blank=True, null=True)
+    option_d_text_hindi = models.TextField(blank=True, null=True)
     option_d_image = models.ImageField(upload_to='option_images/', blank=True, null=True)
     correct_answer = models.CharField(
         max_length=1, 
@@ -142,6 +144,7 @@ class Question(models.Model):
     )
     concept_involved = models.CharField(max_length=255, blank=True, null=True)
     solution_text = models.TextField(blank=True, null=True)
+    solution_text_hindi = models.TextField(blank=True, null=True)
     diagram_image = models.ImageField(upload_to='question_diagrams/', blank=True, null=True)
     level = models.IntegerField(choices=LEVEL_CHOICES, default=1)
 
@@ -181,7 +184,6 @@ class UserExamData(models.Model):
 
     def __str__(self):
         return f"ExamAttempt (User: {self.user.username}, Exam: {self.exam_id}, Attempt: {self.attempt_number})"
-
 
 class ChapterQuestion(models.Model):
     chapter = models.ForeignKey(

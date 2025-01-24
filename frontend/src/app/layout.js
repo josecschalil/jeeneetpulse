@@ -1,6 +1,5 @@
 import Navbar from "./components/navbar";
 import "./globals.css";
-import Head from "next/head";
 
 export const metadata = {
   title: "Create Next App",
@@ -10,33 +9,10 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <Head>
-        {/* Add MathJax configuration script */}
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-              MathJax = {
-                tex: {
-                  inlineMath: [['$', '$'], ['\\(', '\\)']]
-                },
-                svg: {
-                  fontCache: 'global'
-                }
-              };
-            `,
-          }}
-        />
-        {/* Load MathJax */}
-        <script
-          async
-          src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"
-        ></script>
-      </Head>
       <body className="m-0 p-0 font-instSansN overflow-x-hidden">
         <Navbar />
         {children}
       </body>
-      {/* <Footer /> */}
     </html>
   );
 }
