@@ -6,6 +6,112 @@ from rest_framework.decorators import action,api_view,permission_classes
 from rest_framework.response import Response
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.filters import OrderingFilter, SearchFilter
+from rest_framework.views import APIView
+from django.db.models import Count
+import math
+import random
+
+class ChapterQuestionsView(APIView):
+    permission_classes = [AllowAny]
+    def get(self, request):
+        
+        chapter_ids = request.query_params.getlist('chapter_ids')
+        difficulty = request.query_params.get('difficulty')
+        total_questions = int(request.query_params.get('total_questions', 10))
+
+        if not chapter_ids or difficulty is None:
+            return Response(
+                {"error": "chapter_ids and difficulty are required"},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+
+
+        chapter_question_ids = ChapterQuestion.objects.filter(
+            chapter_id__in=chapter_ids
+        ).values_list('question_id', flat=True)
+
+        filtered_questions = Question.objects.filter(
+            id__in=chapter_question_ids,
+            level=difficulty
+        )
+
+        num_chapters = len(chapter_ids)
+        questions_per_chapter = max(1, total_questions // num_chapters)
+
+        selected_questions = []
+        for chapter_id in chapter_ids:
+         
+            chapter_questions = filtered_questions.filter(
+                id__in=ChapterQuestion.objects.filter(chapter_id=chapter_id).values_list('question_id', flat=True)
+            )
+
+            
+            random_chapter_questions = list(chapter_questions.order_by('?')[:questions_per_chapter])
+            selected_questions.extend(random_chapter_questions)
+
+    
+        selected_questions = selected_questions[:total_questions]
+
+        serializer = QuestionSerializer(selected_questions, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+
+
+from rest_framework.views import APIView
+from django.db.models import Count
+import math
+
+
+import random
+from django.db.models import Count
+from .models import ChapterQuestion, Question
+from .serializers import QuestionSerializer
+
+class ChapterQuestionsView(APIView):
+    permission_classes = [AllowAny]
+    def get(self, request):
+        
+        chapter_ids = request.query_params.getlist('chapter_ids')
+        difficulty = request.query_params.get('difficulty')
+        total_questions = int(request.query_params.get('total_questions', 10))
+
+        if not chapter_ids or difficulty is None:
+            return Response(
+                {"error": "chapter_ids and difficulty are required"},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+
+
+        chapter_question_ids = ChapterQuestion.objects.filter(
+            chapter_id__in=chapter_ids
+        ).values_list('question_id', flat=True)
+
+        filtered_questions = Question.objects.filter(
+            id__in=chapter_question_ids,
+            level=difficulty
+        )
+
+        num_chapters = len(chapter_ids)
+        questions_per_chapter = max(1, total_questions // num_chapters)
+
+        selected_questions = []
+        for chapter_id in chapter_ids:
+         
+            chapter_questions = filtered_questions.filter(
+                id__in=ChapterQuestion.objects.filter(chapter_id=chapter_id).values_list('question_id', flat=True)
+            )
+
+            
+            random_chapter_questions = list(chapter_questions.order_by('?')[:questions_per_chapter])
+            selected_questions.extend(random_chapter_questions)
+
+    
+        selected_questions = selected_questions[:total_questions]
+
+        serializer = QuestionSerializer(selected_questions, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
 
 
 class SubjectViewSet(viewsets.ModelViewSet):
@@ -306,3 +412,5 @@ class ChapterQuestionViewSet(viewsets.ModelViewSet):
     queryset = ChapterQuestion.objects.all()
     serializer_class = ChapterQuestionSerializer
     permission_classes = [AllowAny]
+
+
