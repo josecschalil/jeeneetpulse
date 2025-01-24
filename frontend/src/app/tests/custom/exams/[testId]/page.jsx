@@ -73,7 +73,6 @@ const TestPage = () => {
           `http://127.0.0.1:8000/api/exam-data/filter/?user=${userId}&exam_id=${testId}`
         );
         if (response.data) {
-          console.log(`sss:${response?.data}`);
           const fetchedId = response?.data[0].id;
           setTableId(fetchedId);
         }
@@ -144,7 +143,7 @@ const TestPage = () => {
 
   const AttemptLater = () => {
     saveData();
-    router.push("/tests");
+    router.push(`/tests/custom/${userId}`);
   };
 
   const totalQuestions = Questions?.length;

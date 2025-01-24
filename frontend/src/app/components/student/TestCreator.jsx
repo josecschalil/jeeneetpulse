@@ -1,4 +1,5 @@
-'use client'
+"use client";
+
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
@@ -310,9 +311,8 @@ const ModalSubjects = ({
 };
 
 const TestCreator = ({ id }) => {
-
-  
   const router = useRouter();
+  const userId = localStorage.getItem("user_id");
 
   const [showModal, setShowModal] = useState(1);
   const [numQuestions, setNumQuestions] = useState(null);
@@ -344,6 +344,7 @@ const TestCreator = ({ id }) => {
       const examPayload = {
         exam_title: "customtest",
         time: time,
+        user:userId,
         difficulty: difficulty,
         is_fullCourseExam: false,
         is_fullSubjectExam: false,
@@ -377,8 +378,31 @@ const TestCreator = ({ id }) => {
       await Promise.all(linkRequests);
       console.log("All questions linked to exam successfully");
 
-      // router.push(`/tests/ct/${newExamId}`);
+      const payload_exam_data = {
+        exam_id: newExamId,
+        current_question_index: 0,
+        answers: {},
+        visited: [],
+        marked_for_review: [],
+        time_remaining: time*60,
+        is_timer_running: false,
+        is_active: true,
+        attempt_number: 1,
+        user: userId,
+        is_submitted: false,
+      };
 
+      try {
+        const response = await axios.post(
+          "http://127.0.0.1:8000/api/exam-data/",
+          payload_exam_data
+        );
+        console.log("Test started successfully:", response.data);
+      } catch (error) {
+        console.error("Error starting the test:", error);
+      }
+
+      router.push(`/tests/custom/exams/${newExamId}`);
     } catch (error) {
       console.error("Error during exam creation process:", error);
     }

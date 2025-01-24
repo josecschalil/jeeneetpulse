@@ -71,7 +71,7 @@ const Navbar = () => {
   }, []);
 
   // Check if the current page is a /tests/{testid} page
-  const isTestPage = pathname.startsWith("/tests/exam/");
+  const isTestPage = pathname.startsWith("/tests/custom/exams/");
 
   if (isTestPage) return null; // Do not render Navbar on /tests/{testid} pages
 

@@ -57,9 +57,10 @@ class LectureVideo(models.Model):
     video_path = models.CharField(max_length=500)
 
 class Exam(models.Model):
+
     exam_id = models.UUIDField(default=uuid.uuid4, editable=False, unique=True, primary_key=True)
     exam_title = models.CharField(max_length=255)
-
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, null=True, blank=True, on_delete=models.SET_NULL, related_name='exam_user')
     time = models.IntegerField(default=60 )
     diffculty = models.IntegerField(default=1)
     is_fullCourseExam = models.BooleanField(default=False)
