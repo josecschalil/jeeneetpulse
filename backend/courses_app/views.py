@@ -1,6 +1,6 @@
 from rest_framework import viewsets,status
-from .models import Course, Subject, Chapter, LectureVideo, Exam, Question,UserCourseData,UserExamData,ExamQuestion,ChapterQuestion
-from .serializers import CourseSerializer, SubjectSerializer, ChapterSerializer, LectureVideoSerializer, ExamSerializer, QuestionSerializer,UserCourseDataSerializer,UserExamDataSerializer,ExamQuestionSerializer,ChapterQuestionSerializer
+from .models import Course, Subject, Chapter, LectureVideo, Exam, Question,UserCourseData,UserExamData,ExamQuestion,ChapterQuestion,LectureNote
+from .serializers import CourseSerializer, SubjectSerializer, ChapterSerializer, LectureVideoSerializer, ExamSerializer, QuestionSerializer,UserCourseDataSerializer,UserExamDataSerializer,ExamQuestionSerializer,ChapterQuestionSerializer,LectureNoteSerializer
 from rest_framework.permissions import AllowAny
 from rest_framework.decorators import action,api_view,permission_classes
 from rest_framework.response import Response
@@ -10,6 +10,8 @@ from rest_framework.views import APIView
 from django.db.models import Count
 import math
 import random
+from rest_framework.views import APIView
+from django.db.models import Count
 
 class ChapterQuestionsView(APIView):
     permission_classes = [AllowAny]
@@ -58,15 +60,6 @@ class ChapterQuestionsView(APIView):
 
 
 
-from rest_framework.views import APIView
-from django.db.models import Count
-import math
-
-
-import random
-from django.db.models import Count
-from .models import ChapterQuestion, Question
-from .serializers import QuestionSerializer
 
 class ChapterQuestionsView(APIView):
     permission_classes = [AllowAny]
@@ -175,7 +168,14 @@ class LectureVideoViewSet(viewsets.ModelViewSet):
     search_fields = ['name', 'type']
     ordering_fields = ['name', 'type']
 
-
+class LectureNoteViewSet(viewsets.ModelViewSet):
+    permission_classes = [AllowAny]
+    queryset = LectureNote.objects.all()
+    serializer_class = LectureNoteSerializer
+    filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
+    filterset_fields = ['chapter_id']  
+    search_fields = ['name', 'type']
+    ordering_fields = ['name', 'type']
 
 class ExamViewSet(viewsets.ModelViewSet):
     permission_classes = [AllowAny]
