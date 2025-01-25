@@ -1,11 +1,12 @@
 import React from "react";
-import Image from "next/image";
-import Link from "next/link";
+import Navbar from "../navbar";
 
 const Hero = () => {
   return (
     <div>
-      <div className=" mt-4 sm:mt-0 h-[90vh]  max-w-7xl mx-auto flex flex-row container font-instSansB justify-center space-x-20 px-6 pt-5 pb-10 lg:py-20 ">
+
+      <div className=" mt-4 sm:mt-0 h-[100vh]  max-w-7xl mx-auto flex flex-row container font-instSansB justify-center space-x-20 px-6 pt-5 pb-10 lg:py-20 ">
+
         <div className="text-center flex  flex-col my-auto ">
           <div className="text-5xl md:text-[68px] font-bold text-gray-800  max-w-5xl leading-tight">
             one stop{" "}

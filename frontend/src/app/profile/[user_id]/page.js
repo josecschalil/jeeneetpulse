@@ -1,7 +1,8 @@
 "use client";
 import React, { useState } from "react";
+import { Router, useRouter } from "next/navigation";
 
-import { courses } from "../student-portal/data";
+import { courses } from "@/app/student-portal/data";
 import Link from "next/link";
 
 // Sample user profile data
@@ -56,6 +57,19 @@ const userProfileData = {
 };
 
 const ProfilePage = () => {
+
+  const router = useRouter();
+
+  const logout = () => {
+    localStorage.removeItem("access_token");
+    localStorage.removeItem("refresh_token");
+    localStorage.removeItem("user_id");
+    router.push("/signin"); // Use Next.js router for navigation
+  };
+
+
+
+
   const [profileData, setProfileData] = useState(userProfileData);
 
   // Handle user detail changes
@@ -103,6 +117,12 @@ const ProfilePage = () => {
       <div className="max-w-5xl mx-auto bg-white md:shadow-md md:rounded-2xl p-6">
         <h2 className="text-3xl font-bold text-gray-800">Profile</h2>
         <div className="mt-6 flex flex-col gap-6">
+        <button
+  onClick={logout}
+  className="bg-red-500 text-white py-2 px-4 rounded-full hover:bg-red-700"
+>
+  Logout
+</button>
           {/* User Details Section */}
           <div className="">
             <h3 className="text-2xl font-semibold">User Details</h3>
