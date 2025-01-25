@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 
 const AboutPage = () => {
   return (
@@ -236,9 +237,11 @@ const AboutPage = () => {
         <p className="mb-8">
           Transform your preparation journey with expert guidance and tools.
         </p>
+        <Link href={`/`}>
         <button className="py-2 px-4  bg-white text-black font-bold rounded-lg shadow-md ">
           Get Started
         </button>
+        </Link>
       </section>
     </div>
   );

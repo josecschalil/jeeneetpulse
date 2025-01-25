@@ -18,7 +18,7 @@ const VerifyEmail = () => {
           showPopup('Your email has been successfully verified!')
           setMessage('Your email has been successfully verified!');
           setLoading(false);
-          router.push(`/`);
+          router.push(`/signin`);
           
         })
         .catch((error) => {

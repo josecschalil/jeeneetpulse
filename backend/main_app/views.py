@@ -84,8 +84,7 @@ class ResetPasswordView(APIView):
             uidb64 = urlsafe_base64_encode(force_bytes(user.pk))
             token = token_generator.make_token(user)
 
-            # Send password reset email
-            reset_link = f"<YOUR_FRONTEND_URL>/reset-password-confirm/{uidb64}/{token}/"
+            reset_link = f"http://localhost:3000/reset-password/{uidb64}/{token}/"
             subject = "Reset Your Password"
             message = f"""
             Hello {user.name},
@@ -126,7 +125,7 @@ class ResetPasswordConfirmView(APIView):
 
             # Get and validate the new password
             new_password = request.data.get('password')
-            confirm_password = request.data.get('confirm_password')
+            confirm_password = request.data.get('password')
 
             if len(new_password) < 8:
                 return Response({'message': 'Password must be at least 8 characters long.'}, status=status.HTTP_400_BAD_REQUEST)

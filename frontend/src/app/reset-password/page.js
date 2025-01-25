@@ -80,7 +80,7 @@ export default function ResetRequest() {
                 <div className="w-4 h-4 border-t-2 border-white border-solid rounded-full animate-spin"></div>
               </span>
             ) : (
-              "Create Account"
+              "Reset Password"
             )}
           </button>
           </form>
