@@ -56,6 +56,11 @@ class LectureVideo(models.Model):
     video_title = models.CharField(max_length=255)
     video_path = models.CharField(max_length=500)
 
+class LectureNote(models.Model):
+    chapter = models.ForeignKey(Chapter, on_delete=models.CASCADE, related_name='lecture_notes')
+    thumbnail = models.ImageField(upload_to='lecture_note_thumbnail/', blank=True, null=True)
+    path = models.CharField(max_length=1000)
+
 class Exam(models.Model):
 
     exam_id = models.UUIDField(default=uuid.uuid4, editable=False, unique=True, primary_key=True)
