@@ -1,7 +1,7 @@
 from django.urls import path, include
 from django.urls import path, include
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
-from .views import SignupView, LoginView, VerifyEmailView,UserProfileView,ResetPasswordView
+from .views import SignupView, LoginView, VerifyEmailView,UserProfileView,ResetPasswordView,ContactUsView
 
 urlpatterns = [
   
@@ -14,6 +14,7 @@ urlpatterns = [
     path('login/', LoginView.as_view(), name='user-login'), 
     path('verify-email/<uidb64>/<token>/', VerifyEmailView.as_view(), name='verify-email'),
     path('auth/users/reset_password_confirm/<uidb64>/<token>/', ResetPasswordView.as_view(), name='reset-password'),
-    path('api/user', UserProfileView.as_view(), name='user-profile')
+    path('api/user', UserProfileView.as_view(), name='user-profile'),
+    path('contact-us/',ContactUsView.as_view(),name ='contact-us'),
 
 ]
