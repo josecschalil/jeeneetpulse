@@ -1,8 +1,12 @@
 "use client";
 import React, { useState } from "react";
 import axios from "axios";
+import useAuthCheck from "@/hooks/useAuthCheck";
+import showPopup from "../components/Toast";
+import { useRouter } from "next/navigation";
 
 const SignUpPage = () => {
+  const router = useRouter();
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -12,6 +16,7 @@ const SignUpPage = () => {
 
   const [error, setError] = useState("");
   const [message, setMessage] = useState("");
+  const [isloading, setIsloading] = useState(false);
 
   const handleChange = (e) => {
     const { id, value } = e.target;
@@ -45,31 +50,37 @@ const SignUpPage = () => {
   };
 
   const handleSubmit = async (e) => {
+    setIsloading(true);
     e.preventDefault();
-  
+
     const passwordError = validatePassword();
     if (passwordError) {
       setError(passwordError);
       return;
     }
-  
+
     try {
       const normalizedEmail = normalizeEmail(formData.email);
-  
-      // Make the API request
+
       const response = await axios.post("http://127.0.0.1:8000/signup/", {
         name: formData.name,
         email: normalizedEmail,
         password: formData.password,
         re_password: formData.password,
       });
-  
-      // Log the API response to the console
-      console.log('API Response:', response);
-  
+
+      console.log("API Response:", response);
+
+      setIsloading(false);
       setError("");
-      setMessage("User registered successfully! Please check your email to verify your account.");
-  
+      setMessage(
+        "User registered successfully! Please check your email to verify your account."
+      );
+      showPopup(
+        "An Email has been sent to your registered mail. Confirm to finish Sign-up."
+      );
+      router.push("/");
+
       // Reset form data
       setFormData({
         name: "",
@@ -77,38 +88,42 @@ const SignUpPage = () => {
         password: "",
         confirmPassword: "",
       });
-  
+
       // Clear the success message after 3 seconds
       setTimeout(() => {
         setMessage("");
       }, 3000);
     } catch (err) {
-      // If there's an error, extract a relevant message
+      setIsloading[false];
       const errorMsg =
         err.response?.data?.email ||
         err.response?.data?.password ||
         "Registration failed.";
       setError(errorMsg);
-  
+
       // Clear the error message after 3 seconds
       setTimeout(() => {
         setError("");
       }, 3000);
     }
   };
-  
 
   return (
     <div className="min-h-screen flex sm:items-center sm:justify-center bg-gray-50">
       <div className="w-full sm:max-w-lg bg-white sm:shadow-xl sm:rounded-xl p-8">
-        <h2 className="text-3xl font-bold text-center text-gray-800">Sign Up</h2>
+        <h2 className="text-3xl font-bold text-center text-gray-800">
+          Sign Up
+        </h2>
         <p className="text-sm text-gray-600 text-center mt-2">
           Join us to kickstart your journey for JEE or NEET preparation!
         </p>
 
         <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
           <div>
-            <label htmlFor="name" className="block text-sm font-medium text-gray-700">
+            <label
+              htmlFor="name"
+              className="block text-sm font-medium text-gray-700"
+            >
               Full Name
             </label>
             <input
@@ -124,7 +139,10 @@ const SignUpPage = () => {
           </div>
 
           <div>
-            <label htmlFor="email" className="block text-sm font-medium text-gray-700">
+            <label
+              htmlFor="email"
+              className="block text-sm font-medium text-gray-700"
+            >
               Email Address
             </label>
             <input
@@ -140,7 +158,10 @@ const SignUpPage = () => {
           </div>
 
           <div>
-            <label htmlFor="password" className="block text-sm font-medium text-gray-700">
+            <label
+              htmlFor="password"
+              className="block text-sm font-medium text-gray-700"
+            >
               Password
             </label>
             <input
@@ -156,7 +177,10 @@ const SignUpPage = () => {
           </div>
 
           <div>
-            <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-700">
+            <label
+              htmlFor="confirmPassword"
+              className="block text-sm font-medium text-gray-700"
+            >
               Confirm Password
             </label>
             <input
@@ -173,18 +197,31 @@ const SignUpPage = () => {
 
           {error && <p className="text-sm text-red-600">{error}</p>}
           {message && <p className="text-sm text-green-600">{message}</p>}
-
           <button
             type="submit"
-            className="w-full bg-teal-600 text-white py-3 rounded-lg hover:bg-teal-700 transition duration-300"
+            className={`w-full py-3 rounded-lg transition duration-300 ${
+              isloading
+                ? "bg-teal-400 text-white animate-pulse"
+                : "bg-teal-600 text-white hover:bg-teal-700"
+            }`}
+            disabled={isloading} // Disable the button while loading
           >
-            Create Account
+            {isloading ? (
+              <span className="flex justify-center items-center">
+                <div className="w-4 h-4 border-t-2 border-white border-solid rounded-full animate-spin"></div>
+              </span>
+            ) : (
+              "Create Account"
+            )}
           </button>
         </form>
 
         <p className="text-sm text-center text-gray-600 mt-6">
           Already have an account?{" "}
-          <a href="/signin" className="text-teal-600 font-medium hover:underline">
+          <a
+            href="/signin"
+            className="text-teal-600 font-medium hover:underline"
+          >
             Sign In
           </a>
         </p>
