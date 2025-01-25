@@ -1,4 +1,3 @@
-from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.permissions import AllowAny,IsAuthenticated
@@ -13,14 +12,62 @@ from django.template.loader import render_to_string
 from django.contrib.auth.tokens import default_token_generator
 from django.utils.encoding import force_str
 from rest_framework_simplejwt.authentication import JWTAuthentication
-
 from django.contrib.auth.hashers import make_password  
 from django.contrib.auth.tokens import default_token_generator
 from rest_framework.views import APIView
 from django.contrib.auth.models import User
+from django.http import JsonResponse
+import json
 
 
 User = get_user_model()
+class ContactUsView(APIView):
+    permission_classes = [AllowAny]
+    def get(self, request, *args, **kwargs):
+        return Response({'message': 'Email verified successfully!'}, status=status.HTTP_200_OK)
+    def post(self, request, *args, **kwargs):
+        try:
+            
+            data = json.loads(request.body)
+            first_name = data.get('firstName', '')
+            last_name = data.get('lastName', '')
+            phone = data.get('phone', '')
+            email = data.get('email', '')
+            message = data.get('message', '')
+
+            
+            send_mail(
+                subject="Thank You for Contacting Us!",
+                message=f"Hi {first_name},\n\nThank you for reaching out to us. We have received your message and will get back to you shortly.\n\nBest regards,\nThe Team",
+                from_email="no-reply@yourdomain.com",
+                recipient_list=[email],
+                fail_silently=False,
+            )
+
+            # Send the form details to the admin
+            admin_email = "josecschalil@gmail.com"
+            admin_subject = "New Contact Us Form Submission"
+            admin_message = (
+                f"New contact form submission:\n\n"
+                f"Name: {first_name} {last_name}\n"
+                f"Phone: {phone}\n"
+                f"Email: {email}\n"
+                f"Message: {message}\n"
+            )
+
+            send_mail(
+                subject=admin_subject,
+                message=admin_message,
+                from_email="no-reply@yourdomain.com",
+                recipient_list=[admin_email],
+                fail_silently=False,
+            )
+
+            return JsonResponse({"message": "Your message has been sent successfully."}, status=200)
+
+        except Exception as e:
+            return JsonResponse({"error": "Something went wrong while processing your request.", "details": str(e)}, status=500)
+
 class ResetPasswordView(APIView):
     permission_classes = [AllowAny]
 
