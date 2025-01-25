@@ -42,7 +42,7 @@ export default function ResetRequest() {
   };
 
   return (
-    <div className="h-[90vh] flex items-center justify-center font-jakarta bg-gray-50">
+    <div className="h-[90vh] flex items-center justify-center font-jakarta bg-white sm:bg-gray-50">
       <div className="w-full sm:max-w-md bg-white sm:shadow-lg sm:rounded-xl p-6">
         <h2 className="text-2xl font-semibold text-center text-gray-800">Reset Your Password</h2>
         <p className="text-sm text-gray-600 text-center mt-2">
