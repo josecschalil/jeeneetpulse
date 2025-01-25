@@ -133,7 +133,7 @@ const TestsPage = () => {
                 <h3 className="text-lg font-bold font-instSansB text-gray-800">
                   {exam.exam_title}
                 </h3>
-                <p className="text-sm text-gray-500 mt-1">{exam.exam_id}</p>
+                <p className="text-sm text-gray-700 mt-1"> Level {exam?.diffculty} | {exam.time} mins</p>
               </div>
             </div>
 

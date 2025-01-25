@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import useAuthentication from "@/hooks/useAuthentication";
@@ -9,6 +9,25 @@ const Navbar = () => {
   const [user_id, setUserId] = useState(null);
   const { isAuthenticated, userDetails } = useAuthentication();
   const [menuOpen, setMenuOpen] = useState(false);
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+  const dropdownRef = useRef(null);
+
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setDropdownOpen(false);
+      }
+    };
+
+    if (dropdownOpen) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [dropdownOpen]);
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -17,15 +36,25 @@ const Navbar = () => {
     }
   }, []);
 
+  const handleLogout = () => {
+    localStorage.removeItem("access_token");
+    localStorage.removeItem("refresh_token");
+    localStorage.removeItem("user_id");
+  };
+
   const isTestPage = pathname.startsWith("/tests/custom/exams/");
 
-  if (isTestPage) return null; 
+  if (isTestPage) return null;
 
   return (
     <nav
       className="font-jakarta justify-between py-6"
+  
       style={{
-        backgroundColor: (pathname === "/" || pathname.startsWith("/verify-email") )? "#EBFFF9" : "#FFFFFF",
+        backgroundColor:
+          pathname === "/" || pathname.startsWith("/verify-email")
+            ? "#EBFFF9"
+            : "#FFFFFF",
       }}
     >
       <div className="flex flex-row max-w-7xl px-3 pr-5 md:px-6 items-center justify-between mx-auto">
@@ -33,11 +62,11 @@ const Navbar = () => {
           className="basis-auto flex lg:hidden mr-4"
           onClick={() => setMenuOpen(!menuOpen)}
         >
-          <img src="menu.png" className="h-[25px] " alt="Menu" />
+          <img src="/menu.png" className="h-[25px] " alt="Menu" />
         </div>
 
         <div className="flex">
-          <img src="logo.svg" className="h-[15px] mr-1" alt="Logo" />
+          <img src="/logo.svg" className="h-[15px] mr-1" alt="Logo" />
         </div>
 
         <div className="hidden space-x-6 text-black lg:flex">
@@ -72,12 +101,44 @@ const Navbar = () => {
               </button>
             </Link>
           ) : (
-            <div className="flex items-center space-x-4">
-              <Link href={`/profile/${user_id}`}>
-                <div className="bg-black text-white py-2 px-4 text-sm rounded-full hover:bg-gray-700 ">
-                  Profile
+            <div className="">
+              <div
+                className="flex relative items-center gap-5 font-instSans font-normal cursor-pointer 
+             transition-transform duration-150 ease-in-out active:scale-95"
+                onClick={() => setDropdownOpen(!dropdownOpen)}
+              >
+                <img
+                  className="h-10 w-10 rounded-full bg-black "
+                  src="/boy.png"
+                ></img>
+                {userDetails?.name}
+              </div>
+              {dropdownOpen && (
+                <div className="absolute right-18 top-18 mt-2 w-40 bg-white border border-gray-200 rounded-lg shadow-lg"     ref={dropdownRef}>
+                  <ul className="py-2 text-sm text-gray-700">
+                    <li>
+                      <Link
+                        href={`/profile/${user_id}`}
+                        className="block px-4 py-2 hover:bg-gray-100"
+                      >
+                        Profile
+                      </Link>
+                    </li>
+                    <li>
+                      <Link href={`/`}>
+                        <button
+                          onClick={() => {
+                            handleLogout();
+                          }}
+                          className="block w-full text-left px-4 py-2 hover:bg-gray-100"
+                        >
+                          Logout
+                        </button>
+                      </Link>
+                    </li>
+                  </ul>
                 </div>
-              </Link>
+              )}
             </div>
           )}
         </div>

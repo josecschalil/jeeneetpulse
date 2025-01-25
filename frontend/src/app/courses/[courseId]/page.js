@@ -2,23 +2,36 @@
 import { useParams } from "next/navigation";
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import axios from "axios"; 
+import axios from "axios";
 
 const CoursePage = () => {
-  const { courseId } = useParams(); 
-  const [course, setCourse] = useState(null); 
+  const { courseId } = useParams();
+  const [course, setCourse] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null); 
+  const [error, setError] = useState(null);
+  const [isEnrolled, setIsEnrolled] = useState(false);
+  const [userId, setUserId] = useState(null);
 
- 
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const storedUserId = localStorage.getItem("user_id");
+      if (storedUserId) {
+        setUserId(storedUserId);
+      }
+      setLoading(false);
+    }
+  }, []);
+
   useEffect(() => {
     const fetchCourse = async () => {
       try {
-        const response = await axios.get(`http://localhost:8000/api/courses/${courseId}`);
-        setCourse(response.data); 
+        const response = await axios.get(
+          `http://localhost:8000/api/courses/${courseId}`
+        );
+        setCourse(response.data);
         setLoading(false);
       } catch (err) {
-        setError(err.message || "Failed to fetch course data."); 
+        setError(err.message || "Failed to fetch course data.");
         setLoading(false);
       }
     };
@@ -26,6 +39,27 @@ const CoursePage = () => {
     fetchCourse();
   }, [courseId]);
 
+  useEffect(() => {
+    if (userId) {
+      axios
+        .get(`http://127.0.0.1:8000/api/userCourses/${userId}`)
+        .then((response) => {
+          console.log(response?.data.courses)
+          const isEnrolled = response?.data.courses.some(
+            (course) => course.course_id === courseId
+          );
+
+          if (isEnrolled) {
+            setIsEnrolled(true);
+          } else {
+            setIsEnrolled(false);
+          }
+        })
+        .catch((error) => {
+          console.error("Error fetching user courses:", error);
+        });
+    }
+  }, [userId]);
 
   if (loading) {
     return (
@@ -54,10 +88,11 @@ const CoursePage = () => {
   return (
     <div className="min-h-screen bg-gray-50 md:py-8 font-jakarta md:px-6">
       <div className="max-w-4xl mx-auto bg-white md:shadow-md md:rounded-2xl p-6">
- 
         <div className="flex flex-col gap-3 sm:gap-0 sm:flex-row justify-between items-start mb-6">
           <div>
-            <h1 className="text-4xl font-bold text-gray-800 mb-4">{course.title}</h1>
+            <h1 className="text-4xl font-bold text-gray-800 mb-4">
+              {course.title}
+            </h1>
             <div className="text-2xl font-bold text-gray-800 mt-2">
               ₹{course.current_price}{" "}
               <span className="text-gray-500 line-through text-md">
@@ -68,9 +103,17 @@ const CoursePage = () => {
               </span>
             </div>
           </div>
-          <Link href={`/checkout/${course.id}`}>
-            <button className="bg-teal-600 text-white px-4 py-2 text-nowrap text-md font-semibold rounded-xl hover:bg-teal-700 transition">
-              Buy Now 
+          <Link href={isEnrolled ? "#" : `/checkout/${course.id}`}>
+            <button
+              className={`bg-teal-600 text-white px-4 py-2 text-nowrap text-md font-semibold rounded-xl 
+      ${
+        isEnrolled
+          ? "bg-gray-400 cursor-not-allowed"
+          : "hover:bg-teal-700 transition"
+      }`}
+              disabled={isEnrolled}
+            >
+              {isEnrolled ? "Already Enrolled" : "Buy Now"}
             </button>
           </Link>
         </div>
@@ -90,9 +133,9 @@ const CoursePage = () => {
             What's Included:
           </h3>
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-            {[  
+            {[
               { label: "Watch Hours", value: course.watch_hours },
-              { label: "Classes", value: course.classes},
+              { label: "Classes", value: course.classes },
               { label: "Test Series", value: course.chapters },
               { label: "Videos", value: course.classes },
             ].map((item, index) => (
@@ -115,7 +158,9 @@ const CoursePage = () => {
           </h3>
           <div className="flex justify-between">
             <div className="w-1/2">
-              <h4 className="text-lg font-semibold text-gray-700 mb-2">Exams</h4>
+              <h4 className="text-lg font-semibold text-gray-700 mb-2">
+                Exams
+              </h4>
               <ul className="list-disc pl-5">
                 {course.content_left_1 && <li>{course.content_left_1}</li>}
                 {course.content_left_2 && <li>{course.content_left_2}</li>}
@@ -124,7 +169,9 @@ const CoursePage = () => {
               </ul>
             </div>
             <div className="w-1/2">
-              <h4 className="text-lg font-semibold text-gray-700 mb-2">Videos</h4>
+              <h4 className="text-lg font-semibold text-gray-700 mb-2">
+                Videos
+              </h4>
               <ul className="list-disc pl-5">
                 {course.content_right_1 && <li>{course.content_right_1}</li>}
                 {course.content_right_2 && <li>{course.content_right_2}</li>}
@@ -134,8 +181,6 @@ const CoursePage = () => {
             </div>
           </div>
         </div>
-
-       
       </div>
     </div>
   );

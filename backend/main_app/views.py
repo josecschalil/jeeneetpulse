@@ -1,6 +1,6 @@
 from rest_framework.response import Response
 from rest_framework import status
-from rest_framework.permissions import AllowAny,IsAuthenticated
+from rest_framework.permissions import AllowAny, IsAuthenticated
 from django.contrib.auth import get_user_model
 from rest_framework_simplejwt.tokens import RefreshToken
 from .serializers import UserRegistrationSerializer
@@ -11,7 +11,7 @@ from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.template.loader import render_to_string
 from django.contrib.auth.tokens import default_token_generator
 from rest_framework_simplejwt.authentication import JWTAuthentication
-from django.contrib.auth.hashers import make_password  
+from django.contrib.auth.hashers import make_password
 from django.contrib.auth.tokens import default_token_generator
 from rest_framework.views import APIView
 from django.contrib.auth.models import User
@@ -22,13 +22,17 @@ from django.utils.encoding import force_bytes, force_str
 from main_app.models import CustomUser
 
 User = get_user_model()
+
+
 class ContactUsView(APIView):
     permission_classes = [AllowAny]
+
     def get(self, request, *args, **kwargs):
         return Response({'message': 'Email verified successfully!'}, status=status.HTTP_200_OK)
+
     def post(self, request, *args, **kwargs):
         try:
-            
+
             data = json.loads(request.body)
             first_name = data.get('firstName', '')
             last_name = data.get('lastName', '')
@@ -36,7 +40,6 @@ class ContactUsView(APIView):
             email = data.get('email', '')
             message = data.get('message', '')
 
-            
             send_mail(
                 subject="Thank You for Contacting Us!",
                 message=f"Hi {first_name},\n\nThank you for reaching out to us. We have received your message and will get back to you shortly.\n\nBest regards,\nThe Team",
@@ -69,7 +72,9 @@ class ContactUsView(APIView):
         except Exception as e:
             return JsonResponse({"error": "Something went wrong while processing your request.", "details": str(e)}, status=500)
 
+
 token_generator = PasswordResetTokenGenerator()
+
 
 class ResetPasswordView(APIView):
     permission_classes = [AllowAny]
@@ -100,7 +105,7 @@ class ResetPasswordView(APIView):
             send_mail(
                 subject,
                 message,
-                'no-reply@yourdomain.com',  
+                'no-reply@yourdomain.com',
                 [email],
                 fail_silently=False,
             )
@@ -139,19 +144,18 @@ class ResetPasswordConfirmView(APIView):
             return Response({'message': 'Password reset successfully!'}, status=status.HTTP_200_OK)
         except (TypeError, ValueError, OverflowError, CustomUser.DoesNotExist):
             return Response({'message': 'Invalid request!'}, status=status.HTTP_400_BAD_REQUEST)
-        
-
 
 
 class SignupView(APIView):
     """Handles user registration."""
     permission_classes = [AllowAny]
+
     def post(self, request):
         """Handle POST request for user registration."""
         serializer = UserRegistrationSerializer(data=request.data)
         if serializer.is_valid():
-            user = serializer.save() 
-            
+            user = serializer.save()
+
             self.send_verification_email(user, request)
 
             return Response(
@@ -165,25 +169,24 @@ class SignupView(APIView):
         token = default_token_generator.make_token(user)
         uid = urlsafe_base64_encode(str(user.pk).encode('utf-8'))
 
-      
         current_site = get_current_site(request)
-        relative_link = reverse('verify-email', kwargs={'uidb64': uid, 'token': token})
+        relative_link = reverse(
+            'verify-email', kwargs={'uidb64': uid, 'token': token})
         # full_url = f'http://{current_site.domain}{relative_link}'
         full_url = f'http://localhost:3000{relative_link}'
         print("Relative Link:", relative_link)
         print("Full URL:", full_url)
-      
+
         email_subject = "Activate your account"
         email_message = render_to_string(
-            'registration/activation_email.html',  
+            'registration/activation_email.html',
             {'user': user, 'activation_url': full_url}
         )
 
-        
         send_mail(
             email_subject,
             email_message,
-            'no-reply@yourdomain.com', 
+            'no-reply@yourdomain.com',
             [user.email],
             fail_silently=False,
             html_message=email_message
@@ -191,7 +194,7 @@ class SignupView(APIView):
 
 
 class VerifyEmailView(APIView):
-    permission_classes = [AllowAny] 
+    permission_classes = [AllowAny]
 
     def get(self, request, uidb64, token):
         try:
@@ -205,6 +208,8 @@ class VerifyEmailView(APIView):
                 return Response({'message': 'Invalid token!'}, status=status.HTTP_400_BAD_REQUEST)
         except (TypeError, ValueError, OverflowError, User.DoesNotExist):
             return Response({'message': 'Invalid token!'}, status=status.HTTP_400_BAD_REQUEST)
+
+
 class LoginView(APIView):
     """Handles user authentication and token generation."""
     permission_classes = [AllowAny]
@@ -216,10 +221,11 @@ class LoginView(APIView):
             return Response(serializer.validated_data, status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+
 class UserProfileView(APIView):
     authentication_classes = [JWTAuthentication]
     permission_classes = [IsAuthenticated]
 
     def get(self, request):
         user = request.user
-        return Response({"username": user.name})
+        return Response({"name": user.name, "email": user.email, })

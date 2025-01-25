@@ -1,11 +1,12 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
-import useAuthCheck from "@/hooks/useAuthCheck";
+import useAuthentication from "@/hooks/useAuthentication";
 import showPopup from "../components/Toast";
 import { useRouter } from "next/navigation";
 
 const SignUpPage = () => {
+
   const router = useRouter();
   const [formData, setFormData] = useState({
     name: "",
@@ -16,7 +17,17 @@ const SignUpPage = () => {
 
   const [error, setError] = useState("");
   const [message, setMessage] = useState("");
+  const { isAuthenticated, userDetails } = useAuthentication();
+
   const [isloading, setIsloading] = useState(false);
+
+  useEffect(()=>{
+      if(isAuthenticated){
+        console.log("ss")
+      showPopup("Already Signed In. Sign Out to Register")
+      router.push(`/`);}
+
+  },[isAuthenticated])
 
   const handleChange = (e) => {
     const { id, value } = e.target;
@@ -26,7 +37,7 @@ const SignUpPage = () => {
   const normalizeEmail = (email) => {
     if (!email) return "";
     const [localPart, domainPart] = email.split("@");
-    return domainPart ? `${localPart}@${domainPart.toLowerCase()}` : email;
+    return domainPart ? `${localPart.toLowerCase()}@${domainPart.toLowerCase()}` : email;
   };
 
   const validatePassword = () => {
