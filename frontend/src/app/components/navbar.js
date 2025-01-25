@@ -6,11 +6,16 @@ import useAuthentication from "@/hooks/useAuthentication";
 
 const Navbar = () => {
   const pathname = usePathname();
+  const [user_id, setUserId] = useState(null);
   const { isAuthenticated, userDetails } = useAuthentication();
-  console.log(isAuthenticated,userDetails)
   const [menuOpen, setMenuOpen] = useState(false);
 
-  const user_id = localStorage.getItem("user_id");
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const storedUserId = localStorage.getItem("user_id");
+      setUserId(storedUserId);
+    }
+  }, []);
 
   const isTestPage = pathname.startsWith("/tests/custom/exams/");
 

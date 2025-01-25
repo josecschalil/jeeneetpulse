@@ -16,7 +16,6 @@ const useFetchUserDetails = () => {
           Authorization: `Bearer ${token}`,
         },
       });
-      console.log(response.data)
       setUserDetails(response.data); // Now stores all user details
     } catch (error) {
       if (error.response && error.response.status === 401) {

@@ -22,7 +22,7 @@ const CoursePage = () => {
     axios
       .get(`http://127.0.0.1:8000/api/courses/${courseId}`) 
       .then((response) => {
-        console.log("Course fetched:", response.data);
+        // console.log("Course fetched:", response.data);
         setCourse(response.data);  
       })
       .catch((error) => {

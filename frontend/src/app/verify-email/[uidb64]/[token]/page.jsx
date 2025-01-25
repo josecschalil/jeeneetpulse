@@ -7,8 +7,6 @@ import axios from 'axios';
 const VerifyEmail = () => {
   const router = useRouter();
   const { uidb64, token } = useParams(); // Get the uidb64 and token from the URL
-  console.log(`token is:${token}`);
-  console.log(`uibfd is${uidb64} `);
   const [message, setMessage] = useState('');
   const [loading, setLoading] = useState(true);
 

@@ -21,15 +21,15 @@ const CourseList = () => {
 
   useEffect(() => {
     if (userId) {
-      console.log("Fetching courses for user:", userId);
+      // console.log("Fetching courses for user:", userId);
 
       axios
         .get(`http://127.0.0.1:8000/api/userCourses/${userId}`)
         .then((response) => {
-          console.log("User courses data:", response.data);
+          // console.log("User courses data:", response.data);
 
           const courses = response.data.courses;
-          console.log("Courses found:", courses);
+          // console.log("Courses found:", courses);
 
           const coursePromises = courses.map((coursedata) => {
             return axios.get(
@@ -40,7 +40,7 @@ const CourseList = () => {
           Promise.all(coursePromises)
             .then((courseResponses) => {
               const coursesData = courseResponses.map((res) => res.data);
-              console.log("Course details fetched:", coursesData);
+              // console.log("Course details fetched:", coursesData);
 
               setCoursesData(coursesData);
 

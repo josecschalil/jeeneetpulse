@@ -69,7 +69,6 @@ const SignUpPage = () => {
         re_password: formData.password,
       });
 
-      console.log("API Response:", response);
 
       setIsloading(false);
       setError("");
