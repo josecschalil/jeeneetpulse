@@ -93,6 +93,8 @@ class ResetPasswordView(APIView):
                 return Response({'message': 'Invalid or expired token!'}, status=status.HTTP_400_BAD_REQUEST)
         except (TypeError, ValueError, OverflowError, User.DoesNotExist):
             return Response({'message': 'Invalid request!'}, status=status.HTTP_400_BAD_REQUEST)
+        
+
 class SignupView(APIView):
     """Handles user registration."""
     permission_classes = [AllowAny]
@@ -118,7 +120,8 @@ class SignupView(APIView):
       
         current_site = get_current_site(request)
         relative_link = reverse('verify-email', kwargs={'uidb64': uid, 'token': token})
-        full_url = f'http://{current_site.domain}{relative_link}'
+        # full_url = f'http://{current_site.domain}{relative_link}'
+        full_url = f'http://localhost:3000{relative_link}'
         print("Relative Link:", relative_link)
         print("Full URL:", full_url)
       
@@ -137,6 +140,8 @@ class SignupView(APIView):
             fail_silently=False,
             html_message=email_message
         )
+
+
 class VerifyEmailView(APIView):
     permission_classes = [AllowAny] 
 
