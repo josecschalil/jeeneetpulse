@@ -51,13 +51,20 @@ class Chapter(models.Model):
         return f"{self.name} - {self.subject.name} - {self.subject.course.title}"
 
 class LectureVideo(models.Model):
+    isFeatured = models.BooleanField(default=False)
     thumbnail = models.ImageField(upload_to='video_images/', blank=True, null=True)
     chapter = models.ForeignKey(Chapter, on_delete=models.CASCADE, related_name='lecture_videos')
     video_title = models.CharField(max_length=255)
     video_path = models.CharField(max_length=500)
 
-class Exam(models.Model):
+class LectureNote(models.Model):
+    isFeatured = models.BooleanField(default=False)
+    chapter = models.ForeignKey(Chapter, on_delete=models.CASCADE, related_name='lecture_notes')
+    thumbnail = models.ImageField(upload_to='lecture_note_thumbnail/', blank=True, null=True)
+    path = models.CharField(max_length=1000)
 
+class Exam(models.Model):
+    isFeatured = models.BooleanField(default=False)
     exam_id = models.UUIDField(default=uuid.uuid4, editable=False, unique=True, primary_key=True)
     exam_title = models.CharField(max_length=255)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, null=True, blank=True, on_delete=models.SET_NULL, related_name='exam_user')

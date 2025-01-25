@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Course, Subject, Chapter, LectureVideo, Exam, Question,UserCourseData,UserExamData,ExamQuestion,ChapterQuestion
+from .models import Course, Subject, Chapter, LectureVideo, Exam, Question,UserCourseData,UserExamData,ExamQuestion,ChapterQuestion,LectureNote
 
 class CourseSerializer(serializers.ModelSerializer):
     class Meta:
@@ -40,6 +40,11 @@ class ChapterListSerializer(serializers.ListSerializer):
 class LectureVideoSerializer(serializers.ModelSerializer):
     class Meta:
         model = LectureVideo
+        fields = '__all__'
+
+class LectureNoteSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = LectureNote
         fields = '__all__'
 
 class ExamSerializer(serializers.ModelSerializer):
