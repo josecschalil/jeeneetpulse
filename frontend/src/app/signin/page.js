@@ -110,7 +110,7 @@ const SignInPage = () => {
               <input type="checkbox" className="h-4 w-4 text-teal-600 border-gray-300 rounded" />
               <span className="ml-2 text-sm text-gray-700">Remember me</span>
             </label>
-            <a href="/resetpassword" className="text-sm text-teal-600 hover:underline">
+            <a href="/reset-password" className="text-sm text-teal-600 hover:underline">
               Forgot password?
             </a>
           </div>

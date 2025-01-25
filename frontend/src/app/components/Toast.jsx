@@ -6,13 +6,13 @@ const showPopup = (message) => {
   popup.style.left = "50%";
   popup.style.transform = "translateX(-50%)";
   popup.style.backgroundColor = "#f3f4f6"; // Tailwind gray-100
-  popup.style.color = "#333";
+  popup.style.color = "black";
   popup.style.padding = "15px 25px";
   popup.style.borderRadius = "8px";
   popup.style.boxShadow = "0 4px 10px rgba(0,0,0,0.1)";
   popup.style.zIndex = "1000";
   popup.style.fontFamily = "Jakarta";
-  popup.style.fontSize = "13px";
+  popup.style.fontSize = "16px";
   popup.style.opacity = "0";
   popup.style.transition = "opacity 0.1s ease-in-out";
 
