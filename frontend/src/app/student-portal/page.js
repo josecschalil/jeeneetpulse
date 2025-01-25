@@ -118,7 +118,9 @@ const CourseList = () => {
           </div>
         </div>
       ) : (
-        <p>No user found. Please log in.</p>
+        <div className="flex h-[90vh] items-center justify-center">
+        <p>Please log in to access tests and classes.</p>
+        </div>
       )}
     </div>
   );
