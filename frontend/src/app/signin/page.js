@@ -56,7 +56,7 @@ const SignInPage = () => {
       localStorage.setItem("user_id", userId);
 
       showPopup("User Logged In Successfully.");
-      router.push(`/`);
+      router.push(`/student-portal`);
     } catch (err) {
       setError("Invalid email or password.");
     } finally {
