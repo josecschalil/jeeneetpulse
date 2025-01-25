@@ -10,7 +10,6 @@ from django.contrib.sites.shortcuts import get_current_site
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.template.loader import render_to_string
 from django.contrib.auth.tokens import default_token_generator
-from django.utils.encoding import force_str
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from django.contrib.auth.hashers import make_password  
 from django.contrib.auth.tokens import default_token_generator
@@ -18,7 +17,9 @@ from rest_framework.views import APIView
 from django.contrib.auth.models import User
 from django.http import JsonResponse
 import json
-
+from django.contrib.auth.tokens import PasswordResetTokenGenerator
+from django.utils.encoding import force_bytes, force_str
+from main_app.models import CustomUser
 
 User = get_user_model()
 class ContactUsView(APIView):
@@ -68,32 +69,80 @@ class ContactUsView(APIView):
         except Exception as e:
             return JsonResponse({"error": "Something went wrong while processing your request.", "details": str(e)}, status=500)
 
+token_generator = PasswordResetTokenGenerator()
+
 class ResetPasswordView(APIView):
+    permission_classes = [AllowAny]
+
+    def post(self, request):
+        email = request.data.get('email')
+        try:
+            # Check if a user exists with the given email
+            user = CustomUser.objects.get(email=email)
+
+            # Generate a secure token and UID
+            uidb64 = urlsafe_base64_encode(force_bytes(user.pk))
+            token = token_generator.make_token(user)
+
+            # Send password reset email
+            reset_link = f"<YOUR_FRONTEND_URL>/reset-password-confirm/{uidb64}/{token}/"
+            subject = "Reset Your Password"
+            message = f"""
+            Hello {user.name},
+
+            Click the link below to reset your password:
+            {reset_link}
+
+            If you didn't request this, you can safely ignore this email.
+
+            Thanks,
+            Your Team
+            """
+            send_mail(
+                subject,
+                message,
+                'no-reply@yourdomain.com',  # Replace with your actual email
+                [email],
+                fail_silently=False,
+            )
+
+            return Response({'message': 'Password reset email sent successfully!'}, status=status.HTTP_200_OK)
+        except CustomUser.DoesNotExist:
+            return Response({'message': 'No user found with this email address!'}, status=status.HTTP_404_NOT_FOUND)
+
+
+class ResetPasswordConfirmView(APIView):
     permission_classes = [AllowAny]
 
     def post(self, request, uidb64, token):
         try:
-            
+            # Decode the UID and get the user
             uid = force_str(urlsafe_base64_decode(uidb64))
-            user = User.objects.get(pk=uid)
+            user = CustomUser.objects.get(pk=uid)
 
-            if default_token_generator.check_token(user, token):
-                new_password = request.data.get('password')
-                
-                
-                if len(new_password) < 8:
-                    return Response({'message': 'Password must be at least 8 characters long.'}, status=status.HTTP_400_BAD_REQUEST)
-
-                
-                user.password = make_password(new_password)
-                user.save()
-
-                return Response({'message': 'Password reset successfully!'}, status=status.HTTP_200_OK)
-            else:
+            # Verify the token
+            if not token_generator.check_token(user, token):
                 return Response({'message': 'Invalid or expired token!'}, status=status.HTTP_400_BAD_REQUEST)
-        except (TypeError, ValueError, OverflowError, User.DoesNotExist):
+
+            # Get and validate the new password
+            new_password = request.data.get('password')
+            confirm_password = request.data.get('confirm_password')
+
+            if len(new_password) < 8:
+                return Response({'message': 'Password must be at least 8 characters long.'}, status=status.HTTP_400_BAD_REQUEST)
+            if new_password != confirm_password:
+                return Response({'message': 'Passwords do not match!'}, status=status.HTTP_400_BAD_REQUEST)
+
+            # Update the user's password
+            user.password = make_password(new_password)
+            user.save()
+
+            return Response({'message': 'Password reset successfully!'}, status=status.HTTP_200_OK)
+        except (TypeError, ValueError, OverflowError, CustomUser.DoesNotExist):
             return Response({'message': 'Invalid request!'}, status=status.HTTP_400_BAD_REQUEST)
         
+
+
 
 class SignupView(APIView):
     """Handles user registration."""
