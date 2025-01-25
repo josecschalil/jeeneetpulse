@@ -13,7 +13,7 @@ const TimeSelector = ({ time, setTime }) => {
   ];
 
   return (
-    <div className="flex gap-4 mb-4 ">
+    <div className="flex flex-wrap gap-4 mb-4 ">
       {times.map((t) => (
         <button
           key={t.value}
@@ -27,7 +27,8 @@ const TimeSelector = ({ time, setTime }) => {
           <div className="flex items-center space-x-3">
             <small className="text">{t.icon}</small>
             <div className="text-left">
-              <small className="text-sm ">{t.value} minutes </small>
+              <small className="hidden sm:block text-sm ">{t.value} minutes </small>
+              <small className=" sm:hidden text-sm ">{t.value} </small>
             </div>
           </div>
         </button>
@@ -44,7 +45,7 @@ const QuestionSelector = ({ numQuestions, setNumQuestions }) => {
   ];
 
   return (
-    <div className="flex gap-4 mb-4 ">
+    <div className="flex flex-wrap gap-4 mb-4 ">
       {questionCounts.map((num) => (
         <button
           key={num.value}
@@ -58,7 +59,8 @@ const QuestionSelector = ({ numQuestions, setNumQuestions }) => {
           <div className="flex items-center space-x-2">
             <small className="text">{num.icon}</small>
             <div className="text-left">
-              <small className="text-sm ">{num.value} Questions</small>
+              <small className=" hidden sm:block text-sm ">{num.value} Questions</small>
+              <small className=" text-sm ">{num.value}</small>
             </div>
           </div>
         </button>
@@ -77,7 +79,7 @@ const DifficultySelector = ({ difficulty, setDifficulty }) => {
   ];
 
   return (
-    <div className="flex gap-4 mb-4 ">
+    <div className="flex flex-wrap gap-4 mb-4 ">
       {difficulties.map((d) => (
         <button
           key={d.value}
@@ -91,7 +93,8 @@ const DifficultySelector = ({ difficulty, setDifficulty }) => {
           <div className="flex items-center space-x-3">
             <small className="text">{d.icon}</small>
             <div className="text-left">
-              <small className="text-sm font-">Level {d.value}</small>
+              <small className="hidden sm:block text-sm font-">Level {d.value}</small>
+              <small className="text-sm ">{d.value}</small>
             </div>
           </div>
         </button>
@@ -165,11 +168,11 @@ const SubjectSelector = ({
 
   return (
     <div>
-      <div className="grid grid-cols-5 gap-6 mb-6">
+      <div className="flex  gap-6 mb-6">
         {subjectOptions.map((subject) => (
           <div
             key={subject.id}
-            className={`p-4 border  transition-all duration-100 hover:border-gray-500 rounded-2xl  ${
+            className={`p-4  border  transition-all duration-100 hover:border-gray-500 rounded-2xl  ${
               subjects.includes(subject.name)
                 ? "border-teal-800"
                 : "border-gray-300"
@@ -194,7 +197,7 @@ const SubjectSelector = ({
             <h3 className="text-lg font-bold text-gray-800 mb-4">
               {currentSubject.name} Chapters
             </h3>
-            <div className="grid grid-cols-5 gap-4">
+            <div className="grid grid-cols-2 sm:grid-cols-5 gap-4">
               {currentSubject.chapters.map((chapter) => (
                 <div
                   key={chapter.id}
@@ -231,6 +234,7 @@ const ModalTimeQuestions = ({
 
   return (
     <div className="px-2 modal w-fit rounded-lg  text-gray-800 mx-auto font-instSansB">
+
       <h2 className="text-lg text-left mb-4">Set Duration</h2>
       <TimeSelector time={time} setTime={setTime} />
 
@@ -323,6 +327,7 @@ const TestCreator = ({ id }) => {
 
   const handleNext = () => setShowModal((prev) => prev + 1);
   const handleBack = () => setShowModal((prev) => prev - 1);
+  const handleClose = () => setShowModal(0);
 
   const handleSubmit = async () => {
     if (!numQuestions || !difficulty || selectedChapters.length === 0) {
@@ -411,7 +416,9 @@ const TestCreator = ({ id }) => {
   };
 
   return (
-    <div className="py-4">
+    <div className="py-4 relative">
+      <>
+      
       {showModal === 1 && (
         <ModalTimeQuestions
           onNext={handleNext}
@@ -421,7 +428,9 @@ const TestCreator = ({ id }) => {
           numQuestions={numQuestions}
           time={time}
           difficulty={difficulty}
+          
         />
+        
       )}
       {showModal === 2 && (
         <ModalSubjects
@@ -433,7 +442,8 @@ const TestCreator = ({ id }) => {
           setSelectedChapters={setSelectedChapters}
           courseid={id}
         />
-      )}
+      )}</>
+      
     </div>
   );
 };

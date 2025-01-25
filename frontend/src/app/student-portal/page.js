@@ -3,105 +3,123 @@ import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import axios from "axios";
 
-
 const CourseList = () => {
   const [coursesData, setCoursesData] = useState([]);
-  const [progressArray, setProgressArray] = useState([]); 
-  const userId = localStorage.getItem("user_id");
+  const [progressArray, setProgressArray] = useState([]);
+  const [userId, setUserId] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    console.log("Fetching courses for user:", userId);
+    if (typeof window !== "undefined") {
+      const storedUserId = localStorage.getItem("user_id");
+      if (storedUserId) {
+        setUserId(storedUserId);
+      }
+      setLoading(false);
+    }
+  }, []);
 
-    axios
-      .get(`http://127.0.0.1:8000/api/userCourses/${userId}`)
-      .then((response) => {
-        console.log("User courses data:", response.data);
+  useEffect(() => {
+    if (userId) {
+      console.log("Fetching courses for user:", userId);
 
-        const courses = response.data.courses;
-        console.log("Courses found:", courses);
+      axios
+        .get(`http://127.0.0.1:8000/api/userCourses/${userId}`)
+        .then((response) => {
+          console.log("User courses data:", response.data);
 
-        const coursePromises = courses.map((coursedata) => {
-          console.log("Courdddses found:", coursedata);
-          return axios.get(
-    
-            `http://127.0.0.1:8000/api/courses/${coursedata.course_id}`
-          );
-        });
+          const courses = response.data.courses;
+          console.log("Courses found:", courses);
 
-        Promise.all(coursePromises)
-          .then((courseResponses) => {
-            const coursesData = courseResponses.map((res) => res.data);
-            console.log("Course details fetched:", coursesData);
-
-            setCoursesData(coursesData);
-
-            const progressArray = courses.map((course) => course.progress);
-            setProgressArray(progressArray);
-          })
-          .catch((error) => {
-            console.error("Error fetching course details:", error);
+          const coursePromises = courses.map((coursedata) => {
+            return axios.get(
+              `http://127.0.0.1:8000/api/courses/${coursedata.course_id}`
+            );
           });
-      })
-      .catch((error) => {
-        console.error("Error fetching user courses:", error);
-      });
+
+          Promise.all(coursePromises)
+            .then((courseResponses) => {
+              const coursesData = courseResponses.map((res) => res.data);
+              console.log("Course details fetched:", coursesData);
+
+              setCoursesData(coursesData);
+
+              const progressArray = courses.map((course) => course.progress);
+              setProgressArray(progressArray);
+            })
+            .catch((error) => {
+              console.error("Error fetching course details:", error);
+            });
+        })
+        .catch((error) => {
+          console.error("Error fetching user courses:", error);
+        });
+    }
   }, [userId]);
 
+  if (loading) return <p>Loading...</p>;
+
   return (
-    <div className="min-h-screen bg-gray-50 md:py-8 font-jakarta md:px-6">
-      <div className="max-w-5xl mx-auto bg-white md:shadow-md md:rounded-2xl p-6">
-        <div className="flex justify-between items-center mb-6">
-          <h2 className="text-2xl font-bold text-gray-700 font-instSansB">
-            My Courses
-          </h2>
-        </div>
-
-        {coursesData.map((course, index) => (
-          <Link key={index} href={`/student-portal/${course.id}`}>
-            <div className="flex items-center justify-between p-4 border hover:border-gray-500 hover:shadow transition-all duration-100 rounded-2xl mb-4">
-              <div className="flex items-center space-x-4">
-                <div className="h-10 w-10 bg-blue-100 flex items-center mr-3 justify-center rounded-full">
-                  <span
-                    role="img"
-                    aria-label="course-icon"
-                    className="text-2xl"
-                  >
-                    🎓
-                  </span>
-                </div>
-                <div>
-                  <h3 className="text-lg font font-bold font-instSansB text-gray-800">
-                    {course.title}
-                  </h3>
-                  <p className="text-sm text-gray-500 mt-1 hidden sm:block">
-                    {course.chapters} Chapters •{" "}
-                    {(+course.classes || 0) +
-                      (+course.tests || 0) +
-                      (+course.studymaterials || 0)}{" "}
-                    Contents
-                  </p>
-                </div>
-              </div>
-
-              <div className="flex items-center space-x-4">
-                <div className="hidden md:block w-32 bg-gray-200 rounded-full h-2 overflow-hidden">
-                  <div
-                    className="bg-teal-500 h-full"
-                    style={{ width: `${progressArray[index]}%` }}
-                  ></div>
-                </div>
-                <span className="hidden md:block text-sm text-gray-500">
-                  {progressArray[index]}% complete
-                </span>
-
-                <button className="max2:hidden px-4 py-2 bg-teal-800 hover:bg-teal-900 text-white rounded-2xl text-sm">
-                  Contents
-                </button>
-              </div>
+    <div>
+      {userId ? (
+        <div className="min-h-screen bg-gray-50 md:py-8 font-jakarta md:px-6">
+          <div className="max-w-5xl mx-auto bg-white md:shadow-md md:rounded-2xl p-6">
+            <div className="flex justify-between items-center mb-6">
+              <h2 className="text-2xl font-bold text-gray-700 font-instSansB">
+                My Courses
+              </h2>
             </div>
-          </Link>
-        ))}
-      </div>
+
+            {coursesData.map((course, index) => (
+              <Link key={index} href={`/student-portal/${course.id}`}>
+                <div className="flex items-center justify-between p-4 border hover:border-gray-500 hover:shadow transition-all duration-100 rounded-2xl mb-4">
+                  <div className="flex items-center space-x-4">
+                    <div className="h-10 w-10 bg-blue-100 flex items-center mr-3 justify-center rounded-full">
+                      <span
+                        role="img"
+                        aria-label="course-icon"
+                        className="text-2xl"
+                      >
+                        🎓
+                      </span>
+                    </div>
+                    <div>
+                      <h3 className="text-lg font font-bold font-instSansB text-gray-800">
+                        {course.title}
+                      </h3>
+                      <p className="text-sm text-gray-500 mt-1 hidden sm:block">
+                        {course.chapters} Chapters •{" "}
+                        {(+course.classes || 0) +
+                          (+course.tests || 0) +
+                          (+course.studymaterials || 0)}{" "}
+                        Contents
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center space-x-4">
+                    <div className="hidden md:block w-32 bg-gray-200 rounded-full h-2 overflow-hidden">
+                      <div
+                        className="bg-teal-500 h-full"
+                        style={{ width: `${progressArray[index]}%` }}
+                      ></div>
+                    </div>
+                    <span className="hidden md:block text-sm text-gray-500">
+                      {progressArray[index]}% complete
+                    </span>
+
+                    <button className="max2:hidden px-4 py-2 bg-teal-800 hover:bg-teal-900 text-white rounded-2xl text-sm">
+                      Contents
+                    </button>
+                  </div>
+                </div>
+              </Link>
+            ))}
+          </div>
+        </div>
+      ) : (
+        <p>No user found. Please log in.</p>
+      )}
     </div>
   );
 };

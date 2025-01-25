@@ -4,7 +4,6 @@ import Exams from "@/app/components/student/exams";
 import StudyMaterials from "@/app/components/student/studym";
 import PracticeQuestions from "@/app/components/student/questionsets";
 import Classes from "@/app/components/student/Contents";
-import { courses } from "../student-portal/data";
 
 const VideosPage = () => {
   const [examType, setExamType] = useState("jee");
@@ -51,8 +50,7 @@ const VideosPage = () => {
               Exams
             </h3>
 
-            {/* Pass courseId to components */}
-            <Exams id={courseId} />
+            {/* <Exams id={courseId} />
             <h3 className="text-lg font-instSansB text-gray-700 mt-8 my-4">
               Question Sets
             </h3>
@@ -64,7 +62,7 @@ const VideosPage = () => {
             <h3 className="text-lg font-instSansB text-gray-700 mt-8 my-4">
               Classes
             </h3>
-            <Classes id={courseId} />
+            <Classes id={courseId} /> */}
           </div>
         )}
       </div>

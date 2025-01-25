@@ -75,13 +75,26 @@ const CoursePage = () => {
        
 
       </div>
-     {isTestCreatorOpen && (
-          <div className="modal-overlay fixed inset-0 bg-black bg-opacity-50 z-50 flex justify-center items-center">
-            <div className="modal-content my-4 mb-8 bg-white border border-gray-500 border-t-0 p-4 rounded-2xl transition-transform h-auto duration-300 ">
-              <TestCreator id={courseId}/>
-            </div>
-          </div>
-        )}
+      {isTestCreatorOpen && (
+  <div className=" fixed inset-0 px-4 bg-black bg-opacity-50 z-20 flex justify-center items-center">
+    <div className=" relative my-4 mb-8 bg-white border border-gray-500 border-t-0 p-4 px-0 rounded-2xl transition-transform h-auto duration-300 max-h-[90vh] overflow-y-auto">
+      <div className="flex border-b pb-3">
+      <div className="font-instSansB text-2xl text-gray-800 px-6">Creating Custom Test</div>
+      <button
+        onClick={() => setIsTestCreatorOpen(false)}
+        className="absolute top-4 right-4 p-2 pb-1 pt-0 px-2  z-20 border border-gray-600 rounded-md text-xl hover:bg-slate-100  text-gray-700 hover:text-gray-900 cursor-pointer"
+      >
+        &times;
+      </button>
+      </div>
+        <div className="px-4">
+      <TestCreator id={courseId} />
+      </div>
+      
+    </div>
+  </div>
+)}
+
     </div>
   );
 };

@@ -2,8 +2,11 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import axios from "axios";
+
 import Head from "next/head";
 import Link from "next/link";
+
+
 
 const TestsPage = () => {
   const course_id=useParams();
@@ -106,7 +109,7 @@ const TestsPage = () => {
       </Head>
       <main className="min-h-screen md:bg-gray-50 md:py-8 font-jakarta md:px-6">
         <section className="max-w-5xl mx-auto bg-white shadow-md rounded-xl  p-6">
-          <h1 className="text-3xl font-bold text-gray-800 font-instSansB">Proctored Exams</h1>
+          <h1 className="text-3xl font-bold text-gray-800 font-instSansB">Created Custom Exams</h1>
           <div className="mt-6">
             {loading ? (
               <p>Loading exams...</p>
