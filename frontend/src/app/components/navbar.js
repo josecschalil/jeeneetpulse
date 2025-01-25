@@ -45,9 +45,9 @@ const Navbar = () => {
           <Link href="/courses" passHref>
             <div className="hover:text-gray-400">Courses</div>
           </Link>
-          <Link href="/questions" passHref>
+          {/* <Link href="/questions" passHref>
             <div className="hover:text-gray-400">Questions</div>
-          </Link>
+          </Link> */}
           <Link href="/featured" passHref>
             <div className="hover:text-gray-400">Featured</div>
           </Link>
@@ -102,9 +102,9 @@ const Navbar = () => {
           <Link href="/courses" passHref onClick={() => setMenuOpen(false)}>
             <div className="hover:text-gray-400">Courses</div>
           </Link>
-          <Link href="/questions" passHref onClick={() => setMenuOpen(false)}>
+          {/* <Link href="/questions" passHref onClick={() => setMenuOpen(false)}>
             <div className="hover:text-gray-400">Questions</div>
-          </Link>
+          </Link> */}
           <Link href="/featured" passHref onClick={() => setMenuOpen(false)}>
             <div className="hover:text-gray-400">Featured</div>
           </Link>
