@@ -101,7 +101,7 @@ class ResetPasswordView(APIView):
             send_mail(
                 subject,
                 message,
-                'no-reply@yourdomain.com',  # Replace with your actual email
+                'no-reply@yourdomain.com',  
                 [email],
                 fail_silently=False,
             )
