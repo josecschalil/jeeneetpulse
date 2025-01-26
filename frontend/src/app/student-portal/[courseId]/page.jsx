@@ -12,7 +12,7 @@ const CoursePage = () => {
   const [isTestCreatorOpen, setIsTestCreatorOpen] = useState(false);
   
   const [course, setCourse] = useState(null);
-  const [activeTab, setActiveTab] = useState("Exams");
+  const [activeTab, setActiveTab] = useState("Contents");
 
   const handleTabChange = (tab) => {
     setActiveTab(tab);
@@ -51,7 +51,7 @@ const CoursePage = () => {
           
 
           <div className=" w-fit sm:w-full flex justify-between g-0 sm:gap-4 sm:justify-normal text-sm">
-            {["Exams", "Recents"].map((tab) => (
+            {["Contents", "Recents"].map((tab) => (
               <button
                 key={tab}
                 className={`px-3 sm:px-4 py-1 sm:rounded-3xl bg-none sm:bg-gray-100 shadow-none sm:shadow ${
@@ -68,7 +68,7 @@ const CoursePage = () => {
         </div>
 
         <div>
-        {activeTab === "Exams" && <Exams id={courseId} setIsTestCreatorOpen={setIsTestCreatorOpen} />}
+        {activeTab === "Contents" && <Exams id={courseId} setIsTestCreatorOpen={setIsTestCreatorOpen} />}
           {activeTab === "Recents" && <StudyMaterials id={courseId}  />}
         </div>
 
