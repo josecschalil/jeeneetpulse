@@ -1,65 +1,59 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
-const Contents = ( courseId) => {
-  const [subjects, setSubjects] = useState(null);
+const Contents = () => {
+  const [Videos, setVideos] = useState(null);
 
   useEffect(() => {
-    if (!courseId) {
-      console.error("courseId is undefined!");
-      return;
-    }
 
-    const fetchSubjects = async () => {
-      const response = await fetch(`http://localhost:8000/api/subjects/?course_id=${courseId?.id}`);
+    const fetchVideos = async () => {
+      const response = await fetch(`http://127.0.0.1:8000/api/lecture-videos/?is_featured=true`);
       
       if (response.ok) {
         const data = await response.json();
-        setSubjects(data); 
+        setVideos(data); 
       } else {
-        console.error("Failed to fetch subjects");
+        console.error("Failed to fetch Videos");
       }
     };
 
-    fetchSubjects(); 
-  }, [courseId]); 
+    fetchVideos(); 
+  } ,[]); 
 
 
 
   return (
     <div>
-      <div className="space-y-4">
-        {subjects?.map((subject, index) => (
-          <div key={index} className="flex items-center justify-between p-4 border hover:border-gray-500 hover:shadow rounded-2xl mb-4">
-            {/* Course Details */}
-            <div className="flex items-center space-x-4">
-              {/* Icon */}
-              <div className="h-12 w-12 flex items-center mr-3 justify-center bg-teal-100 rounded-full">
-                <span role="img" aria-label="course-icon" className="text-2xl">
-                🎓
-                </span>
-              </div>
-              {/* Details */}
-              <div>
-                <h3 className="text-lg font-instSansB font-bold text-gray-800">
-                  {subject.name}
-                </h3>
-                <p className="text-sm text-gray-500 mt-1">
-                  {subject.chapters} Chapters
-                </p>
-              </div>
-            </div>
-
-            {/* Progress and Button */}
-            <div className="flex items-center space-x-4">
-              <Link href={`http://localhost:3000/learn/chapters/${subject.id}`}>
-                <button className="px-4 py-2 border border-teal-900 shadow rounded-full hover:bg-teal-800 hover:text-white text-sm">
-                  Contents
-                </button>
-              </Link>
-            </div>
+   <div>
+  <h3 className="text-xl font-semibold text-gray-800 font-instSansB">Classes</h3>
+  {Videos?.length === 0 ? (
+    <p className="text-gray-600 mt-4">No videos available.</p>
+  ) : (
+    <div className="flex  mt-4 flex-wrap justify-start gap-x-11 gap-4 mx-auto">
+      {Videos?.map((video, index) => (
+        <Link    key={index} href={`/learn/video/${video.id}`}>
+        <div
+       
+          className=" min-w-72"
+        >
+          <div className="border w-fit border-gray-300 rounded-lg shadow-sm transition-all hover:shadow-md" >
+          <img
+            src={video.thumbnail}
+            alt={video.video_title}
+            className="w-80 h-48 object-cover rounded-lg hover:scale-[1.02] transition-all duration-300"
+          />
           </div>
-        ))}
-      </div>
+          
+            <h4 className="text-md px-2 py-2 font-semibold text-gray-900 font-instSansB truncate">
+              {video.video_title}
+            </h4>
+        
+        </div>
+        </Link>
+      ))}
+    </div>
+  )}
+</div>
+
     </div>
   );
 };
