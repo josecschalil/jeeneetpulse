@@ -18,12 +18,9 @@ export default function Home() {
       <div className="w-screen" style={{ backgroundColor: "#EBFFF9" }}>
         <div></div>
         <Hero />
-
         <Sections />
-
         <VideoHighlights />
         <PrepareSection />
-
         {/* <Features_2 />
          */}
         {/* <FeaturedCourses /> */}

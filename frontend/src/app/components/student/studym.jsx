@@ -1,48 +1,62 @@
 import React from "react";
 import Link from "next/link";
-import { studymaterials } from "@/app/student-portal/data";
-const StudyMaterials = ({ id }) => {
-  const courseId = Number(id);
+import { useState, useEffect } from "react";
+const StudyMaterials = () => {
+  const [StudyMaterials, setStudyMaterials] = useState(null);
 
-  const materials =
-    studymaterials?.filter((material) => material.courseId === courseId) || [];
+  useEffect(() => {
+    const fetchStudyMaterials = async () => {
+      const response = await fetch(
+        `http://127.0.0.1:8000/api/lecture-notes/?is_featured=true`
+      );
+
+      if (response.ok) {
+        const data = await response.json();
+        setStudyMaterials(data);
+      } else {
+        console.error("Failed to fetch StudyMaterials");
+      }
+    };
+
+    fetchStudyMaterials();
+  }, []);
 
   return (
-    <div>
-      <div className="space-y-4">
-        {materials.map((material, index) => (
-          <div
-            key={index}
-            className="flex items-center justify-between p-4 hover:border-gray-500 hover:shadow  transition-all duration-100  border rounded-2xl  mb-4"
-          >
-            {/* Course Details */}
-            <div className="flex items-center space-x-4">
-              {/* Icon */}
-              <div className="h-10 w-10 bg-blue-100 flex items-center mr-3 justify-center rounded-full">
-                <span role="img" aria-label="course-icon" className="text-2xl">
-                  📝
-                </span>
-              </div>
-              {/* Details */}
-              <div>
-                <h3 className="text-lg font font-bold text-gray-800 font-instSansB">
-                  {material.title}
-                </h3>
-                <p className="text-sm text-gray-500 mt-1  uppercase">{material.type}</p>
-              </div>
-            </div>
+    <div className="my-8">
+      <h3 className="text-xl font-semibold text-gray-800 font-instSansB mb">
+        Lecture Notes
+      </h3>
+      {StudyMaterials?.length === 0 ? (
+        <p className="text-gray-600 mt-4">No lecture notes available.</p>
+      ) : (
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mt-4">
+          {StudyMaterials?.map((note, index) => (
+            <div
+              key={index}
+              className="border border-gray-300 rounded-lg shadow-sm transition-all hover:shadow-md overflow-hidden "
+            >
+              <div className="p-4">
+                <h4 className=" font-instSansB text-gray-900 truncate">
+                  {note.pdf_title}
+                </h4>
 
-            {/* Progress and Button */}
-            <div className="flex items-center space-x-4">
-              <Link key={index} href={`/student-portal/`}>
-                <button className="px-4  py-2 border  border-teal-900 rounded-full hover:bg-teal-800 hover:text-white  text-sm">
+                <p className="text-sm text-gray-500 mt-1 font-istok">{note.pdf_type}</p>
+              </div>
+              <div className="w-full bg-teal-700 flex  justify-end px-4 py-2 ">
+                <Link
+                  href={`${note.pdf_file}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-white  font-istok"
+                >
                   Download
-                </button>
-              </Link>
+                  
+                </Link>
+              </div>
             </div>
-          </div>
-        ))}
-      </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 };

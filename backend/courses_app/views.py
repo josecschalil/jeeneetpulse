@@ -164,7 +164,7 @@ class LectureVideoViewSet(viewsets.ModelViewSet):
     queryset = LectureVideo.objects.all()
     serializer_class = LectureVideoSerializer
     filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
-    filterset_fields = ['chapter_id']  
+    filterset_fields = ['is_featured','chapter_id']  
     search_fields = ['name', 'type']
     ordering_fields = ['name', 'type']
 
@@ -173,7 +173,7 @@ class LectureNoteViewSet(viewsets.ModelViewSet):
     queryset = LectureNote.objects.all()
     serializer_class = LectureNoteSerializer
     filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
-    filterset_fields = ['chapter_id']  
+    filterset_fields = ['is_featured','chapter_id']  
     search_fields = ['name', 'type']
     ordering_fields = ['name', 'type']
 
@@ -182,7 +182,7 @@ class ExamViewSet(viewsets.ModelViewSet):
     queryset = Exam.objects.all()
     serializer_class = ExamSerializer
     filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
-    filterset_fields = ['course_id','subject_id','chapter_id','user_id']  
+    filterset_fields = ['course_id','subject_id','chapter_id','user_id','is_featured']  
     search_fields = ['name', 'type']
     ordering_fields = ['name', 'type']
 
@@ -207,9 +207,9 @@ class QuestionViewSet(viewsets.ModelViewSet):
     serializer_class = QuestionSerializer
     @action(detail=False, methods=['get'], url_path='chapter/(?P<chapter_id>[^/.]+)')
     def get_questions_by_chapter(self, request, chapter_id=None):
-        questions = Question.objects.filter(chapters__chapter_id=[chapter_id])
+        questions = Question.objects.filter(chapters__chapter_id=chapter_id)
         if questions.exists():
-            serializer = QuestionSerializer(questions, many=True)
+            serializer = self.get_serializer(questions, many=True)
             return Response(serializer.data, status=200)
         return Response({"detail": "No questions found for this chapter."}, status=404)
 

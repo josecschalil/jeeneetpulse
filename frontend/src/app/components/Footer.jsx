@@ -54,7 +54,7 @@ export default function Footer() {
           </div>
         </div> */}
 
-        <div className="mt-8 border-t border-gray-700 pt-6 text-center font-instSansN text-sm">
+        <div className="mt-8 border-t border-gray-200 pt-6 text-center font-instSansN text-sm">
           <p>&copy; {new Date().getFullYear()} jeeneetpulse | All rights reserved.</p>
         </div>
       </div>

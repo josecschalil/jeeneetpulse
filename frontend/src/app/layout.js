@@ -13,10 +13,8 @@ export default function RootLayout({ children }) {
       <body className="m-0 p-0 font-instSansN overflow-x-hidden">
       <AuthProvider>
       <Navbar />
-          {children}
-        </AuthProvider>
-   
- 
+      {children}
+      </AuthProvider>
       </body>
     </html>
   );

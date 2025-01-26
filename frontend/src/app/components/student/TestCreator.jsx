@@ -60,7 +60,7 @@ const QuestionSelector = ({ numQuestions, setNumQuestions }) => {
             <small className="text">{num.icon}</small>
             <div className="text-left">
               <small className=" hidden sm:block text-sm ">{num.value} Questions</small>
-              <small className=" text-sm ">{num.value}</small>
+              <small className=" sm:hidden text-sm ">{num.value}</small>
             </div>
           </div>
         </button>
@@ -94,7 +94,7 @@ const DifficultySelector = ({ difficulty, setDifficulty }) => {
             <small className="text">{d.icon}</small>
             <div className="text-left">
               <small className="hidden sm:block text-sm font-">Level {d.value}</small>
-              <small className="text-sm ">{d.value}</small>
+              <small className="sm:hidden text-sm ">{d.value}</small>
             </div>
           </div>
         </button>
@@ -341,6 +341,7 @@ const TestCreator = ({ id }) => {
         .join("&");
 
       const questionApiUrl = `http://127.0.0.1:8000/api/chapter-questions?difficulty=${difficulty}&total_questions=${numQuestions}&${chapterQueryString}`;
+      console.log( questionApiUrl)
       const questionResponse = await axios.get(questionApiUrl);
       const questionIds = questionResponse.data.map((q) => q.id);
 
