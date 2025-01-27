@@ -48,14 +48,9 @@ const Navbar = () => {
 
   return (
     <nav
-      className="font-jakarta justify-between py-6"
+      className="font-jakarta hover:translate-y-1 transition-all duration-300 font-medium z-20 relative mt-5 mx-auto rounded-lg  max-w-6xl justify-between py-5 bg-opacity-10"
   
-      style={{
-        backgroundColor:
-          pathname === "/" || pathname.startsWith("/verify-email")
-            ? "#EBFFF9"
-            : "#FFFFFF",
-      }}
+     
     >
       <div className="flex flex-row max-w-7xl px-3 pr-5 md:px-6 items-center justify-between mx-auto">
         <div
@@ -65,11 +60,11 @@ const Navbar = () => {
           <img src="/menu.png" className="h-[25px] " alt="Menu" />
         </div>
 
-        <div className="flex">
+        <div className="flex ml-4">
           <img src="/logo.svg" className="h-[15px] mr-1" alt="Logo" />
         </div>
 
-        <div className="hidden space-x-6 text-black lg:flex">
+        <div className="hidden space-x-6 text-black lg:flex ">
           <Link href="/" passHref>
             <div className="hover:text-gray-400">Home</div>
           </Link>
@@ -93,7 +88,7 @@ const Navbar = () => {
           </Link>
         </div>
 
-        <div className="flex items-center space-x-4 font-semibold">
+        <div className="flex mr-4 items-center space-x-4 font-semibold">
           {!isAuthenticated ? (
             <Link href="/signin" passHref>
               <button className="bg-black text-white py-2 px-4 text-sm rounded-full hover:bg-gray-700 ">
@@ -103,7 +98,7 @@ const Navbar = () => {
           ) : (
             <div className="">
               <div
-                className="flex relative items-center gap-5 font-instSans font-normal cursor-pointer 
+                className="flex font-semibold relative items-center gap-5  cursor-pointer 
              transition-transform duration-150 ease-in-out active:scale-95"
                 onClick={() => setDropdownOpen(!dropdownOpen)}
               >
@@ -111,8 +106,7 @@ const Navbar = () => {
                   className="h-10 w-10 rounded-full bg-black "
                   src="/boy.png"
                 ></img>
-                {userDetails?.name}
-              </div>
+                {userDetails?.name}           </div>
               {dropdownOpen && (
                 <div className="absolute right-18 top-18 mt-2 w-40 bg-white border border-gray-200 rounded-lg shadow-lg"     ref={dropdownRef}>
                   <ul className="py-2 text-sm text-gray-700">

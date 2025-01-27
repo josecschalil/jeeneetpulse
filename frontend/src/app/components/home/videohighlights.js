@@ -16,21 +16,21 @@ const VideoHighlights = () => {
         </p>
         <div className="mt-8 grid grid-cols-1  range1:px-16  sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-12">
           <VideoCard
-            link="/1 (3).avif"
+            link="/1 (2).webp"
             url=""
             title="Quadratic Equations & Real Solutions"
             faculty="George Sir"
             time="34 mins"
           />
           <VideoCard
-            link="/1 (2).avif"
+            link="/1 (3).webp"
             url=""
             title="Stucture of Atom - One Shot"
             faculty="Prathyush Sir"
             time="49 mins"
           />
           <VideoCard
-          link="/1 (4).avif"
+          link="/1 (4).webp"
             url=""
             title="Dual Nature of Particles"
             faculty="Srinvasan Sir"

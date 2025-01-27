@@ -1,61 +1,55 @@
-import Link from 'next/link';
-
 export default function Footer() {
   return (
-    <footer className="bg-white  pb-8"  style={{ backgroundColor: "#EBFFF9" }}>
-      <div className="container mx-auto">
-        {/* <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          <div>
-            <h2 className="text-lg font-semibold">jeeneetpulse</h2>
-            <p className="mt-2 text-sm">
-              Your go-to platform for competitive exam preparation.
-            </p>
-          </div>
+    <footer className="py-10 w-full h-[40vh] bg-gray-50 font-jakarta">
+      <div className="max-w-6xl mx-auto mt-6 px-8 flex gap-8 w-full text-gray-900">
+        
+        {/* Left Section */}
+        <div className="w-[30%] space-y-2">
+        <div className="mb-6 ">
+          <img src="/logo.svg" className="h-[15px] mr-1" alt="Logo" />
+        </div>
 
-          <div>
-            <h3 className="text-lg font-semibold">Quick Links</h3>
-            <ul className="mt-2 space-y-2">
-              <li>
-                <Link href="/about" className="hover:text-white">
-                  About Us
-                </Link>
-              </li>
-              <li>
-                <Link href="/courses" className="hover:text-white">
-                  Courses
-                </Link>
-              </li>
-              <li>
-                <Link href="/contact" className="hover:text-white">
-                  Contact
-                </Link>
-              </li>
-              <li>
-                <Link href="/faq" className="hover:text-white">
-                  FAQ
-                </Link>
-              </li>
-            </ul>
-          </div>
+          <p className="mt-2">Contact Us on:</p>
+          <p className="mt-1">+91 92031129421</p>
+          <p className="mt-1">admin@jeeneetpulse.com</p>
+        </div>
 
-          <div>
-            <h3 className="text-lg font-semibold text-white">Follow Us</h3>
-            <div className="flex space-x-4 mt-2">
-              <Link href="https://facebook.com" target="_blank" rel="noopener noreferrer">
-                <img src="/icons/facebook.svg" alt="Facebook" className="w-6 h-6" />
-              </Link>
-              <Link href="https://twitter.com" target="_blank" rel="noopener noreferrer">
-                <img src="/icons/twitter.svg" alt="Twitter" className="w-6 h-6" />
-              </Link>
-              <Link href="https://instagram.com" target="_blank" rel="noopener noreferrer">
-                <img src="/icons/instagram.svg" alt="Instagram" className="w-6 h-6" />
-              </Link>
-            </div>
-          </div>
-        </div> */}
+<div className="w-[70%] flex justify-evenly -mt-1 ">
+        <div>
+          <h4 className="font-bold mb-2 text-lg">Quick Links</h4>
+          <ul className="space-y-2">
+            <li>Contact</li>
+            <li>About Us</li>
+            <li>Featured</li>
+            <li>Courses</li>
+          </ul>
+        </div>
 
-        <div className="mt-8 border-t border-gray-200 pt-6 text-center font-instSansN text-sm">
-          <p>&copy; {new Date().getFullYear()} jeeneetpulse | All rights reserved.</p>
+        {/* Links Section */}
+        <div className="">
+          <h4 className="font-bold mb-2 text-lg">Links</h4>
+          <ul className="space-y-2">
+            <li>Home</li>
+            <li>Profile</li>
+            <li>Log Out</li>
+          </ul>
+        </div>
+
+        {/* Social Section */}
+        <div>
+          <h4 className="font-bold mb-2 text-lg">Social</h4>
+          <div className="flex space-x-4 mt-2">
+            <a href="#" aria-label="Instagram">
+              <img src="/Instagram.svg" alt="Instagram" className="h-6 w-6" />
+            </a>
+            <a href="#" aria-label="Facebook">
+              <img src="/Facebook.svg" alt="Facebook" className="h-6 w-6" />
+            </a>
+            <a href="#" aria-label="Twitter">
+              <img src="/Twitter.svg" alt="Twitter" className="h-6 w-6" />
+            </a>
+          </div>
+        </div>
         </div>
       </div>
     </footer>
