@@ -61,8 +61,8 @@ class LectureNote(models.Model):
     is_featured = models.BooleanField(default=False)
     chapter = models.ForeignKey(Chapter, on_delete=models.CASCADE, related_name='lecture_notes',  blank=True, null=True)
     pdf_file = models.FileField(upload_to='lecture_notes_pdfs/', blank=True, null=True)
-    pdf_title = models.CharField(max_length=255)
-    pdf_type = models.CharField(max_length=255)
+    pdf_title = models.CharField(max_length=255,null=True)
+    pdf_type = models.CharField(max_length=255,null=True)
     
     def __str__(self): 
         return "Lecture Note"
@@ -115,29 +115,6 @@ class Question(models.Model):
     chapters = models.ManyToManyField('Chapter', through='ChapterQuestion', related_name='chapters')
     exams = models.ManyToManyField('Exam', through='ExamQuestion', related_name='exams')
 
-    # since error courses_app.Chapter.questions: (fields.E302) Reverse accessor 'Question.chapters' for 'courses_app.Chapter.questions' clashes with field name 'courses_app.Question.chapters'.
-    #we modified name of chater MODEL's method question
-
-
-    #not reuqired now since there is a many one relation table initated?
-    #old code only associates single chapter and exam.
-
-    # exam = models.ForeignKey(
-    #     'Exam', 
-    #     on_delete=models.CASCADE, 
-    #     related_name='exam_questions', 
-    #     db_index=True, 
-    #     blank=True, 
-    #     null=True
-    # )
-    # chapter = models.ForeignKey(
-    #     'Chapter', 
-    #     on_delete=models.CASCADE, 
-    #     related_name='chapter_questions', 
-    #     db_index=True, 
-    #     blank=True, 
-    #     null=True
-    # )
 
     question_text = models.TextField(blank=True, null=True)
     question_text_hindi = models.TextField(blank=True, null=True)
@@ -166,9 +143,9 @@ class Question(models.Model):
 
     class Meta:
         ordering = ['id']
+        
 
     def __str__(self):
-        # return f"Question {self.id} - Exam {self.exam.name}" i dont know why it was written like this here.
         return f"{self.question_text}"
 
 class UserCourseData(models.Model):
