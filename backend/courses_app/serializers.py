@@ -1,5 +1,8 @@
 from rest_framework import serializers
-from .models import Course, Subject, Chapter, LectureVideo, Exam, Question,UserCourseData,UserExamData,ExamQuestion,ChapterQuestion,LectureNote
+from .models import ( 
+    Course, Subject, Chapter, LectureVideo,
+    Exam, Question,UserCourseData,UserExamData,
+    ExamQuestion,ChapterQuestion,LectureNote )
 
 class CourseSerializer(serializers.ModelSerializer):
     class Meta:
@@ -83,3 +86,24 @@ class ExamQuestionSerializer(serializers.ModelSerializer):
 
     def validate(self, data):
         return data
+
+
+class ChapterQuestionUploadSerializer(serializers.Serializer):
+    chapter_id = serializers.UUIDField()
+    questions = QuestionSerializer(many=True)
+
+    def validate_chapter_id(self, value):
+        if not Chapter.objects.filter(id=value).exists():
+            raise serializers.ValidationError("Invalid Chapter ID.")
+        return value
+
+    def create(self, validated_data):
+        chapter_id = validated_data['chapter_id']
+        chapter = Chapter.objects.get(id=chapter_id)
+        questions_data = validated_data['questions']
+
+        for question_data in questions_data:
+            question = Question.objects.create(**question_data)
+            question.chapters.add(chapter)
+
+        return validated_data

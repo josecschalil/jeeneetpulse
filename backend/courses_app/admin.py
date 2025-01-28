@@ -5,6 +5,7 @@ from .models import (
     ChapterQuestion, ExamQuestion
 )
 
+
 @admin.register(Course)
 class CourseAdmin(admin.ModelAdmin):
     list_display = ('title', 'course_type', 'price', 'current_price', 'validity')

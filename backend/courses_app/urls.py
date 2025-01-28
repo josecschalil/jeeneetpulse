@@ -1,6 +1,6 @@
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
-from .views import CourseViewSet, SubjectViewSet, ChapterViewSet, LectureVideoViewSet,ExamQuestionViewSet, ChapterQuestionViewSet, ExamViewSet, QuestionViewSet, CourseAddViewSet, bulk_create_chapters, bulk_create_questions,UserExamDataViewSet,ChapterQuestionsView,LectureNoteViewSet
+from .views import CourseViewSet, SubjectViewSet, ChapterViewSet, LectureVideoViewSet,ExamQuestionViewSet, ChapterQuestionViewSet, ExamViewSet, QuestionViewSet, CourseAddViewSet, bulk_create_chapters,UserExamDataViewSet,ChapterQuestionsView,LectureNoteViewSet,BulkUploadQuestionsView
 
 router = DefaultRouter()
 router.register(r'courses', CourseViewSet)
@@ -17,7 +17,7 @@ router.register(r'chapterquestions', ChapterQuestionViewSet) #its for manymany s
 
 urlpatterns = [
     path('chapters/bulk/', bulk_create_chapters, name='bulk-create-chapters'),  
-    path('questions/bulk/', bulk_create_questions, name='bulk-create-questions'),  
+    path('upload-questions/', BulkUploadQuestionsView.as_view(), name='bulk_upload_questions'),
     path('chapter-questions/', ChapterQuestionsView.as_view(), name='chapter-questions'),
 
 ]

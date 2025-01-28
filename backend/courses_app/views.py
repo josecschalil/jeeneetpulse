@@ -1,6 +1,13 @@
 from rest_framework import viewsets,status
-from .models import Course, Subject, Chapter, LectureVideo, Exam, Question,UserCourseData,UserExamData,ExamQuestion,ChapterQuestion,LectureNote
-from .serializers import CourseSerializer, SubjectSerializer, ChapterSerializer, LectureVideoSerializer, ExamSerializer, QuestionSerializer,UserCourseDataSerializer,UserExamDataSerializer,ExamQuestionSerializer,ChapterQuestionSerializer,LectureNoteSerializer
+from .models import (
+    Course, Subject, Chapter, LectureVideo,
+     Exam, Question,UserCourseData,UserExamData,
+     ExamQuestion,ChapterQuestion,LectureNote )
+from .serializers import (
+    CourseSerializer, SubjectSerializer,ChapterSerializer,
+    LectureVideoSerializer, ExamSerializer, QuestionSerializer,
+    UserCourseDataSerializer,UserExamDataSerializer,ExamQuestionSerializer,ChapterQuestionUploadSerializer,
+    ChapterQuestionSerializer,LectureNoteSerializer )
 from rest_framework.permissions import AllowAny
 from rest_framework.decorators import action,api_view,permission_classes
 from rest_framework.response import Response
@@ -58,8 +65,14 @@ class ChapterQuestionsView(APIView):
         return Response(serializer.data, status=status.HTTP_200_OK)
 
 
-
-
+class BulkUploadQuestionsView(APIView):
+    permission_classes = [AllowAny]
+    def post(self, request, *args, **kwargs):
+        serializer = ChapterQuestionUploadSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response({"message": "Questions uploaded successfully!"}, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class ChapterQuestionsView(APIView):
     permission_classes = [AllowAny]
@@ -126,17 +139,11 @@ def bulk_create_chapters(request):
             chapters = serializer.save()
             return Response(ChapterSerializer(chapters, many=True).data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    
-@api_view(['POST'])
-@permission_classes([AllowAny])
-def bulk_create_questions(request):
-    if request.method == 'POST':
-        serializer = QuestionSerializer(data=request.data, many=True)
-        if serializer.is_valid():
-            questions = serializer.save()
-            return Response(QuestionSerializer(questions, many=True).data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    
+@api_view(['GET'])
+def get_all_chapters(request):
+    chapters = Chapter.objects.all()
+    serializer = ChapterSerializer(chapters, many=True)
+    return Response(serializer.data, status=status.HTTP_200_OK)
 
 class CourseViewSet(viewsets.ModelViewSet):
     permission_classes = [AllowAny]
