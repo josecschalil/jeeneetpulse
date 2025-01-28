@@ -87,21 +87,49 @@ class ExamQuestionSerializer(serializers.ModelSerializer):
     def validate(self, data):
         return data
 
+class ChapterSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Chapter
+        fields = ['id', 'name']  # Customize fields as needed
 
-class ChapterQuestionUploadSerializer(serializers.Serializer):
+class BulkQuestionUploadSerializer(serializers.Serializer):
     chapter_id = serializers.UUIDField()
     questions = QuestionSerializer(many=True)
 
-    def validate_chapter_id(self, value):
-        if not Chapter.objects.filter(id=value).exists():
-            raise serializers.ValidationError("Invalid Chapter ID.")
-        return value
+    def create(self, validated_data):
+        chapter = Chapter.objects.get(id=validated_data['chapter_id'])
+        questions_data = validated_data['questions']
+        
+        for question_data in questions_data:
+            question = Question.objects.create(**question_data)
+            question.chapters.add(chapter)
+
+        return validated_data
+
+class BulkQuestionUploadSerializer(serializers.Serializer):
+    chapter_id = serializers.ChoiceField(choices=[])  # Dropdown for selecting chapter
+    questions_json = serializers.CharField(write_only=True)  # JSON text input
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        if "chapters" in self.context:
+            self.fields['chapter_id'].choices = [(c["id"], c["name"]) for c in self.context["chapters"]]
+
+    def validate_questions_json(self, value):
+        """Ensure the provided JSON is valid"""
+        import json
+        try:
+            data = json.loads(value)
+            if not isinstance(data, list):
+                raise serializers.ValidationError("Invalid format: Questions should be a list.")
+            return data
+        except json.JSONDecodeError:
+            raise serializers.ValidationError("Invalid JSON format.")
 
     def create(self, validated_data):
-        chapter_id = validated_data['chapter_id']
-        chapter = Chapter.objects.get(id=chapter_id)
-        questions_data = validated_data['questions']
-
+        chapter = Chapter.objects.get(id=validated_data['chapter_id'])
+        questions_data = validated_data['questions_json']
+        
         for question_data in questions_data:
             question = Question.objects.create(**question_data)
             question.chapters.add(chapter)

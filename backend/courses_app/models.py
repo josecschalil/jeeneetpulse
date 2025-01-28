@@ -143,9 +143,9 @@ class Question(models.Model):
 
     class Meta:
         ordering = ['id']
+        
 
     def __str__(self):
-        # return f"Question {self.id} - Exam {self.exam.name}" i dont know why it was written like this here.
         return f"{self.question_text}"
 
 class UserCourseData(models.Model):
