@@ -34,8 +34,8 @@ const Hero = () => {
       style={{ backgroundColor: "#EBFFF9" }}
       ref={heroRef}
     >
-      <img src="/elements.png" className="absolute z-0 h-[500px] -top-[200px] left-[100px]"></img>
-      <img src="/elements.png" className="absolute z-0 h-[500px] -bottom-[200px] right-[100px]"></img>
+      <img src="/elements.png" className="absolute z-0 h-[500px] -top-[200px] left-[00px]"></img>
+      <img src="/elements.png" className="absolute z-0 h-[500px] -bottom-[200px] right-[00px]"></img>
       <div className="hero-overlay w-full h-[80vh] sm:h-[87vh] flex flex-col items-center justify-center text-center">
 
         <div style={{ backgroundColor: "#EBFFF9" }} className="flex items-center mb-6 z-10 relative  justify-between w-fit px-3 pr-2 py-2 border border-gray-600 rounded-full shadow-md hover:border-gray-900">
