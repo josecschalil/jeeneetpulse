@@ -187,12 +187,16 @@ const Navbar = () => {
                         <li className="px-4 py-2 hover:bg-gray-200 cursor-pointer">
                           <Link href={`/profile/${user_id}`}>Profile</Link>
                         </li>
-                        <li
-                          className="px-4 py-2 hover:bg-gray-200 cursor-pointer"
-                          onClick={handleLogout}
+                        <Link href={`/`}>
+                        <button
+                          onClick={() => {
+                            handleLogout();
+                          }}
+                          className="block w-full text-left px-4 py-2 hover:bg-gray-100"
                         >
-                          Logout
-                        </li>
+                          SIGN OUT
+                        </button>
+                      </Link>
                       </ul>
                     </div>
                   )}
