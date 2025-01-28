@@ -13,12 +13,12 @@ const Hero = () => {
 
   return (
     <div
-      className="mt-[5vh] sm:mt-0 max-w-7xl font-inter mx-auto hero-section relative "
+      className=" px-6 font-inter mx-auto hero-section relative "
     
     >
 
     
-      <div className="hero-overlay   w-full h-fit md:h-[80vh] flex flex-col items-center justify-center text-center">
+      <div className="hero-overlay w-full h-[80vh] sm:h-[72vh] flex flex-col items-center justify-center text-center">
 
         <div className="flex items-center mt-1 mb-6 justify-between w-fit px-3 pr-2 py-2 border border-gray-600 rounded-full shadow-md hover:border-gray-900">
           <Link href="/signup" className="flex justify-between items-center gap-2">
@@ -49,22 +49,22 @@ const Hero = () => {
           {heroData.MainText}
         </h1>
 
-        <p className="px-4 text-xl  font-inter font-semibold max-w-3xl mb-10 leading-relaxed">
+        <p className="px-4 text-lg sm:text-xl  font-inter font-semibold max-w-3xl mb-10 leading-relaxed">
           {heroData.Description}
         </p>
 
         <div className="flex gap-6 px-6 ">
           <a
-            href="/schedule"
-            className="bg-teal-800 font-bold   px-6 sm:px-8 py-4 text-sm sm:text-lg  transition"
+            href="/courses"
+            className="border font-inter font-bold  border-black  px-6 sm:px-8 py-2 rounded-md text-sm sm:text-lg  transition"
           >
             Courses
           </a>
           <a
-            href="/register"
-            className="bg-orange-200 font-bold text-black px-6 sm:px-8 py-4  text-sm sm:text-lg  transition"
+            href="/signin"
+            className="bg-teal-700 font-bold font-inter rounded-md hover:shadow-lg text-white px-6 sm:px-8 py-2  text-sm sm:text-lg  transition"
           >
-            Get Started.
+            Get Started
           </a>
         </div>
       </div>
