@@ -11,7 +11,7 @@ const Sections = () => {
   ];
 
   return (
-    <section className="z-20 relative py-10 -mt-[22vh] text-white w-[100vw] font-instSansB">
+    <section className="z-20 relative py-10 -mt-[20vh] text-white w-[100vw] font-instSansB">
       <section className={`w-full h-[24vh] -mb-10 sm:-mb-2 relative z-10 ${styles.topSquiggly}`} />
       <div className="bg-gradient-to-r relative z-20 bg-[#009A80] to-[#FFF5EF]">
         <div className="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-4 px-6 py-8 pt-4 gap-3 lg:gap-6 text-center">
