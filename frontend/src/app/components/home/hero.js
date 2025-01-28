@@ -1,44 +1,71 @@
 import React from "react";
 import Navbar from "../navbar";
+import Link from "next/link";
 
 const Hero = () => {
+  const heroData = {
+    Offer: "Ace Your Exams with Confidence.",
+    MainText: "Ace Your Exams with Confidence.",
+    SubHeading: "Practice, Analyze, and Improve.",
+    Description:
+      "Track your progress with real-time analytics, practice custom tests, and stay ahead with exam-focused preparation. Join the revolution in online education today!",
+  };
+
   return (
-    <div>
+    <div
+      className="mt-[5vh] sm:mt-0 max-w-7xl font-inter mx-auto hero-section relative "
+    
+    >
 
-      <div className=" mt-4 sm:mt-0 h-[80vh]  max-w-7xl mx-auto flex flex-row container font-instSansB justify-center space-x-20 px-6 pt-5 pb-10 lg:py-20 ">
+    
+      <div className="hero-overlay   w-full h-fit md:h-[80vh] flex flex-col items-center justify-center text-center">
 
-        <div className="text-center flex  flex-col my-auto ">
-          <div className="text-5xl md:text-[68px] font-bold text-gray-800  max-w-5xl leading-tight">
-            one stop{" "}
-            <span className="text-teal-500 font-istok font-normal ">
-              Solution
-            </span>{" "}
-            for your entrance journey.
-          </div>
-          <p className="mt-6 px-3  mx-auto  text-[20px] font-semibold">
-            Navigate all your exams with ease and confidence, all in one spot.
-          </p>
-          <div className="mt-8 flex justify-center  space-x-4">
-            <a
-              href="/courses"
-              className="px-8 py-2 font-semibold text-white border border-teal-600 hover:border-gray-500 rounded-3xl bg-teal-600 transition-all duration-300 shadow-lg"
-            >
-              Courses
-            </a>
-            <a
-              href="/signup"
-              className="px-6 font-semibold  py-2 bg-none border-[1.44px] bg-gray-50 transition-all duration-300 shadow-md rounded-3xl hover:border-gray-400"
-            >
-              Get Started
-            </a>
-          </div>
+        <div className="flex items-center mt-1 mb-6 justify-between w-fit px-3 pr-2 py-2 border border-gray-600 rounded-full shadow-md hover:border-gray-900">
+          <Link href="/signup" className="flex justify-between items-center gap-2">
+            <p className="text-sm font-interi font-medium ">
+            {heroData.SubHeading}
+            </p>
+
+            <div className="flex items-center justify-center w-6 h-6 bg-teal-900 rounded-full">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={2}
+                stroke="white"
+                className="w-4 h-4"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M9 5l7 7-7 7"
+                />
+              </svg>
+            </div>
+          </Link>
         </div>
-        <div className="mt-8 lg:mt-0 hidden ">
-          <img
-            src="/image.svg"
-            alt="Student Studying"
-            className="w-full max-w-[530px] max-h-[530px]"
-          />
+
+        <h1 className="px-4 text-5xl font-instSansB sm:text-6xl font-bold  mb-6">
+          {heroData.MainText}
+        </h1>
+
+        <p className="px-4 text-xl  font-inter font-semibold max-w-3xl mb-10 leading-relaxed">
+          {heroData.Description}
+        </p>
+
+        <div className="flex gap-6 px-6 ">
+          <a
+            href="/schedule"
+            className="bg-teal-800 font-bold   px-6 sm:px-8 py-4 text-sm sm:text-lg  transition"
+          >
+            Courses
+          </a>
+          <a
+            href="/register"
+            className="bg-orange-200 font-bold text-black px-6 sm:px-8 py-4  text-sm sm:text-lg  transition"
+          >
+            Get Started.
+          </a>
         </div>
       </div>
     </div>

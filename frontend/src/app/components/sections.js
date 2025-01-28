@@ -2,10 +2,10 @@ import React from "react";
 
 const Sections = () => {
   const data = [
-    { count: 200, label: "Video Classes" },
-    { count: 100, label: "Live Sessions" },
-    { count: 50, label: "Quizzes" },
-    { count: 300, label: "Assignments" },
+    { count: "2000", label: "Video Classes" },
+    { count: "80,000", label: "Questions" },
+    { count: "2000", label: "Quizzes" },
+    { count: "3000", label: "Study Materials" },
   ];
 
   return (

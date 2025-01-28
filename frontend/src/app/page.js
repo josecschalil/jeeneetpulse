@@ -15,7 +15,7 @@ import Footer from "./components/Footer";
 export default function Home() {
   return (
     <div className="flex flex-col items-center font-poppins w-[100vw] overflow-x-hidden ">
-      <div className="w-screen" style={{ backgroundColor: "#EBFFF9" }}>
+      <div className="w-screen relative" style={{ backgroundColor: "#EBFFF9" }}>
         <div></div>
         <Hero />
         <Sections />

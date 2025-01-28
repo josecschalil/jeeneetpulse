@@ -4,7 +4,7 @@ import Link from "next/link";
 
 const VideoCard = ({ title, faculty, time, link, url }) => {
   return (
-    <div className="text-black hover:scale-105 transition flex justify-center items-center font-montserrat font-semibold">
+    <div className="text-black hover:scale-[1.02] transition duration-300 flex justify-center items-center font-montserrat font-semibold">
       <Link href={url} passHref>
       
           <div className="">

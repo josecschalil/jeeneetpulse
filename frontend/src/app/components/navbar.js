@@ -11,12 +11,13 @@ const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
-
+  const [isRotated, setIsRotated] = useState(false);
 
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
         setDropdownOpen(false);
+        setIsRotated(false);
       }
     };
 
@@ -47,12 +48,8 @@ const Navbar = () => {
   if (isTestPage) return null;
 
   return (
-    <nav
-      className="font-jakarta hover:translate-y-1 transition-all duration-300 font-medium z-20 relative mt-5 mx-auto rounded-lg  max-w-6xl justify-between py-5 bg-opacity-10"
-  
-     
-    >
-      <div className="flex flex-row max-w-7xl px-3 pr-5 md:px-6 items-center justify-between mx-auto">
+    <nav className="font-jakarta border-b  border-b-gray-400 shadow-sm sticky top-0 backdrop-blur-2xl z-20 bg-opacity-5 transition-all duration-300 font-medium items-center pt-4 mx-auto   py-5 bg-white w-full">
+      <div className="flex flex-row max-w-7xl px-3 pr-5 md:px-6 items-center justify-between gap-14 mx-auto">
         <div
           className="basis-auto flex lg:hidden mr-4"
           onClick={() => setMenuOpen(!menuOpen)}
@@ -60,55 +57,55 @@ const Navbar = () => {
           <img src="/menu.png" className="h-[25px] " alt="Menu" />
         </div>
 
-        <div className="flex ml-4">
-          <img src="/logo.svg" className="h-[15px] mr-1" alt="Logo" />
+        <div className="flex ">
+          <img src="/logo.svg" className="h-[12px] mr-1 mt-2" alt="Logo" />
         </div>
 
-        <div className="hidden space-x-6 text-black lg:flex ">
+        <div className="hidden space-x-2 text-sm uppercase font-instSansB text-black lg:flex gap-4 items-center mt-2 ">
           <Link href="/" passHref>
-            <div className="hover:text-gray-400">Home</div>
+            <div className=" hover:text-teal-800 px-3 p-1 rounded-full">Home</div>
           </Link>
           <Link href="/student-portal" passHref>
-            <div className="hover:text-gray-400">Student Portal</div>
+            <div className=" hover:text-teal-800 px-3 p-1 rounded-full">Student Portal</div>
           </Link>
           <Link href="/courses" passHref>
-            <div className="hover:text-gray-400">Courses</div>
+            <div className="hover:text-teal-800 px-3 p-1 rounded-full ">Courses</div>
           </Link>
           {/* <Link href="/questions" passHref>
             <div className="hover:text-gray-400">Questions</div>
           </Link> */}
           <Link href="/featured" passHref>
-            <div className="hover:text-gray-400">Featured</div>
+            <div className=" hover:text-teal-800 px-3 p-1 rounded-full">Featured</div>
           </Link>
           <Link href="/about" passHref>
-            <div className="hover:text-gray-400">About</div>
+            <div className=" hover:text-teal-800 px-3 p-1 rounded-full">About</div>
           </Link>
           <Link href="/contact" passHref>
-            <div className="hover:text-gray-400">Contact</div>
+            <div className="hover:text-teal-800 px-3 p-1 rounded-full ">Contact</div>
           </Link>
-        </div>
-
-        <div className="flex mr-4 items-center space-x-4 font-semibold">
+          <div className="flex  items-center space-x-4 font-semibold ">
           {!isAuthenticated ? (
             <Link href="/signin" passHref>
-              <button className="bg-black text-white py-2 px-4 text-sm rounded-full hover:bg-gray-700 ">
+              <button className="border border-black font-instSansB py-2 px-4 uppercase rounded-md hover:rounded-2xl  transition-all duration-300 ">
                 Sign In
               </button>
             </Link>
           ) : (
             <div className="">
               <div
-                className="flex font-semibold relative items-center gap-5  cursor-pointer 
+                className="flex  relative items-center gap-5 font-instSansB text-[16px] cursor-pointer 
              transition-transform duration-150 ease-in-out active:scale-95"
-                onClick={() => setDropdownOpen(!dropdownOpen)}
+                onClick={() => {
+                  setDropdownOpen(!dropdownOpen), setIsRotated(!isRotated);
+                }}
               >
-                <img
-                  className="h-10 w-10 rounded-full bg-black "
-                  src="/boy.png"
-                ></img>
-                {userDetails?.name}           </div>
+                {userDetails?.name}
+              </div>
               {dropdownOpen && (
-                <div className="absolute right-18 top-18 mt-2 w-40 bg-white border border-gray-200 rounded-lg shadow-lg"     ref={dropdownRef}>
+                <div
+                  className="absolute right-18 top-18 mt-2 w-40 bg-white border border-gray-200 rounded-3xl shadow-lg"
+                  ref={dropdownRef}
+                >
                   <ul className="py-2 text-sm text-gray-700">
                     <li>
                       <Link
@@ -118,6 +115,7 @@ const Navbar = () => {
                         Profile
                       </Link>
                     </li>
+                    <hr></hr>
                     <li>
                       <Link href={`/`}>
                         <button
@@ -136,6 +134,9 @@ const Navbar = () => {
             </div>
           )}
         </div>
+        </div>
+
+
       </div>
 
       {/* Mobile Menu */}

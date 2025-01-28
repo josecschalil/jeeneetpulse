@@ -24,6 +24,8 @@ module.exports = {
         instSans: ['instrumentSans', 'Sans'],
         instSansN: ['instrumentSansnorm', 'Sans'],  
         instSansB: ['instrumentSansBold', 'Sans'], 
+        inter: ['Inter', 'Sans'],
+        interi: ['InterI', 'Sans'],
       },
       colors: {
         background: "var(--background)",
