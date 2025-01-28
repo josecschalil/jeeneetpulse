@@ -14,13 +14,18 @@ const Hero = () => {
   return (
     <div
       className=" px-6 font-inter mx-auto hero-section relative "
+      style={{
+        backgroundColor:
+        
+           "#EBFFF9"
+      }}
     
     >
 
     
-      <div className="hero-overlay w-full h-[80vh] sm:h-[72vh] flex flex-col items-center justify-center text-center">
+      <div className="hero-overlay w-full h-[80vh] sm:h-[90vh] flex flex-col items-center justify-center text-center">
 
-        <div className="flex items-center mt-1 mb-6 justify-between w-fit px-3 pr-2 py-2 border border-gray-600 rounded-full shadow-md hover:border-gray-900">
+        <div className="flex items-center  mb-6 justify-between w-fit px-3 pr-2 py-2 border border-gray-600 rounded-full shadow-md hover:border-gray-900">
           <Link href="/signup" className="flex justify-between items-center gap-2">
             <p className="text-sm font-interi font-medium ">
             {heroData.SubHeading}
@@ -56,13 +61,13 @@ const Hero = () => {
         <div className="flex gap-6 px-6 ">
           <a
             href="/courses"
-            className="border font-inter font-bold  border-black  px-6 sm:px-8 py-2 rounded-md text-sm sm:text-lg  transition"
+            className="border font-inter font-bold  border-black  px-6 sm:px-8 py-2 rounded text-sm sm:text-lg  transition"
           >
             Courses
           </a>
           <a
             href="/signin"
-            className="bg-teal-700 font-bold font-inter rounded-md hover:shadow-lg text-white px-6 sm:px-8 py-2  text-sm sm:text-lg  transition"
+            className="bg-teal-700 font-bold font-inter  hover:shadow-lg text-white px-6 sm:px-8 py-2 rounded text-sm sm:text-lg  transition"
           >
             Get Started
           </a>
