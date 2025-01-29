@@ -26,7 +26,8 @@ SECRET_KEY = 'django-insecure-igt2(drbd-j!9174r@skyw1p%&f53i3q5dhlpp7o$!(4t$7ko0
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', '0.0.0.0']
+
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
@@ -133,7 +134,7 @@ DATABASES = {
         'NAME': 'jeeneetpulse',
         'USER': 'postgres',
         'PASSWORD': '1234',
-        'HOST': 'localhost',
+        'HOST': 'db',
         'PORT': '5432',
     }
 }
